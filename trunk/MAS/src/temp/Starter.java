@@ -7,8 +7,10 @@ package temp;
 import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
+import temp.ricevitori.REST.RicevitoreREST;
 import temp.ricevitori.SOAP.RicevitoreSOAP;
 import temp.ricevitori.Socket.RicevitoreSocket;
+import temp.trasmettitori.REST.TrasmettitoreREST;
 import temp.trasmettitori.SOAP.TrasmettitoreSOAP;
 import temp.trasmettitori.Socket.TrasmettitoreSocket;
 import temp.valutatori.*;
@@ -24,6 +26,20 @@ public class Starter {
      */
     public static void main(String[] args) {
         try{
+            
+            Blocco asc4 = new Blocco();
+            asc4.setPortaAscolto(17782);
+            asc4.setTrasmettitore(new TrasmettitoreREST());
+            HashMap conf4 = new HashMap();
+            conf4.put("portaAscoltoEsterna", 17781);
+            conf4.put("portaAscoltoInterna", 17782);        
+            asc4.ricevitori.add(new RicevitoreREST(conf4));
+            asc4.setAlgoritmo(new Algoritmo4());
+            Thread th4 = new Thread (asc4);
+            th4.start();
+            
+            Thread.sleep(1000);
+            
             Blocco asc3 = new Blocco();
             asc3.setPortaAscolto(17779);
             //asc3.setTrasmettitore(new TrasmettitoreSocket(new Socket("localhost",7780)));
