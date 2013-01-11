@@ -38,9 +38,7 @@ public class Blocco implements Runnable{
 	public void run(){
 	
 		boolean continua = true;
-		
-               
-                
+              
 		try{
 		ServerSocket SS = new ServerSocket(portaAscolto);
 		

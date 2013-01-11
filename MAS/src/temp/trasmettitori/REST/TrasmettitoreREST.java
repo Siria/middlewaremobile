@@ -4,44 +4,48 @@
  */
 package temp.trasmettitori.REST;
 
-import java.net.URL;
+import com.sun.jersey.api.client.WebResource;
+import java.net.URI;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.MediaType;
+import temp.ricevitori.REST.REST;
 import temp.trasmettitori.AbstractTrasmettitore;
 
 /**
  *
  * @author Seby
  */
-@Path("temp.ricevitori.REST/REST")
+@Path("Trasmettitore")
 public class TrasmettitoreREST extends AbstractTrasmettitore{
+    
+    private String BASE_URI;
+    private WebResource webResource;
 
-    public TrasmettitoreREST() {
+    public TrasmettitoreREST(String BASE_URI) {
+        this.BASE_URI = BASE_URI;
     }
 
     @Override
+    @Path("/Invio")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes("application/xml")
     public void invia(Object messaggio) {           
-        inviaPost("Trasmettitore Rest..");
-  }
-        /**
-     *
-     * @param message
-     * @return
-     */
-        @POST
-        @Path("/temp.ricevitori.REST/REST")
-        @Produces("text/plain")
-        @Consumes("application/xml")
-        public ResponseBuilder inviaPost(@PathParam("REST") Object message) {
-           // REST rest.invia(message);    
-            return Response.status(200).entity(message);
+            System.out.println("Saluto aggiunto in post\n");
+            WebResource res = webResource; // messaggiooo sottooo
+            REST rest = null;
+            rest.ricevi(res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class)) ;
+    }
 
     }
 
+
+
     
-}
+
+    
+
