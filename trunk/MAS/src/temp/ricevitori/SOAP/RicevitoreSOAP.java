@@ -21,7 +21,6 @@ public class RicevitoreSOAP extends AbstractRicevitore implements SOAP {
 		System.out.println("Ricevo tramite SOAP");
                 this.inviaPerValutazione(messaggio);                
         }
-
         
 
         public RicevitoreSOAP(HashMap conf) {

@@ -17,7 +17,7 @@ import temp.valutatori.*;
 
 /**
  *
- * @author Seby
+ * @author alessandra
  */
 public class Starter {
 
@@ -29,7 +29,7 @@ public class Starter {
             
             Blocco asc4 = new Blocco();
             asc4.setPortaAscolto(17782);
-            asc4.setTrasmettitore(new TrasmettitoreREST());
+            asc4.setTrasmettitore(new TrasmettitoreREST("http://localhost:17781/WS/REST"));
             HashMap conf4 = new HashMap();
             conf4.put("portaAscoltoEsterna", 17781);
             conf4.put("portaAscoltoInterna", 17782);        
@@ -42,7 +42,7 @@ public class Starter {
             
             Blocco asc3 = new Blocco();
             asc3.setPortaAscolto(17779);
-            //asc3.setTrasmettitore(new TrasmettitoreSocket(new Socket("localhost",7780)));
+            asc3.setTrasmettitore(new TrasmettitoreSocket(new Socket("localhost",17780)));
             HashMap conf3 = new HashMap();
             conf3.put("portaAscoltoEsterna", 17778);
             conf3.put("portaAscoltoInterna", 17779);           

@@ -5,27 +5,22 @@
 package temp.ricevitori.REST;
 
 import java.util.HashMap;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-
-
-
-
-
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.xml.ws.Endpoint;
 import temp.ricevitori.AbstractRicevitore;
 
 
 
 public class RicevitoreREST extends AbstractRicevitore implements REST {
     
-    @Override 
-    public void ricevi(Object messaggio){
+    @Override
+    @GET
+    @Path("temp.TrasmettitoriREST/TrasmettitoreREST/{messaggio}")
+    public void ricevi(@PathParam("messaggio") Object messaggio){
         System.out.println("Ricevo tramite REST..");
-        this.inviaPerValutazione(getSString(messaggio));
+        this.inviaPerValutazione(messaggio);
     //per ricevere il messaggio    
     }
     
@@ -36,19 +31,13 @@ public class RicevitoreREST extends AbstractRicevitore implements REST {
     @Override 
     public void ricevi(){
     // configurazione porta
+         Endpoint.publish("http://localhost:"+conf.get("portaAscoltoEsterna")+"/WS/REST",this);
    
     }
-  
 
-    @GET
-    @Path("temp.TrasmettitoriREST/TrasmettitoreREST/{messaggio}")
-    public String getSString(@PathParam("messaggio") Object messaggio ) {
-    return messaggio.toString();
-    
-
-        }
 
 }
+
 
 
 
