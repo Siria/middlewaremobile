@@ -5,6 +5,7 @@
 package temp;
 
 import java.net.Socket;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import temp.ricevitori.REST.RicevitoreREST;
