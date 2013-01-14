@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.xml.ws.Endpoint;
 import temp.ricevitori.AbstractRicevitore;
 
+// nel ricevitore devo configurare la porta ascolto
 
 
 public class RicevitoreREST extends AbstractRicevitore implements REST {

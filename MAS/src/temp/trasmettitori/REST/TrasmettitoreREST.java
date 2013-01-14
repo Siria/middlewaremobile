@@ -17,9 +17,13 @@ import temp.trasmettitori.AbstractTrasmettitore;
 
 /**
  *
- * @author Seby
+ * @author alessandra
  */
-@Path("Trasmettitore")
+
+
+
+
+@Path("temp.trasmettitori.REST")
 public class TrasmettitoreREST extends AbstractTrasmettitore{
     
     private String BASE_URI;
@@ -30,15 +34,18 @@ public class TrasmettitoreREST extends AbstractTrasmettitore{
     }
 
     @Override
-    @Path("/Invio")
-    @POST
+    @Path("/Invia")
+    @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Consumes("application/xml")
-    public void invia(Object messaggio) {           
-            System.out.println("Saluto aggiunto in post\n");
+    public void invia(Object messaggio) {    
+        try{
             WebResource res = webResource; // messaggiooo sottooo
             REST rest = null;
             rest.ricevi(res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class)) ;
+    }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     }

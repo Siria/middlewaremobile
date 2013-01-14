@@ -20,34 +20,52 @@ package test;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
-import javax.ws.rs.Path;
-import temp.ricevitori.REST.REST;
 
-@Path("/serviceREST")
+
 public class ClientREST {
 
-    private WebResource webResource;
-    private Client client;
-    private String BASE_URI = "http://localhost:8080/WS/REST";
+      private WebResource webResource;
+      private Client client;
+      private String BASE_URI = "http://localhost:17781/WS/REST";
+      
+     
+      
+/* deve avere un costruttore che accetti in ingresso un URI o un URL
+ * scheme://host:port/path?queryString#fragment
+ * Scheme: http/https
+ * Host: nome logico o indirizzo IP
+ * Port: porta/opzionale
+ * Path: stringa(con /) per identificare la risorsa in uno schema gerarchico
+ * Query string: Lista di parametri (coppie nome=valore delimitate da &).
+ * */
+      
+      
+      public void NewJerseyClient() {
+          
+           com.sun.jersey.api.client.config.ClientConfig config;
+           config = new com.sun.jersey.api.client.config.DefaultClientConfig();
+           client = Client.create(config);
+           webResource = client.resource(BASE_URI).path("temp.trasmettitori.REST");
+    }
+     
+       public void invia() throws UniformInterfaceException{
+       
+          WebResource res = webResource;
+          String accept = res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+          System.out.println(accept);
 
-    public void NewJerseyClient() {
-        com.sun.jersey.api.client.config.ClientConfig config;
-        config = new com.sun.jersey.api.client.config.DefaultClientConfig();
-        client = Client.create(config);
-        webResource = client.resource(BASE_URI).path("");
     }
 
-    public String invia() throws UniformInterfaceException {
-        WebResource res = webResource;
-        return res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
-    }
+      public static void main(String args[]) {
 
-    public static void main(String args[]) {
-        ClientREST client = new ClientREST();
-        System.out.print("Inizio client Rest...");
-        System.out.print(client.invia());
+          ClientREST restClient = new ClientREST();          
+          System.out.println("Inizio trasmissione...");
+          restClient.invia();
     }
 }
+    
+
+
 /*   private static void invia(Object messaggio) {
             
  @Path("/test/Client")
@@ -62,7 +80,7 @@ public class ClientREST {
         
  @GET
  @Path("temp.ricevitori.REST/{messaggio}")
- public String getString(@PathParam("messaggio") Object messaggio ) {
+ public void invia(@PathParam("messaggio") Object messaggio ) {
  return messaggio.toString();
  }
         
