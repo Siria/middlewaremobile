@@ -18,7 +18,7 @@ public class RicevitoreREST extends AbstractRicevitore implements REST {
     
     @Override
     @GET
-    @Path("temp.TrasmettitoriREST/TrasmettitoreREST/{messaggio}")
+    @Path("temp.trasmettitori.REST/Invio")
     public void ricevi(@PathParam("messaggio") Object messaggio){
         System.out.println("Ricevo tramite REST..");
         this.inviaPerValutazione(messaggio);
