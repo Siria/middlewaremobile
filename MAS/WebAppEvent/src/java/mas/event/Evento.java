@@ -4,9 +4,9 @@
  */
 package mas.event;
 
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -25,11 +25,14 @@ public class Evento {
 
     @Context
     private UriInfo context;
+    private String tipo;
+    private String contenuto;
 
     /**
      * Creates a new instance of Evento
      */
     public Evento() {
+
     }
 
     /**
@@ -52,4 +55,32 @@ public class Evento {
     @Consumes("text/plain")
     public void putText(String content) {
     }
+
+    public UriInfo getContext() {
+        return context;
+    }
+
+    public void setContext(UriInfo context) {
+        this.context = context;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getContenuto() {
+        return contenuto;
+    }
+
+    public void setContenuto(String contenuto) {
+        this.contenuto = contenuto;
+    }
+    private static final Logger LOG = Logger.getLogger(Evento.class.getName());
+    
+    
+    
 }
