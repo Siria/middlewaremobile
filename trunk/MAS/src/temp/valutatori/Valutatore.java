@@ -7,7 +7,7 @@ package temp.valutatori;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import temp.trasmettitori.AbstractTrasmettitore;
+import temp.proxy.TrasmettitoreProxy;
 
 /**
  *
@@ -17,11 +17,11 @@ public class Valutatore implements Runnable{
         Socket SK = null;
 	ObjectOutputStream OOS = null;
 	ObjectInputStream OIS = null;
-	AbstractTrasmettitore TX; 
+	TrasmettitoreProxy TX; 
         InterfaceAlgoritmo algoritmo;
     
         public Valutatore(){}
-	public Valutatore(Socket SK, AbstractTrasmettitore TX, InterfaceAlgoritmo algoritmo){
+	public Valutatore(Socket SK, TrasmettitoreProxy TX, InterfaceAlgoritmo algoritmo){
                 this.TX = TX;
 		this.SK = SK;
                 this.algoritmo = algoritmo;

@@ -10,17 +10,17 @@ package temp;
  */
 import java.net.*;
 import java.util.LinkedList;
-import temp.ricevitori.AbstractRicevitore;
-import temp.trasmettitori.AbstractTrasmettitore;
+import temp.proxy.RicevitoreProxy;
+import temp.proxy.TrasmettitoreProxy;
 import temp.valutatori.InterfaceAlgoritmo;
 import temp.valutatori.Valutatore;
 
 public class Blocco implements Runnable{
     
     private int portaAscolto;
-    private AbstractTrasmettitore trasmettitore;
+    private TrasmettitoreProxy trasmettitore;
     private InterfaceAlgoritmo algoritmo; 
-    public LinkedList<AbstractRicevitore> ricevitori = new LinkedList<>();
+    public LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
 
     public void setAlgoritmo(InterfaceAlgoritmo algoritmo) {
         this.algoritmo = algoritmo;
@@ -30,7 +30,7 @@ public class Blocco implements Runnable{
         this.portaAscolto = portaAscolto;
     }
 
-    public void setTrasmettitore(AbstractTrasmettitore trasmettitore) {
+    public void setTrasmettitore(TrasmettitoreProxy trasmettitore) {
         this.trasmettitore = trasmettitore;
     }
 	
@@ -42,7 +42,7 @@ public class Blocco implements Runnable{
 		try{
 		ServerSocket SS = new ServerSocket(portaAscolto);
 		
-                for (AbstractRicevitore ricevitore : ricevitori){
+                for (RicevitoreProxy ricevitore : ricevitori){
                     ricevitore.mettitiInAscolto();
                 }
                 

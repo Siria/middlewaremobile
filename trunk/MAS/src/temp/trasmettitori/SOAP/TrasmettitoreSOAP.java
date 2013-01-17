@@ -4,21 +4,18 @@
  */
 package temp.trasmettitori.SOAP;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import temp.proxy.TrasmettitoreProxy;
 import temp.ricevitori.SOAP.SOAP;
-import temp.trasmettitori.AbstractTrasmettitore;
 
 
 /**
  *
  * @author Seby
  */
-public class TrasmettitoreSOAP extends AbstractTrasmettitore{
+public class TrasmettitoreSOAP implements TrasmettitoreProxy{
 
     private URL url;
     

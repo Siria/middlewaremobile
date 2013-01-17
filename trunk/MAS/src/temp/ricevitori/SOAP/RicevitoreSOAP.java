@@ -8,14 +8,17 @@ package temp.ricevitori.SOAP;
  *
  * @author Seby
  */
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.HashMap;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
-import temp.ricevitori.AbstractRicevitore;
+import temp.proxy.RicevitoreProxy;
 
 @WebService(endpointInterface = "temp.ricevitori.SOAP.SOAP")
-public class RicevitoreSOAP extends AbstractRicevitore implements SOAP {
-
+public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
+    ObjectOutputStream OOS = null;
+    public HashMap conf = null;
 	@Override
 	public void ricevi(Object messaggio) {
 		System.out.println("Ricevo tramite SOAP");
@@ -23,9 +26,7 @@ public class RicevitoreSOAP extends AbstractRicevitore implements SOAP {
         }
         
 
-        public RicevitoreSOAP(HashMap conf) {
-            super(conf);           
-        }
+        
 
         @Override
         public void ricevi() {
@@ -33,5 +34,37 @@ public class RicevitoreSOAP extends AbstractRicevitore implements SOAP {
         }
         
         
+    
+    
+    
+    public RicevitoreSOAP(HashMap conf){
+        this.conf = conf;       	
+    }
+
+    public final void mettitiInAscolto(){
+        try{
+            Socket SK = new Socket("localhost",(int)conf.get("portaAscoltoInterna"));
+            OOS = new ObjectOutputStream(SK.getOutputStream());	
+  	}catch(Exception e){
+            e.printStackTrace();
+	}
+        
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                    ricevi();
+                }
+            });
+            t.start();
+    }
+    
+    public void inviaPerValutazione(Object messaggio){
+    	try{
+            OOS.writeObject(messaggio);
+            OOS.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 }
