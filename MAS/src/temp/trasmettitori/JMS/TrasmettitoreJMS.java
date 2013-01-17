@@ -4,13 +4,13 @@
  */
 package temp.trasmettitori.JMS;
 
-import temp.trasmettitori.AbstractTrasmettitore;
+import temp.proxy.TrasmettitoreProxy;
 
 /**
  *
  * @author Seby
  */
-public class TrasmettitoreJMS extends AbstractTrasmettitore{
+public class TrasmettitoreJMS implements TrasmettitoreProxy{
 
     @Override
     public void invia(Object messaggio) {

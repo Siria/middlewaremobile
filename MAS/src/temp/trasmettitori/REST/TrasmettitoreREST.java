@@ -5,15 +5,12 @@
 package temp.trasmettitori.REST;
 
 import com.sun.jersey.api.client.WebResource;
-import java.net.URI;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import temp.ricevitori.REST.REST;
-import temp.trasmettitori.AbstractTrasmettitore;
+import temp.proxy.TrasmettitoreProxy;
 
 /**
  *
@@ -24,7 +21,7 @@ import temp.trasmettitori.AbstractTrasmettitore;
 
 
 @Path("temp.trasmettitori.REST")
-public class TrasmettitoreREST extends AbstractTrasmettitore{
+public class TrasmettitoreREST implements TrasmettitoreProxy{
     
     private String BASE_URI;
     private WebResource webResource;

@@ -6,20 +6,23 @@ package temp.ricevitori.Socket;
 
 import java.io.EOFException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import temp.ricevitori.AbstractRicevitore;
+import temp.proxy.RicevitoreProxy;
 
 /**
  *
  * @author Seby
  */
-public class RicevitoreSocket extends AbstractRicevitore{
+public class RicevitoreSocket implements RicevitoreProxy{
 
-    public RicevitoreSocket(HashMap conf) {
-        super(conf);
-    }
+    ObjectOutputStream OOS = null;
+    public HashMap conf = null;
+    
+   
+    
     
     @Override
     public void ricevi() {
@@ -53,6 +56,37 @@ public class RicevitoreSocket extends AbstractRicevitore{
 	}catch(Exception e){
 		e.printStackTrace();
 	}
+    }
+    
+    
+    public RicevitoreSocket(HashMap conf){
+        this.conf = conf;       	
+    }
+
+    public final void mettitiInAscolto(){
+        try{
+            Socket SK = new Socket("localhost",(int)conf.get("portaAscoltoInterna"));
+            OOS = new ObjectOutputStream(SK.getOutputStream());	
+  	}catch(Exception e){
+            e.printStackTrace();
+	}
+        
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                    ricevi();
+                }
+            });
+            t.start();
+    }
+    
+    public void inviaPerValutazione(Object messaggio){
+    	try{
+            OOS.writeObject(messaggio);
+            OOS.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     
 }

@@ -7,13 +7,13 @@ package temp.trasmettitori.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import temp.trasmettitori.AbstractTrasmettitore;
+import temp.proxy.TrasmettitoreProxy;
 
 /**
  *
  * @author Seby
  */
-public class TrasmettitoreSocket extends AbstractTrasmettitore{
+public class TrasmettitoreSocket implements TrasmettitoreProxy{
 
     Socket SK = null;
     ObjectOutputStream OOS = null;
