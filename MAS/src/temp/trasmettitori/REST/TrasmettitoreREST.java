@@ -45,6 +45,11 @@ public class TrasmettitoreREST implements TrasmettitoreProxy{
         }
     }
 
+    @Override
+    public void dequeue(Object messaggio) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     }
 
 

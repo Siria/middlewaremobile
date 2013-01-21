@@ -11,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import temp.proxy.RicevitoreProxy;
+import temp.queue.Monitor;
 
 /**
  *
@@ -18,8 +19,12 @@ import temp.proxy.RicevitoreProxy;
  */
 public class RicevitoreSocket implements RicevitoreProxy{
 
-    ObjectOutputStream OOS = null;
+    private Monitor monitor;
     public HashMap conf = null;
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
     
    
     
@@ -41,7 +46,7 @@ public class RicevitoreSocket implements RicevitoreProxy{
                                     while(true){
                                     Object tmp = OIS.readObject();
                                     System.out.println("Ricevo tramite Socket...");
-                                    inviaPerValutazione(tmp);
+                                    enqueue(tmp);
                                     }
                                 } catch (EOFException exf){
                                     System.out.println("Un client si è scollegato...");   
@@ -59,18 +64,13 @@ public class RicevitoreSocket implements RicevitoreProxy{
     }
     
     
-    public RicevitoreSocket(HashMap conf){
-        this.conf = conf;       	
+    public RicevitoreSocket(Monitor monitor, HashMap conf){
+        this.conf = conf;
+        this.monitor = monitor;
     }
 
     public final void mettitiInAscolto(){
-        try{
-            Socket SK = new Socket("localhost",(int)conf.get("portaAscoltoInterna"));
-            OOS = new ObjectOutputStream(SK.getOutputStream());	
-  	}catch(Exception e){
-            e.printStackTrace();
-	}
-        
+       
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -80,13 +80,8 @@ public class RicevitoreSocket implements RicevitoreProxy{
             t.start();
     }
     
-    public void inviaPerValutazione(Object messaggio){
-    	try{
-            OOS.writeObject(messaggio);
-            OOS.flush();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public void enqueue(Object messaggio){
+    	monitor.accodaRichiesta(messaggio);
     }
     
 }

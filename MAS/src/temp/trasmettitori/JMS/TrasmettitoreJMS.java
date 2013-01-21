@@ -16,5 +16,10 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy{
     public void invia(Object messaggio) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void dequeue(Object messaggio) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

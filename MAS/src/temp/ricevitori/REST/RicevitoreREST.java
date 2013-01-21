@@ -4,20 +4,19 @@
  */
 package temp.ricevitori.REST;
 
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.HashMap;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.xml.ws.Endpoint;
 import temp.proxy.RicevitoreProxy;
+import temp.queue.Monitor;
 
 // nel ricevitore devo configurare la porta ascolto
 
 
 public class RicevitoreREST  implements REST,RicevitoreProxy {
-    ObjectOutputStream OOS = null;
+    Monitor monitor;
     public HashMap conf = null;
 
     @Override
@@ -25,7 +24,7 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
     @Path("temp.trasmettitori.REST/Invio")
     public void ricevi(@PathParam("messaggio") Object messaggio){
         System.out.println("Ricevo tramite REST..");
-        this.inviaPerValutazione(messaggio);
+        this.enqueue(messaggio);
     //per ricevere il messaggio    
     }
     
@@ -40,13 +39,6 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
 
     
     public final void mettitiInAscolto(){
-        try{
-            Socket SK = new Socket("localhost",(int)conf.get("portaAscoltoInterna"));
-            OOS = new ObjectOutputStream(SK.getOutputStream());	
-  	}catch(Exception e){
-            e.printStackTrace();
-	}
-        
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -56,14 +48,11 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
             t.start();
     }
     
-    public void inviaPerValutazione(Object messaggio){
-    	try{
-            OOS.writeObject(messaggio);
-            OOS.flush();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public void enqueue(Object messaggio){
+    	monitor.accodaRichiesta(messaggio);
     }
+
+   
 
 }
 
