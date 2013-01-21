@@ -8,21 +8,21 @@ package temp.ricevitori.SOAP;
  *
  * @author Seby
  */
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.HashMap;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
 import temp.proxy.RicevitoreProxy;
+import temp.queue.Monitor;
 
 @WebService(endpointInterface = "temp.ricevitori.SOAP.SOAP")
 public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
-    ObjectOutputStream OOS = null;
+    
+    Monitor monitor;
     public HashMap conf = null;
 	@Override
 	public void ricevi(Object messaggio) {
 		System.out.println("Ricevo tramite SOAP");
-                this.inviaPerValutazione(messaggio);                
+                this.enqueue(messaggio);                
         }
         
 
@@ -37,17 +37,13 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
     
     
     
-    public RicevitoreSOAP(HashMap conf){
-        this.conf = conf;       	
+    public RicevitoreSOAP(Monitor monitor, HashMap conf){
+        this.conf = conf;
+        this.monitor = monitor;
     }
 
     public final void mettitiInAscolto(){
-        try{
-            Socket SK = new Socket("localhost",(int)conf.get("portaAscoltoInterna"));
-            OOS = new ObjectOutputStream(SK.getOutputStream());	
-  	}catch(Exception e){
-            e.printStackTrace();
-	}
+        
         
         Thread t = new Thread(new Runnable() {
             @Override
@@ -58,13 +54,9 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
             t.start();
     }
     
-    public void inviaPerValutazione(Object messaggio){
-    	try{
-            OOS.writeObject(messaggio);
-            OOS.flush();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public void enqueue(Object messaggio){
+        monitor.accodaRichiesta(messaggio);
     }
 
+    
 }

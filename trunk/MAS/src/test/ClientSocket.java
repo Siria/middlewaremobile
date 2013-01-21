@@ -6,9 +6,10 @@ import java.net.*;
 public class ClientSocket {
 	
 	 public static void main(String[] args) throws Exception {
-        
-            invia("Inizio Socket...");
-
+             while (true){
+                invia("Inizio Socket...");
+                Thread.sleep(1000);
+             }
         
          }
 	

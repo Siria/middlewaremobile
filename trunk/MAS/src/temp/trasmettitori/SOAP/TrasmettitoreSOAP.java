@@ -37,5 +37,10 @@ public class TrasmettitoreSOAP implements TrasmettitoreProxy{
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public void dequeue(Object messaggio) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
