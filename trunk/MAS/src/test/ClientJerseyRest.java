@@ -47,18 +47,35 @@ public class ClientJerseyRest {
     private static final Logger LOG = Logger.getLogger(ClientJerseyRest.class.getName());
     
     public void invia() throws UniformInterfaceException{
+        
+        
        
           WebResource res = webResource;
           String accept = res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
           System.out.println(accept);
 
+
     }
+    
+      public void putEvento(Object requestEntity) throws UniformInterfaceException {
+        webResource.type(javax.ws.rs.core.MediaType.TEXT_PLAIN).put(requestEntity);
+    }
+    
+        public <T> T getEvento(Class<T> responseType) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(responseType);
+    }
+        
+
+
 
      public static void main(String args[]) {
 
           ClientJerseyRest restClient = new ClientJerseyRest();          
           System.out.println("Inizio trasmissione...");
+          
           restClient.invia();
+          
     }
     
     
