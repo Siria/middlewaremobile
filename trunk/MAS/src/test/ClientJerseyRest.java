@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class ClientJerseyRest {
     private WebResource webResource;
     private Client client;
-    private static final String BASE_URI = "http://localhost:17781/WebAppEvent/webresources";
+    private static final String BASE_URI = "http://localhost:8080/WebAppEvent/webresources";
 
     public ClientJerseyRest() {
         com.sun.jersey.api.client.config.ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();
