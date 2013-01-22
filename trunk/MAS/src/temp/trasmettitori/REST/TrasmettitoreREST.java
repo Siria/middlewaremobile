@@ -31,12 +31,13 @@ public class TrasmettitoreREST implements TrasmettitoreProxy{
     }
 
     @Override
-    @Path("/Invia")
+    @Path("/Risorsa")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public void invia(Object messaggio) {    
+    public void invia(Object evento) {    
         try{
             WebResource res = webResource; // messaggiooo sottooo
+            res.put(evento);
             REST rest = null;
             rest.ricevi(res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class)) ;
     }

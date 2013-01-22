@@ -4,6 +4,10 @@
  */
 package temp.ricevitori.REST;
 
+
+import com.sun.jersey.api.client.WebResource;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.HashMap;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,10 +25,15 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
 
     @Override
     @GET
-    @Path("temp.trasmettitori.REST/Invio")
-    public void ricevi(@PathParam("messaggio") Object messaggio){
+    @Path("/Risorsa")
+    public void ricevi(@PathParam("evento") Object messaggio){      
         System.out.println("Ricevo tramite REST..");
+
+        System.out.println();
+        this.inviaPerValutazione(messaggio);
+
         this.enqueue(messaggio);
+
     //per ricevere il messaggio    
     }
     
@@ -33,13 +42,14 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
     @Override 
     public void ricevi(){
     // configurazione porta
-         Endpoint.publish("http://localhost:"+conf.get("portaAscoltoEsterna")+"/WS/REST",this);
+         Endpoint.publish("http://localhost:"+conf.get("portaAscoltoEsterna")+"WebAppEvent/webresources",this);
    
     }
-
     
+    @Override
     public final void mettitiInAscolto(){
         Thread t = new Thread(new Runnable() {
+            
             @Override
             public void run() {
                     ricevi();
@@ -48,11 +58,20 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
             t.start();
     }
     
+
+
+ 
+
     public void enqueue(Object messaggio){
     	monitor.accodaRichiesta(messaggio);
+
     }
 
-   
+    private void inviaPerValutazione(Object messaggio) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+
 
 }
 
