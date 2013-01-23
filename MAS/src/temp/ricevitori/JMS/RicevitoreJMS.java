@@ -11,7 +11,7 @@ public class RicevitoreJMS {
     /**
      * Main method.
      *
-     * @param args     the queue used by the example
+     * @param args    
      */
     public static void main(String[] args) {
         String                  queueName = null;
@@ -33,11 +33,7 @@ public class RicevitoreJMS {
         }
         queueName = new String(args[0]);
         System.out.println("Queue name is " + queueName);
-        
-        /* 
-         * Create a JNDI API InitialContext object if none exists
-         * yet.
-         */
+
         try {
             jndiContext = new InitialContext();
         } catch (NamingException e) {
@@ -47,8 +43,7 @@ public class RicevitoreJMS {
         }
         
         /* 
-         * Look up connection factory and queue.  If either does
-         * not exist, exit.
+         * Look up 
          */
         try {
             queueConnectionFactory = (QueueConnectionFactory)
@@ -60,16 +55,6 @@ public class RicevitoreJMS {
             System.exit(1);
         }
 
-        /*
-         * Create connection.
-         * Create session from connection; false means session is
-         * not transacted.
-         * Create receiver, then start message delivery.
-         * Receive all text messages from queue until
-         * a non-text message is received indicating end of
-         * message stream.
-         * Close connection.
-         */
         try {
             queueConnection = 
                 queueConnectionFactory.createQueueConnection();
