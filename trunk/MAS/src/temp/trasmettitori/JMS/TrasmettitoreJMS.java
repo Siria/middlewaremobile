@@ -12,8 +12,7 @@ public class TrasmettitoreJMS {
     /**
      * Main method.
      *
-     * @param args     the queue used by the example and,
-     *                 optionally, the number of messages to send
+     * @param args  
      */
     public static void main(String[] args) {
         String                  queueName = null;
@@ -38,11 +37,7 @@ public class TrasmettitoreJMS {
         } else {
             NUM_MSGS = 1;
         }
-        
-        /* 
-         * Create a JNDI API InitialContext object if none exists
-         * yet.
-         */
+
         try {
             jndiContext = new InitialContext();
         } catch (NamingException e) {
@@ -52,8 +47,7 @@ public class TrasmettitoreJMS {
         }
         
         /* 
-         * Look up connection factory and queue.  If either does
-         * not exist, exit.
+         * Look up 
          */
         try {
             queueConnectionFactory = (QueueConnectionFactory)
@@ -65,15 +59,6 @@ public class TrasmettitoreJMS {
             System.exit(1);
         }
 
-        /*
-         * Create connection.
-         * Create session from connection; false means session is
-         * not transacted.
-         * Create sender and text message.
-         * Send messages, varying text slightly.
-         * Send end-of-messages message.
-         * Finally, close connection.
-         */
         try {
             queueConnection = 
                 queueConnectionFactory.createQueueConnection();
@@ -89,10 +74,6 @@ public class TrasmettitoreJMS {
                 queueSender.send(message);
             }
 
-            /* 
-             * Send a non-text control message indicating end of
-             * messages.
-             */
             queueSender.send(queueSession.createMessage());
         } catch (JMSException e) {
             System.out.println("Exception occurred: " + 
