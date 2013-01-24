@@ -6,6 +6,7 @@ package temp.trasmettitori.JMS;
 
 import javax.jms.*;
 import javax.naming.*;
+import temp.queue.Monitor;
 
 public class TrasmettitoreJMS {
 

@@ -6,7 +6,6 @@ package temp.ricevitori.Socket;
 
 import java.io.EOFException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -25,16 +24,14 @@ public class RicevitoreSocket implements RicevitoreProxy{
     public void setMonitor(Monitor monitor) {
         this.monitor = monitor;
     }
-    
    
-    
     
     @Override
     public void ricevi() {
         
         
         try{
-        ServerSocket SS = new ServerSocket((int)conf.get("portaAscoltoEsterna"));
+        ServerSocket SS = (ServerSocket)conf.get("socketIngresso");
 		
 		while(true){
 			final Socket SK = SS.accept();
@@ -63,14 +60,16 @@ public class RicevitoreSocket implements RicevitoreProxy{
 	}
     }
     
-    
-    public RicevitoreSocket(Monitor monitor, HashMap conf){
-        this.conf = conf;
-        this.monitor = monitor;
+    public void enqueue(Object messaggio){
+    	monitor.accodaRichiesta(messaggio);
     }
 
-    public final void mettitiInAscolto(){
-       
+    @Override
+    public void configura(Monitor monitor, HashMap conf) {
+        
+        this.conf = conf;
+        this.monitor = monitor;
+        
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -78,10 +77,6 @@ public class RicevitoreSocket implements RicevitoreProxy{
                 }
             });
             t.start();
-    }
-    
-    public void enqueue(Object messaggio){
-    	monitor.accodaRichiesta(messaggio);
     }
     
 }

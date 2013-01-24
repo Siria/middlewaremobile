@@ -5,12 +5,14 @@
 package temp.trasmettitori.REST;
 
 import com.sun.jersey.api.client.WebResource;
+import java.util.HashMap;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import temp.ricevitori.REST.REST;
 import temp.proxy.TrasmettitoreProxy;
+import temp.queue.Monitor;
 
 /**
  *
@@ -46,8 +48,10 @@ public class TrasmettitoreREST implements TrasmettitoreProxy{
         }
     }
 
+    
+
     @Override
-    public void dequeue(Object messaggio) {
+    public void configura(Monitor monitor, HashMap conf) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

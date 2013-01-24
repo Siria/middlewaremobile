@@ -4,10 +4,15 @@
  */
 package temp.trasmettitori.SOAP;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import temp.proxy.TrasmettitoreProxy;
+import temp.queue.Monitor;
 import temp.ricevitori.SOAP.SOAP;
 
 
@@ -18,12 +23,6 @@ import temp.ricevitori.SOAP.SOAP;
 public class TrasmettitoreSOAP implements TrasmettitoreProxy{
 
     private URL url;
-    
-    public TrasmettitoreSOAP(URL url) {
-        this.url = url;
-    }
-
-    
     
     @Override
     public void invia(Object messaggio){
@@ -39,8 +38,12 @@ public class TrasmettitoreSOAP implements TrasmettitoreProxy{
     }
 
     @Override
-    public void dequeue(Object messaggio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void configura(Monitor monitor, HashMap conf) {
+        try {
+            this.url = new URL((String)conf.get("soapUscita"));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(TrasmettitoreSOAP.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

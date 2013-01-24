@@ -16,7 +16,7 @@ public class ClientSocket {
 	
 	public static void invia(Object DATI){
 		try{
-                Socket SK = new Socket("localhost",17774);
+                Socket SK = new Socket("localhost",17706);
 		ObjectOutputStream OOS = new ObjectOutputStream(SK.getOutputStream());
 		OOS.writeObject(DATI);
 		OOS.flush();

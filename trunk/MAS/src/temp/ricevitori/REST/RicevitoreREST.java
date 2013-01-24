@@ -45,9 +45,17 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
          Endpoint.publish("http://localhost:"+conf.get("portaAscoltoEsterna")+"WebAppEvent/webresources",this);
    
     }
+   
     
     @Override
-    public final void mettitiInAscolto(){
+    public void enqueue(Object messaggio){
+    	monitor.accodaRichiesta(messaggio);
+    }
+
+    @Override
+    public void configura(Monitor monitor, HashMap conf) {
+        this.monitor = monitor;
+        
         Thread t = new Thread(new Runnable() {
             
             @Override
@@ -56,15 +64,6 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
                 }
             });
             t.start();
-    }
-    
-
-
- 
-
-    public void enqueue(Object messaggio){
-    	monitor.accodaRichiesta(messaggio);
-
     }
 
     private void inviaPerValutazione(Object messaggio) {

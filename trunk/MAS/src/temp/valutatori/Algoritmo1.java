@@ -4,12 +4,14 @@
  */
 package temp.valutatori;
 
+import temp.proxy.AlgoritmoProxy;
+
 /**
  *
  * @author Seby
  */
 
-public class Algoritmo1 implements InterfaceAlgoritmo{
+public class Algoritmo1 implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
