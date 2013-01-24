@@ -30,20 +30,19 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
 
         @Override
         public void ricevi() {
-            Endpoint.publish("http://localhost:"+conf.get("portaAscoltoEsterna")+"/WS/SOAP",this);
+            Endpoint.publish((String)conf.get("soapIngresso"),this);
         }
-        
-        
+  
     
-    
-    
-    public RicevitoreSOAP(Monitor monitor, HashMap conf){
-        this.conf = conf;
-        this.monitor = monitor;
+    public void enqueue(Object messaggio){
+        monitor.accodaRichiesta(messaggio);
     }
 
-    public final void mettitiInAscolto(){
+    @Override
+    public void configura(Monitor monitor, HashMap conf) {
         
+        this.conf = conf;
+        this.monitor = monitor;
         
         Thread t = new Thread(new Runnable() {
             @Override
@@ -52,10 +51,6 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
                 }
             });
             t.start();
-    }
-    
-    public void enqueue(Object messaggio){
-        monitor.accodaRichiesta(messaggio);
     }
 
     
