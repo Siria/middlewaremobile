@@ -3,87 +3,75 @@
  * and open the template in the editor.
  */
 package temp.ricevitori.JMS;
+import java.util.HashMap;
+import java.util.logging.Logger;
+import javax.ejb.MessageDriven;
 import javax.jms.*;
-import javax.naming.*;
+import temp.Evento;
+import temp.proxy.RicevitoreProxy;
+import temp.queue.Monitor;
 
-public class RicevitoreJMS {
+@MessageDriven(mappedName="Test")
+public class RicevitoreJMS implements MessageListener, RicevitoreProxy{
+    
+    Logger log;
+    Monitor monitor;
+    public HashMap conf = null;
 
-    /**
-     * Main method.
-     *
-     * @param args    
-     */
-    public static void main(String[] args) {
-        String                  queueName = null;
-        Context                 jndiContext = null;
-        QueueConnectionFactory  queueConnectionFactory = null;
-        QueueConnection         queueConnection = null;
-        QueueSession            queueSession = null;
-        Queue                   queue = null;
-        QueueReceiver           queueReceiver = null;
-        TextMessage             message = null;
-                
-        /*
-         * Read queue name from command line and display it.
-         */
-        if (args.length != 1) {
-            System.out.println("Usage: java " +
-                "SimpleQueueReceiver <queue-name>");
-            System.exit(1);
-        }
-        queueName = new String(args[0]);
-        System.out.println("Queue name is " + queueName);
-
-        try {
-            jndiContext = new InitialContext();
-        } catch (NamingException e) {
-            System.out.println("Could not create JNDI API " +
-                "context: " + e.toString());
-            System.exit(1);
-        }
-        
-        /* 
-         * Look up 
-         */
-        try {
-            queueConnectionFactory = (QueueConnectionFactory)
-                jndiContext.lookup("QueueConnectionFactory");
-            queue = (Queue) jndiContext.lookup(queueName);
-        } catch (NamingException e) {
-            System.out.println("JNDI API lookup failed: " +
-                e.toString());
-            System.exit(1);
-        }
-
-        try {
-            queueConnection = 
-                queueConnectionFactory.createQueueConnection();
-            queueSession = 
-                queueConnection.createQueueSession(false, 
-                    Session.AUTO_ACKNOWLEDGE);
-            queueReceiver = queueSession.createReceiver(queue);
-            queueConnection.start();
-            while (true) {
-                Message m = queueReceiver.receive(1);
-                if (m != null) {
-                    if (m instanceof TextMessage) {
-                        message = (TextMessage) m;
-                        System.out.println("Reading message: " +
-                            message.getText());
-                    } else {
-                        break;
-                    }
-                }
-            }
-        } catch (JMSException e) {
-            System.out.println("Exception occurred: " + 
-                e.toString());
-        } finally {
-            if (queueConnection != null) {
-                try {
-                    queueConnection.close();
-                } catch (JMSException e) {}
-            }
-        }
+    public RicevitoreJMS() {
     }
-}
+
+    public RicevitoreJMS(Logger log, Monitor monitor) {
+        this.log = log;
+        this.monitor = monitor;
+    }
+    
+    @Override
+    public void onMessage(Message message) {
+	    System.out.println("In onMessage()!");
+ 
+	    try {
+	      if (message instanceof ObjectMessage) {
+	        ObjectMessage msg = (ObjectMessage) message;
+	        Evento ricevuto = (Evento)msg.getObject();
+                enqueue(ricevuto);
+                System.out.println("Ricevuto evento: " + ricevuto.getTipo() + " " + ricevuto.getContenuto());
+                log.info("on message " + ricevuto.getTipo() + " " + ricevuto.getContenuto());
+	      }
+	    } catch (Exception e) {
+	      System.out.println("Exception raised: " + e.toString());
+	    }
+	  }
+
+    public void ricevi(Object messaggio) {
+        System.out.println("Ricevo tramite JMS");
+        onMessage((Message)messaggio);
+
+    }
+
+    @Override
+    public void configura(Monitor monitor, HashMap conf) {
+                
+        this.conf = conf;
+        this.monitor = monitor;
+        
+        Thread t = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            ricevi();
+        }
+        });
+            t.start();
+
+    }
+
+    @Override
+    public void enqueue(Object messaggio) {
+        monitor.accodaRichiesta(messaggio);
+    }
+
+    @Override
+    public void ricevi() {
+    }
+
+	}
