@@ -41,29 +41,32 @@ public class TrasmettitoreJMS extends HttpServlet implements TrasmettitoreProxy 
 	  @Resource(mappedName="Test")
 	  private Queue queue;
          	 
-	  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+	/*  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	 
 	    response.setContentType("text/html;charset=UTF-8");
 	 
 	    try {
-	      conn = (QueueConnection) connectionFactory.createConnection();
-	      session = (QueueSession) conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-	      MessageProducer messageProducer = session.createProducer(queue);
-	 
-            Evento evento = new Evento();
-	 
-	      ObjectMessage msg;
-                    msg = session.createObjectMessage(evento);
-	      messageProducer.send(msg);
-	      System.out.println("Dati dell'evento: " + evento.getTipo() +
-	           " " + evento.getContenuto());
-	 
-	      messageProducer.close();
-	      conn.close();
-	    } catch (Exception e) {
-	      System.out.println("Exception raised: " + e.toString());
-	    }
+            */
+          public void send() { 
+        try {
+            conn = (QueueConnection) connectionFactory.createConnection();
+            session = (QueueSession) conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer messageProducer = session.createProducer(queue);
+       
+          Evento evento = new Evento();
+       
+            ObjectMessage msg;
+                  msg = session.createObjectMessage(evento);
+            messageProducer.send(msg);
+            System.out.println("Dati dell'evento: " + evento.getTipo() +
+                 " " + evento.getContenuto());
+       
+            messageProducer.close();
+            conn.close();
+        } catch (JMSException ex) {
+            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	  }
 
 
@@ -73,10 +76,10 @@ public class TrasmettitoreJMS extends HttpServlet implements TrasmettitoreProxy 
     {
         try {
             InitialContext iniCtx = new InitialContext();
-            Object tmp = iniCtx.lookup("ConnectionFactory");
+            Object tmp = iniCtx.lookup("QueueConnectionFactory");
             QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
             conn = qcf.createQueueConnection();
-            queue = (Queue) iniCtx.lookup("queue/testQueue");
+            queue = (Queue) iniCtx.lookup("queue/Test");
             session = conn.createQueueSession(false,QueueSession.AUTO_ACKNOWLEDGE);
             conn.start();
         } catch (JMSException ex) {
@@ -88,8 +91,11 @@ public class TrasmettitoreJMS extends HttpServlet implements TrasmettitoreProxy 
 
     @Override
     public void invia(Object messaggio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
+        send();
+
+        }
     }
 
 
-}
+
