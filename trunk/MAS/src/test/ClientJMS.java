@@ -35,20 +35,22 @@ public class ClientJMS {
      */
     public static void main(String[] args) throws Exception {
 
-    
+       
         
         
                 log = Logger.getLogger("inizio Client");
 
 		RicevitoreJMS receiver = new RicevitoreJMS();
-		receiver.start(); // Runs on a seperate thread
+	//	receiver.start(); // Runs on a seperate thread
 		
 		//Send one message manually
-		String response = TrasmettitoreJMS.invia("Hello World");
-		System.out.println("Response: " + response);
+                TrasmettitoreJMS sender = new TrasmettitoreJMS();
+                sender.invia(args);
+
+		System.out.println("Response: ");
 		Thread.sleep(1000);
 		
-		receiver.stopListening();
+		//receiver.stopListening();
 		
 		System.exit(0); // Force exit
 	}
