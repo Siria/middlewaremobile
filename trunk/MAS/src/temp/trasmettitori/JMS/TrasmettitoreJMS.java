@@ -4,87 +4,92 @@
  */
 package temp.trasmettitori.JMS;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.jms.*;
 import javax.naming.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import temp.Evento;
+import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
+import temp.trasmettitori.SOAP.TrasmettitoreSOAP;
+import test.ClientJMS;
 
-public class TrasmettitoreJMS {
 
-    /**
-     * Main method.
-     *
-     * @param args  
-     */
-    public static void main(String[] args) {
-        String                  queueName = null;
-        Context                 jndiContext = null;
-        QueueConnectionFactory  queueConnectionFactory = null;
-        QueueConnection         queueConnection = null;
-        QueueSession            queueSession = null;
-        Queue                   queue = null;
-        QueueSender             queueSender = null;
-        TextMessage             message = null;
-        final int               NUM_MSGS;
-        
-        if ( (args.length < 1) || (args.length > 2) ) {
-            System.out.println("Usage: java SimpleQueueSender " +
-                "<queue-name> [<number-of-messages>]");
-            System.exit(1);
-        }
-        queueName = new String(args[0]);
-        System.out.println("Queue name is " + queueName);
-        if (args.length == 2){
-            NUM_MSGS = (new Integer(args[1])).intValue();
-        } else {
-            NUM_MSGS = 1;
-        }
 
+
+public class TrasmettitoreJMS extends HttpServlet implements TrasmettitoreProxy {
+    
+          Logger log;         
+ 
+            
+    private QueueConnection conn;
+    private QueueSession session;
+	 
+	  @Resource(mappedName="QueueConnectionFactory")
+	  private ConnectionFactory connectionFactory;
+	 
+	  @Resource(mappedName="Test")
+	  private Queue queue;
+         	 
+	  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+	 
+	    response.setContentType("text/html;charset=UTF-8");
+	 
+	    try {
+	      conn = (QueueConnection) connectionFactory.createConnection();
+	      session = (QueueSession) conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+	      MessageProducer messageProducer = session.createProducer(queue);
+	 
+            Evento evento = new Evento();
+	 
+	      ObjectMessage msg;
+                    msg = session.createObjectMessage(evento);
+	      messageProducer.send(msg);
+	      System.out.println("Dati dell'evento: " + evento.getTipo() +
+	           " " + evento.getContenuto());
+	 
+	      messageProducer.close();
+	      conn.close();
+	    } catch (Exception e) {
+	      System.out.println("Exception raised: " + e.toString());
+	    }
+	  }
+
+
+
+    @Override
+    public void configura(Monitor monitor, HashMap conf) 
+    {
         try {
-            jndiContext = new InitialContext();
-        } catch (NamingException e) {
-            System.out.println("Could not create JNDI API " +
-                "context: " + e.toString());
-            System.exit(1);
-        }
-        
-        /* 
-         * Look up 
-         */
-        try {
-            queueConnectionFactory = (QueueConnectionFactory)
-                jndiContext.lookup("QueueConnectionFactory");
-            queue = (Queue) jndiContext.lookup(queueName);
-        } catch (NamingException e) {
-            System.out.println("JNDI API lookup failed: " + 
-                e.toString());
-            System.exit(1);
-        }
-
-        try {
-            queueConnection = 
-                queueConnectionFactory.createQueueConnection();
-            queueSession = 
-                queueConnection.createQueueSession(false, 
-                    Session.AUTO_ACKNOWLEDGE);
-            queueSender = queueSession.createSender(queue);
-            message = queueSession.createTextMessage();
-            for (int i = 0; i < NUM_MSGS; i++) {
-                message.setText("This is message " + (i + 1));
-                System.out.println("Sending message: " + 
-                    message.getText());
-                queueSender.send(message);
-            }
-
-            queueSender.send(queueSession.createMessage());
-        } catch (JMSException e) {
-            System.out.println("Exception occurred: " + 
-                e.toString());
-        } finally {
-            if (queueConnection != null) {
-                try {
-                    queueConnection.close();
-                } catch (JMSException e) {}
-            }
+            InitialContext iniCtx = new InitialContext();
+            Object tmp = iniCtx.lookup("ConnectionFactory");
+            QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
+            conn = qcf.createQueueConnection();
+            queue = (Queue) iniCtx.lookup("queue/testQueue");
+            session = conn.createQueueSession(false,QueueSession.AUTO_ACKNOWLEDGE);
+            conn.start();
+        } catch (JMSException ex) {
+            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    public void invia(Object messaggio) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
 }
