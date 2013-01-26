@@ -4,60 +4,41 @@
  */
 package temp.trasmettitori.REST;
 
-import com.sun.jersey.api.client.WebResource;
-import java.util.HashMap;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import temp.ricevitori.REST.REST;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.util.HashMap;
 import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
-
-/**
- *
- * @author alessandra
- */
-
-
-
-
-@Path("temp.trasmettitori.REST")
-public class TrasmettitoreREST implements TrasmettitoreProxy{
+ 
+public class TrasmettitoreREST implements TrasmettitoreProxy {
     
-    private String BASE_URI;
-    private WebResource webResource;
-
-    public TrasmettitoreREST(String BASE_URI) {
-        this.BASE_URI = BASE_URI;
-    }
+    Monitor monitor;
+    HashMap conf;
+ 
+    
+    
+    
 
     @Override
-    @Path("/Risorsa")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public void invia(Object evento) {    
-        try{
-            WebResource res = webResource; // messaggiooo sottooo
-            res.put(evento);
-            REST rest = null;
-            rest.ricevi(res.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class)) ;
+    public void invia(Object messaggio) {
+        ClientConfig config = new DefaultClientConfig();
+        Client client = Client.create(config);
+        WebResource service = client.resource((String)conf.get("restUscita")).path("ricevi").path(messaggio.toString());
+        service.accept(MediaType.TEXT_PLAIN).get(ClientResponse.class).toString();
     }
-        catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    
 
     @Override
     public void configura(Monitor monitor, HashMap conf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.monitor = monitor;
+        this.conf = conf;
     }
-
-    }
-
-
+}
+    
+    
 
     
 

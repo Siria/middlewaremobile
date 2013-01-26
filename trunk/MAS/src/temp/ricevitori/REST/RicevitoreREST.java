@@ -4,48 +4,18 @@
  */
 package temp.ricevitori.REST;
 
-
-import com.sun.jersey.api.client.WebResource;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import com.sun.jersey.api.container.httpserver.HttpServerFactory;
+import com.sun.net.httpserver.HttpServer;
+import java.io.IOException;
 import java.util.HashMap;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.xml.ws.Endpoint;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
 
 // nel ricevitore devo configurare la porta ascolto
 
-
-public class RicevitoreREST  implements REST,RicevitoreProxy {
+public class RicevitoreREST implements RicevitoreProxy {
     Monitor monitor;
     public HashMap conf = null;
-
-    @Override
-    @GET
-    @Path("/Risorsa")
-    public void ricevi(@PathParam("evento") Object messaggio){      
-        System.out.println("Ricevo tramite REST..");
-
-        System.out.println();
-        this.inviaPerValutazione(messaggio);
-
-        this.enqueue(messaggio);
-
-    //per ricevere il messaggio    
-    }
-    
-    
-    
-    @Override 
-    public void ricevi(){
-    // configurazione porta
-         Endpoint.publish("http://localhost:"+conf.get("portaAscoltoEsterna")+"WebAppEvent/webresources",this);
-   
-    }
-   
     
     @Override
     public void enqueue(Object messaggio){
@@ -55,23 +25,31 @@ public class RicevitoreREST  implements REST,RicevitoreProxy {
     @Override
     public void configura(Monitor monitor, HashMap conf) {
         this.monitor = monitor;
+        this.conf = conf;
         
         Thread t = new Thread(new Runnable() {
             
             @Override
             public void run() {
-                    ricevi();
-                }
-            });
+                ricevi();
+            }});
             t.start();
     }
 
-    private void inviaPerValutazione(Object messaggio) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    @Override
+    public void ricevi() {
+        try {
+                HttpServer server = HttpServerFactory.create((String)conf.get("restIngresso"));
+                    server.start();
+                    //System.out.println("Press Enter to stop the server. ");
+                    //System.in.read();
+                    //server.stop(0);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
     }
-
-
-
 }
 
 

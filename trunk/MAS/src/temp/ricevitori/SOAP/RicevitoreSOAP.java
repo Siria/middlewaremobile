@@ -25,9 +25,6 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
                 this.enqueue(messaggio);                
         }
         
-
-        
-
         @Override
         public void ricevi() {
             Endpoint.publish((String)conf.get("soapIngresso"),this);

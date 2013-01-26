@@ -6,16 +6,14 @@ package temp;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
-import java.util.HashMap;
 import temp.proxy.AlgoritmoProxy;
 import temp.proxy.ProxyTarget;
 import temp.proxy.RicevitoreProxy;
 import temp.proxy.TrasmettitoreProxy;
-import temp.queue.Monitor;
+import temp.ricevitori.REST.RicevitoreREST;
 import temp.ricevitori.SOAP.RicevitoreSOAP;
 import temp.ricevitori.Socket.RicevitoreSocket;
-import temp.trasmettitori.JMS.TrasmettitoreJMS;
+import temp.trasmettitori.REST.TrasmettitoreREST;
 import temp.trasmettitori.SOAP.TrasmettitoreSOAP;
 import temp.trasmettitori.Socket.TrasmettitoreSocket;
 import temp.valutatori.*;
@@ -31,9 +29,20 @@ public class Starter {
      */
     public static void main(String[] args) {
         try{
+            
+            Blocco asc5 = new Blocco();
+            asc5.getConf().put("restIngresso", "http://localhost:9998/WS/REST/");
+            asc5.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreREST()));
+            asc5.setAlgoritmo(new Algoritmo5());
+            Thread th5 = new Thread (asc5);
+            th5.start();
+            
+            Thread.sleep(1000);
+          
             Blocco asc4 = new Blocco();
-            //asc4.setTrasmettitore((TrasmettitoreProxy)ProxyTarget.createProxy(monitor4,new TrasmettitoreREST(monitor4,"http://localhost:17781/WS/REST")));
+            asc4.getConf().put("restUscita", "http://localhost:9998/WS/REST/");
             asc4.getConf().put("soapIngresso", "http://localhost:17756/WS/SOAP");
+            asc4.setTrasmettitore((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreREST()));
             asc4.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
             asc4.setAlgoritmo(new Algoritmo4());
             Thread th4 = new Thread (asc4);
