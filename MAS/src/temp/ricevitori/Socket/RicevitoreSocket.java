@@ -71,12 +71,14 @@ public class RicevitoreSocket implements RicevitoreProxy{
         this.monitor = monitor;
         
         Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
+    @Override
+    public void run() {
                     ricevi();
                 }
             });
             t.start();
     }
+    
+    
     
 }
