@@ -16,7 +16,7 @@ public class Algoritmo4 implements AlgoritmoProxy{
     public Object valuta(Object messaggio) {
         messaggio = (messaggio + " Algoritmo numero 4...");
         System.out.println(messaggio);
-        return null;
+        return messaggio;
     }
     
 }

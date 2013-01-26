@@ -8,16 +8,15 @@ import temp.proxy.AlgoritmoProxy;
 
 /**
  *
- * @author Seby
+ * @author alessandra
  */
+public class Algoritmo5 implements AlgoritmoProxy{
 
-public class Algoritmo3 implements AlgoritmoProxy{
-    
     @Override
-    public Object valuta(Object messaggio){
-        messaggio = (messaggio + " Algo3...");
+    public Object valuta(Object messaggio) {
+        messaggio = (messaggio + " Algoritmo numero 5...");
         System.out.println(messaggio);
         return messaggio;
     }
-	
+    
 }
