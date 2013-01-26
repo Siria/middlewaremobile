@@ -35,22 +35,17 @@ public class ClientJMS {
      */
     public static void main(String[] args) throws Exception {
 
-       
-        
-        
                 log = Logger.getLogger("inizio Client");
 
 		RicevitoreJMS receiver = new RicevitoreJMS();
 	//	receiver.start(); // Runs on a seperate thread
 		
 		//Send one message manually
-                TrasmettitoreJMS sender = new TrasmettitoreJMS();
+                TrasmettitoreJMS sender = new TrasmettitoreJMS();                              
                 sender.invia(args);
-
 		System.out.println("Response: ");
-		Thread.sleep(1000);
-		
-		//receiver.stopListening();
+		Thread.sleep(1000);		
+		receiver.ricevi();
 		
 		System.exit(0); // Force exit
 	}
@@ -58,14 +53,5 @@ public class ClientJMS {
       
 
 }
-        /*log.info("Inizio Client, now=" + System.currentTimeMillis());
-        SendRecvClient client = new SendRecvClient();
-        client.sendRecvAsync("A text msg");
-        client.done.acquire();
-        client.stop();
-        log.info("End ");
-        System.exit(0);
-    }*/
-
 
  
