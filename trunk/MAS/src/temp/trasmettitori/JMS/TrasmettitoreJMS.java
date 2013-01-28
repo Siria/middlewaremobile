@@ -19,35 +19,30 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
     Monitor monitor;
     public HashMap conf = null;
     
-    private Connection conn;
-    private Session session;
-	 
-    @Resource(mappedName = "QueueConnectionFactory")
-    private ConnectionFactory connectionFactory;
-    @Resource(mappedName = "Test")
-    private Queue queue;
-         	 
-	/*  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	 
-	    response.setContentType("text/html;charset=UTF-8");
-	 
-	    try {
-            */
+    //Context ctx = new InitialContext();
+
+    @Resource(lookup = "jms/ConnectionFactory")
+    private static ConnectionFactory connectionFactory;
+    @Resource(lookup = "jms/Queue")
+    private static Queue queue;
+    private QueueConnection queueconnection;
+    private QueueSession queuesession;
+    
+
     public void send() {
         try {
-            conn = (QueueConnection) connectionFactory.createConnection();
-            session = (QueueSession) conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer messageProducer = session.createProducer(queue);
-            conn.start();
+            queueconnection = (QueueConnection) connectionFactory.createConnection();
+            queuesession = (QueueSession) queueconnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer messageProducer = queuesession.createProducer(queue);
+            queueconnection.start();
             Evento evento = new Evento();
             ObjectMessage msg;
-            msg = session.createObjectMessage(evento);
+            msg = queuesession.createObjectMessage(evento);
             messageProducer.send(msg);
             System.out.println("Dati dell'evento: " + evento.getTipo()
                     + " " + evento.getContenuto());      
             messageProducer.close();
-            conn.close();
+            queueconnection.close();
         } catch (JMSException ex) {
             Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
