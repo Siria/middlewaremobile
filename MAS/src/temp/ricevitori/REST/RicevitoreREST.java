@@ -11,16 +11,16 @@ import com.sun.jersey.spi.inject.PerRequestTypeInjectableProvider;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.ws.rs.ext.Provider;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
-import javax.ws.rs.ext.Provider;
 // nel ricevitore devo configurare la porta ascolto
 @Provider
 public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource, Monitor> implements RicevitoreProxy{
 
 
     
-    Monitor monitor;
+    static Monitor monitor;
     public HashMap conf = null;
     
     @Override
@@ -52,17 +52,13 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
                     //System.out.println("Press Enter to stop the server. ");
                     //System.in.read();
                     //server.stop(0);
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (IllegalArgumentException | IOException e) {
                     e.printStackTrace();
                 }
     }
     
     public RicevitoreREST() {
-        
-        super(Monitor.class);
-        
+        super(Monitor.class);    
     }
 
     @Override
