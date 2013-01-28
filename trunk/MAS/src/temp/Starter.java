@@ -32,21 +32,21 @@ public class Starter {
     public static void main(String[] args) {
         try{
             
-            Thread.sleep(1000);
+            
             
             Blocco asc6 = new Blocco();
-            asc6.getConf().put("jmsUscita", "http://localhost:4848/jms/");
-            asc6.getConf().put("soapIngresso", "http://localhost:17758/WS/SOAP");
-            asc6.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreJMS()));
+            asc6.getConf().put("soapIngresso", "http://localhost:9997/WS/SOAP/");
             asc6.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
-            asc6.setAlgoritmo(new Algoritmo5());
-            Thread th6 = new Thread(asc6);
+            asc6.setAlgoritmo(new Algoritmo6());
+            Thread th6 = new Thread (asc6);
+            th6.start();
             
             Thread.sleep(1000);
-            
             
             Blocco asc5 = new Blocco();
             asc5.getConf().put("restIngresso", "http://localhost:9998/WS/REST/");
+            asc5.getConf().put("soapUscita", "http://localhost:9997/WS/SOAP/");
+            asc5.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSOAP()));
             asc5.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreREST()));
             asc5.setAlgoritmo(new Algoritmo5());
             Thread th5 = new Thread (asc5);
