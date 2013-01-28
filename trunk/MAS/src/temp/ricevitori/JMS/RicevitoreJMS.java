@@ -56,8 +56,16 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
             MessageConsumer messageConsumer = queuesession.createConsumer(queue);
             queueconnection.start();
             Message msg = messageConsumer.receive();
-            onMessage(msg);
-            //queueconnection.close();
+            messageConsumer.setMessageListener(this);
+            // wait for messages
+            System.out.print("waiting for messages");
+            for (int i = 0; i < 10; i++) {
+                Thread.sleep(1000);
+                System.out.print(".");
+            }
+            System.out.println();
+
+            queueconnection.close();
             {
                 if (ic != null) {
                     try {
@@ -71,16 +79,8 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
                     }
                 }
 
-                try {
-                    if (queueconnection != null) {
-                        queueconnection.close();
-                    }
-                } catch (JMSException jmse) {
-                    System.out.println("Could not close connection " + queueconnection + " exception was " + jmse);
-                }
-
             }
-        } catch (NamingException ex) {
+        } catch (InterruptedException | NamingException ex) {
             Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JMSException ex) {
             Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
