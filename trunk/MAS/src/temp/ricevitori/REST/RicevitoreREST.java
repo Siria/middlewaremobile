@@ -6,13 +6,10 @@ package temp.ricevitori.REST;
 
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.jersey.core.spi.component.ComponentContext;
-import com.sun.jersey.core.spi.component.ComponentScope;
 import com.sun.jersey.spi.inject.Injectable;
-import com.sun.jersey.spi.inject.InjectableProvider;
 import com.sun.jersey.spi.inject.PerRequestTypeInjectableProvider;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;

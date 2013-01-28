@@ -58,6 +58,11 @@ public class Blocco implements Runnable{
                     try {  
                         try {
                             File root = new File(".");
+                            // per caricare in maniera dinamica della classe
+                            // in base al nome pssato nella variabile valore
+                            // valore= percorso per il file .class della classe java
+                            // ma nebeans mette i .class in una cartella e i .java in un'altra
+                            // che percorso devo mettere
                             URLClassLoader classLoader;
                            
                                 classLoader = URLClassLoader.newInstance(new URL[] { root.toURI().toURL() });

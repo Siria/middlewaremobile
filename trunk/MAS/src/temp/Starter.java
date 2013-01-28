@@ -10,9 +10,11 @@ import temp.proxy.AlgoritmoProxy;
 import temp.proxy.ProxyTarget;
 import temp.proxy.RicevitoreProxy;
 import temp.proxy.TrasmettitoreProxy;
+import temp.ricevitori.JMS.RicevitoreJMS;
 import temp.ricevitori.REST.RicevitoreREST;
 import temp.ricevitori.SOAP.RicevitoreSOAP;
 import temp.ricevitori.Socket.RicevitoreSocket;
+import temp.trasmettitori.JMS.TrasmettitoreJMS;
 import temp.trasmettitori.REST.TrasmettitoreREST;
 import temp.trasmettitori.SOAP.TrasmettitoreSOAP;
 import temp.trasmettitori.Socket.TrasmettitoreSocket;
@@ -29,6 +31,19 @@ public class Starter {
      */
     public static void main(String[] args) {
         try{
+            
+            Thread.sleep(1000);
+            
+            Blocco asc6 = new Blocco();
+            asc6.getConf().put("jmsUscita", "http://localhost:4848/jms/");
+            asc6.getConf().put("soapIngresso", "http://localhost:17758/WS/SOAP");
+            asc6.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreJMS()));
+            asc6.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
+            asc6.setAlgoritmo(new Algoritmo5());
+            Thread th6 = new Thread(asc6);
+            
+            Thread.sleep(1000);
+            
             
             Blocco asc5 = new Blocco();
             asc5.getConf().put("restIngresso", "http://localhost:9998/WS/REST/");
