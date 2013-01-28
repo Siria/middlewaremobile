@@ -5,15 +5,24 @@
 package temp.ricevitori.REST;
 
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
+import com.sun.jersey.core.spi.component.ComponentContext;
+import com.sun.jersey.core.spi.component.ComponentScope;
+import com.sun.jersey.spi.inject.Injectable;
+import com.sun.jersey.spi.inject.InjectableProvider;
+import com.sun.jersey.spi.inject.PerRequestTypeInjectableProvider;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
-
+import javax.ws.rs.ext.Provider;
 // nel ricevitore devo configurare la porta ascolto
+@Provider
+public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource, Monitor> implements RicevitoreProxy{
 
-public class RicevitoreREST implements RicevitoreProxy {
+
+    
     Monitor monitor;
     public HashMap conf = null;
     
@@ -24,6 +33,7 @@ public class RicevitoreREST implements RicevitoreProxy {
 
     @Override
     public void configura(Monitor monitor, HashMap conf) {
+                
         this.monitor = monitor;
         this.conf = conf;
         
@@ -39,6 +49,7 @@ public class RicevitoreREST implements RicevitoreProxy {
     @Override
     public void ricevi() {
         try {
+            
                 HttpServer server = HttpServerFactory.create((String)conf.get("restIngresso"));
                     server.start();
                     //System.out.println("Press Enter to stop the server. ");
@@ -50,10 +61,20 @@ public class RicevitoreREST implements RicevitoreProxy {
                     e.printStackTrace();
                 }
     }
+    
+    public RicevitoreREST() {
+        
+        super(Monitor.class);
+        System.out.println("istanzio");
+    }
+
+    @Override
+    public Injectable<Monitor> getInjectable(ComponentContext ic, MyResource a) {
+        System.out.println("associo");
+        return new InjMonitor(monitor);
+    }
+    
 }
-
-
-
 
 
 
