@@ -34,4 +34,8 @@ public class Monitor {
     codaRichieste.add(richiesta);
     notifyAll();
   }
+  
+  public synchronized void test (){
+      System.out.println("si sono il monitor e ho" + codaRichieste.size() + " richieste");
+  }
 } 
