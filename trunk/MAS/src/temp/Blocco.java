@@ -21,15 +21,15 @@ import temp.proxy.ProxyTarget;
 import temp.proxy.RicevitoreProxy;
 import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
-import temp.ricevitori.SOAP.RicevitoreSOAP;
 
 
 public class Blocco implements Runnable{
     
     private Monitor monitor = new Monitor();
     private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
+    private LinkedList<TrasmettitoreProxy> trasmettitori = new LinkedList<>();
+    
     private AlgoritmoProxy algoritmo; 
-    private TrasmettitoreProxy trasmettitore;
     private HashMap conf = new HashMap();
 
 
@@ -62,7 +62,7 @@ public class Blocco implements Runnable{
                            
                                 classLoader = URLClassLoader.newInstance(new URL[] { root.toURI().toURL() });
                                 Class<?> cls = Class.forName(valore, true, classLoader);
-                                trasmettitore = (TrasmettitoreProxy)ProxyTarget.createProxy(cls);
+                                trasmettitori.add((TrasmettitoreProxy)ProxyTarget.createProxy(cls));
                                 
                          } catch (MalformedURLException ex) {
                             Logger.getLogger(Blocco.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,13 +132,16 @@ public class Blocco implements Runnable{
         this.algoritmo = algoritmo;
     }
 
-    public TrasmettitoreProxy getTrasmettitore() {
-        return trasmettitore;
+    public LinkedList<TrasmettitoreProxy> getTrasmettitori() {
+        return trasmettitori;
     }
 
-    public void setTrasmettitore(TrasmettitoreProxy trasmettitore) {
-        this.trasmettitore = trasmettitore;
+    public void setTrasmettitori(LinkedList<TrasmettitoreProxy> trasmettitori) {
+        this.trasmettitori = trasmettitori;
     }
+
+    
+    
 	
     @Override
 	public void run(){
@@ -146,9 +149,10 @@ public class Blocco implements Runnable{
                     ricevitore.configura(monitor,conf);                   
                 }
                 
-                if (trasmettitore != null){
+                for (TrasmettitoreProxy trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf);                   
                 }
+                
             
             try{    
     		boolean continua=true;
@@ -156,7 +160,9 @@ public class Blocco implements Runnable{
                                 Object tmp = monitor.prelevaRichiesta();
 				Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
-                                    trasmettitore.invia(risp);
+                                    for (TrasmettitoreProxy trasmettitore : trasmettitori){
+                                        trasmettitore.invia(risp);              
+                                    }
                                 }
                         }
 		}catch (Exception e){e.printStackTrace();}
