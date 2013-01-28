@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.ejb.MessageDriven;
+import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -18,26 +18,27 @@ import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueSession;
 import javax.jms.Session;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import temp.Evento;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import temp.trasmettitori.JMS.TrasmettitoreJMS;
 
-@MessageDriven(mappedName="Test")
 public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
 
     Logger log;
     Monitor monitor;
     public HashMap conf = null;
     InitialContext ic = null;
-    @Resource(lookup = "jms/ConnectionFactory")
+    //@Resource(lookup = "jms/ConnectionFactory")
+    @Resource(mappedName = "jms/ConnectionFactory")
     private static ConnectionFactory connectionFactory;
-    @Resource(lookup = "jms/Queue")
+    //@Resource(lookup = "jms/Queue")
+    @Resource(mappedName = "jms/Queue")
     private static Queue queue;
-    private QueueConnection queueconnection;
-    private QueueSession queuesession;
+    private Connection connection;
+    private Session session;
 
     public RicevitoreJMS() {
     }
@@ -51,10 +52,10 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
     public void ricevi() {
         try {
             ic = new InitialContext();
-            queueconnection = (QueueConnection) connectionFactory.createConnection();
-            queuesession = (QueueSession) queueconnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageConsumer messageConsumer = queuesession.createConsumer(queue);
-            queueconnection.start();
+            connection = connectionFactory.createConnection();
+            session = (QueueSession) connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageConsumer messageConsumer = session.createConsumer(queue);
+            connection.start();
             Message msg = messageConsumer.receive();
             messageConsumer.setMessageListener(this);
             // wait for messages
@@ -65,7 +66,7 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
             }
             System.out.println();
 
-            queueconnection.close();
+            connection.close();
             {
                 if (ic != null) {
                     try {
@@ -114,12 +115,13 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
         this.monitor = monitor;
         
         Thread t = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            ricevi();
-        }
+             
+            @Override
+            public void run() {
+                ricevi();
+            }
         });
-            t.start();
+        t.start();
 
     }
 

@@ -9,6 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.jms.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import temp.Evento;
 import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
@@ -19,30 +22,34 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
     Monitor monitor;
     public HashMap conf = null;
     
-    //Context ctx = new InitialContext();
+    Context ctx;
 
-    @Resource(lookup = "jms/ConnectionFactory")
+    //@Resource(lookup = "jms/ConnectionFactory")
+    @Resource(mappedName = "jms/ConnectionFactory")
     private static ConnectionFactory connectionFactory;
-    @Resource(lookup = "jms/Queue")
+    //@Resource(lookup = "jms/Queue")
+    @Resource(mappedName = "jms/Queue")
     private static Queue queue;
-    private QueueConnection queueconnection;
-    private QueueSession queuesession;
+    private Connection connection;
+    private Session session;
     
 
-    public void send() {
+    public void send(Evento messaggio) {
         try {
-            queueconnection = (QueueConnection) connectionFactory.createConnection();
-            queuesession = (QueueSession) queueconnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer messageProducer = queuesession.createProducer(queue);
-            queueconnection.start();
-            Evento evento = new Evento();
+            ctx = new InitialContext();
+            connection = connectionFactory.createConnection();
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer messageProducer = session.createProducer(queue);
+            connection.start();
             ObjectMessage msg;
-            msg = queuesession.createObjectMessage(evento);
+            msg = session.createObjectMessage(messaggio);
             messageProducer.send(msg);
-            System.out.println("Dati dell'evento: " + evento.getTipo()
-                    + " " + evento.getContenuto());      
+            System.out.println("Dati dell'evento: " + messaggio.getTipo()
+                    + " " + messaggio.getContenuto());      
             messageProducer.close();
-            queueconnection.close();
+            connection.close();
+        } catch (NamingException ex) {
+            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JMSException ex) {
             Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,7 +66,7 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
     @Override
     public void invia(Object messaggio) {
 
-        send();
+        send((Evento)messaggio);
 
     }
 }

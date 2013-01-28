@@ -4,11 +4,8 @@
  */
 package test;
 
-import com.sun.corba.se.pept.broker.Broker;
 import java.util.logging.Logger;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
+import temp.Evento;
 import temp.ricevitori.JMS.RicevitoreJMS;
 import temp.trasmettitori.JMS.TrasmettitoreJMS;
 
@@ -34,19 +31,22 @@ public class ClientJMS {
      * a while before shutting down. Execution comments will be logged.
      */
     public static void main(String[] args) throws Exception {
+        
+        System.out.println("Client Jms");
 
-                log = Logger.getLogger("inizio Client");
+        log = Logger.getLogger("inizio Client");
 
-		RicevitoreJMS receiver = new RicevitoreJMS();
-	//	receiver.start(); // Runs on a seperate thread
-		
-		//Send one message manually
-                TrasmettitoreJMS sender = new TrasmettitoreJMS();                              
-                sender.invia(args);
-		System.out.println("Response: ");
-		Thread.sleep(1000);		
-		receiver.ricevi();
-		
+        RicevitoreJMS receiver = new RicevitoreJMS();
+        //	receiver.start(); // Runs on a seperate thread
+        receiver.ricevi();
+        System.out.println("Ricevitore avviato...");
+        //Send one message manually
+        TrasmettitoreJMS sender = new TrasmettitoreJMS();
+        Evento evento = new Evento();
+        sender.invia(evento);
+        System.out.println("Response: ");
+        Thread.sleep(1000);
+
 		System.exit(0); // Force exit
 	}
 }
