@@ -49,9 +49,6 @@ public class ClientJMS {
 		
 		System.exit(0); // Force exit
 	}
-    
-      
-
 }
 
  
