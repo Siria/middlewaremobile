@@ -11,11 +11,11 @@ import temp.queue.Monitor;
  *
  * @author Seby
  */
-public class InjMonitor implements Injectable<Monitor>  {
+public class injMonitor implements Injectable<Monitor>  {
 
     Monitor monitor;
     
-    InjMonitor(Monitor monitor){
+    injMonitor(Monitor monitor){
         System.out.println("Assegno " + monitor + " a " + this.monitor );
         this.monitor = monitor;
     }

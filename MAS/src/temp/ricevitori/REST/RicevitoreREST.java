@@ -71,7 +71,7 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
     @Override
     public Injectable<Monitor> getInjectable(ComponentContext ic, MyResource a) {
         System.out.println("associo");
-        return new InjMonitor(monitor);
+        return new injMonitor(monitor);
     }
     
 }
