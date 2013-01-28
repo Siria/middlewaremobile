@@ -65,13 +65,17 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
     public RicevitoreREST() {
         
         super(Monitor.class);
-        System.out.println("istanzio");
+        
     }
 
     @Override
     public Injectable<Monitor> getInjectable(ComponentContext ic, MyResource a) {
-        System.out.println("associo");
-        return new InjMonitor(monitor);
+        return new Injectable<Monitor>() {
+            @Override
+            public Monitor getValue() {
+                return monitor;
+            }
+        };
     }
     
 }
