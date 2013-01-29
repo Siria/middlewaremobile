@@ -6,27 +6,19 @@ package temp.ricevitori.JMS;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.QueueSession;
-import javax.jms.Session;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.jms.*;
 import temp.Evento;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
+import temp.trasmettitori.JMS.MessageConnection;
+import temp.trasmettitori.JMS.MessageException;
 
 public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
 
     Logger log;
     Monitor monitor;
     public HashMap conf = null;
+    private MessageConnection messageConnection;
 
     public RicevitoreJMS() {
     }
@@ -36,37 +28,39 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
         this.monitor = monitor;
     }
 
-    @Override
-    @SuppressWarnings("SleepWhileInLoop")
-    public void ricevi() {
-        try {
-            // try {
-            InitialContext ic = new InitialContext();
-            ConnectionFactory cf = (ConnectionFactory) ic.lookup("jms/ConnectionFactory");
-            Queue queue = (Queue) ic.lookup("jms/Queue");
-            Connection connection = cf.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageConsumer messageConsumer = session.createConsumer(queue);
-            connection.start();
-            //Message msg = messageConsumer.receive();
-            messageConsumer.setMessageListener(this);
-            // wait for messages
-            System.out.print("waiting for messages");
-            for (int i = 0; i < 10; i++) {
-                Thread.sleep(1000);
-                System.out.print(".");
-            }
-            System.out.println();
+    private MessageConnection getMessageConnection() throws MessageException {
+  if (messageConnection == null) {
+    messageConnection = new MessageConnection();
+  }
+  return messageConnection;
+}
 
-            connection.close();
-            {
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JMSException | NamingException ex) {
-            Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+/********************************************************************
+* Attempts to receive a message.
+*
+* @throws MessageException If the receive fails.
+********************************************************************/
+public Message receive() throws MessageException {
+  return getMessageConnection().receive(1);
+}
+
+public void connect() throws MessageException {
+  getMessageConnection().getConsumer();
+}
+
+public void disconnect() throws MessageException {
+  if (messageConnection != null) {
+    try {
+      messageConnection.disconnect();
+      messageConnection = null;
+    } catch (MessageException e) {
+      messageConnection = null;
+      e.printStackTrace();
+      throw e;
     }
+  }
+}
+
          @Override
          public void onMessage(Message message) {
              System.out.println("In onMessage()!");
@@ -108,6 +102,15 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
          public void enqueue(Object messaggio) {
              monitor.accodaRichiesta(messaggio);
          }
+
+    @Override
+    public void ricevi() {
+        try {
+            receive();
+        } catch (MessageException ex) {
+            Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
         
 
 
