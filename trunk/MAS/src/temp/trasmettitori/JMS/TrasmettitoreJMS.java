@@ -22,23 +22,16 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
     Monitor monitor;
     public HashMap conf = null;
     
-    Context ctx;
 
-    //@Resource(lookup = "jms/ConnectionFactory")
-    @Resource(mappedName = "jms/ConnectionFactory")
-    private static ConnectionFactory connectionFactory;
-    //@Resource(lookup = "jms/Queue")
-    @Resource(mappedName = "jms/Queue")
-    private static Queue queue;
-    private Connection connection;
-    private Session session;
     
 
     public void send(Evento messaggio) {
         try {
-            ctx = new InitialContext();
-            connection = connectionFactory.createConnection();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            InitialContext ic = new InitialContext();
+            ConnectionFactory cf = (ConnectionFactory) ic.lookup("jms/ConnectionFactory") ;
+            Queue queue = (Queue) ic.lookup("jms/Queue");
+            Connection connection = cf.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer messageProducer = session.createProducer(queue);
             connection.start();
             ObjectMessage msg;
@@ -48,9 +41,7 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
                     + " " + messaggio.getContenuto());      
             messageProducer.close();
             connection.close();
-        } catch (NamingException ex) {
-            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JMSException ex) {
+        } catch (NamingException | JMSException ex) {
             Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
