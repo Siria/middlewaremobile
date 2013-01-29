@@ -7,57 +7,101 @@ package temp.trasmettitori.JMS;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.jms.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import temp.Evento;
 import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
 
 public class TrasmettitoreJMS implements TrasmettitoreProxy {
-    
+
     Logger log;
     Monitor monitor;
     public HashMap conf = null;
-    
-
-    
-
-    public void send(Evento messaggio) {
-        try {
-            InitialContext ic = new InitialContext();
-            ConnectionFactory cf = (ConnectionFactory) ic.lookup("jms/ConnectionFactory") ;
-            Queue queue = (Queue) ic.lookup("jms/Queue");
-            Connection connection = cf.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer messageProducer = session.createProducer(queue);
-            connection.start();
-            ObjectMessage msg;
-            msg = session.createObjectMessage(messaggio);
-            messageProducer.send(msg);
-            System.out.println("Dati dell'evento: " + messaggio.getTipo()
-                    + " " + messaggio.getContenuto());      
-            messageProducer.close();
-            connection.close();
-        } catch (NamingException | JMSException ex) {
-            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    private MessageConnection messageConnection;
 
     @Override
     public void configura(Monitor monitor, HashMap conf) {
         this.monitor = monitor;
         this.conf = conf;
-
-        
     }
 
     @Override
     public void invia(Object messaggio) {
+        try {
+            send((Message) messaggio);
+        } catch (MessageException ex) {
+            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-        send((Evento)messaggio);
+    private MessageConnection getMessageConnection() throws MessageException {
+        if (messageConnection == null) {
+            messageConnection = new MessageConnection();
+        }
+        return messageConnection;
+    }
 
+    private Session getSession() throws MessageException {
+        if (getMessageConnection() != null) {
+            return getMessageConnection().getSession();
+        }
+        return null;
+    }
+
+    public void send(Message message) throws MessageException {
+        if (message != null) {
+            getMessageConnection().send(message);
+        }
+    }
+
+    public void connect() throws MessageException {
+        getMessageConnection().getProducer();
+    }
+
+    public void disconnect() throws MessageException {
+        if (messageConnection != null) {
+            try {
+                messageConnection.disconnect();
+                messageConnection = null;
+            } catch (MessageException e) {
+                messageConnection = null;
+                e.printStackTrace();
+                throw e;
+            }
+        }
+    }
+
+  
+    public TextMessage createTextMessage() throws MessageException {
+        TextMessage message = null;
+
+        try {
+            message = getSession().createTextMessage();
+        } catch (JMSException e) {
+            throw new MessageException("JMS Create Text Message Exception: " + e);
+        }
+        return message;
+    }
+
+    public BytesMessage createBytesMessage() throws MessageException {
+        BytesMessage message = null;
+
+        try {
+            message = getSession().createBytesMessage();
+        } catch (JMSException e) {
+            throw new MessageException("JMS Create Bytes Exception: " + e);
+        }
+        return message;
+    }
+
+    public ObjectMessage createObjectMessage() throws MessageException {
+        ObjectMessage message = null;
+
+        try {
+            message = getSession().createObjectMessage();
+        } catch (JMSException e) {
+            throw new MessageException("JMS Create Object Message Exception: " + e);
+        }
+
+        return message;
     }
 }
