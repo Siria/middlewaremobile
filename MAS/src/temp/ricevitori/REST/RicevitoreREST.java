@@ -58,7 +58,8 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
     }
     
     public RicevitoreREST() {
-        super(Monitor.class);    
+        super(Monitor.class);   
+        
     }
 
     @Override
