@@ -109,7 +109,7 @@ public ConnectionFactory getConnectionFactory() throws MessageException {
       //------------------------------------------
       // Lookup the connection factory using JNDI.
       //------------------------------------------
-      connectionFactory = (ConnectionFactory) getContext().lookup(factoryName);
+          connectionFactory = (ConnectionFactory) getContext().lookup(factoryName);
     } catch (NamingException e) {
       disconnect();
       e.printStackTrace();
