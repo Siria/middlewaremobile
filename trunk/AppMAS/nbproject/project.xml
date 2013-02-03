@@ -11,7 +11,11 @@
             <test-roots>
                 <root id="test.src.dir" name="Test Packages"/>
             </test-roots>
-            <included-library dirs="200">libs.restlib.classpath</included-library>
+            <included-library dirs="200">file.reference.grizzly-http-webserver-1.9.18-e.jar</included-library>
+            <included-library dirs="200">file.reference.jersey-bundle-1.8.jar</included-library>
+            <included-library dirs="200">file.reference.jersey-core-1.5.jar</included-library>
+            <included-library dirs="200">file.reference.asm-3.1.jar</included-library>
+            <included-library dirs="200">file.reference.jsr311-api-1.1.1.jar</included-library>
         </data>
         <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
             <definitions>./lib/nblibraries.properties</definitions>

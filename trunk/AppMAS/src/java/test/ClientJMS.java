@@ -14,7 +14,7 @@ import temp.trasmettitori.JMS.TrasmettitoreJMS;
 
 /**
  *
- * @author Seby
+ * @author alessandra
  */
 /**
  * This is a simple example to show some basics of JMS for a
