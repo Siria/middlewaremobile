@@ -805,16 +805,28 @@ exists or setup the property manually. For example like this:
         <!-- You can override this target in the ../build.xml file. -->
     </target>
     <target depends="compile" if="is.server.weblogic" name="library-inclusion-in-archive">
-        <basename file="${libs.restlib.classpath}" property="manifest.libs.restlib.classpath"/>
+        <basename file="${file.reference.grizzly-http-webserver-1.9.18-e.jar}" property="manifest.file.reference.grizzly-http-webserver-1.9.18-e.jar"/>
+        <basename file="${file.reference.jersey-bundle-1.8.jar}" property="manifest.file.reference.jersey-bundle-1.8.jar"/>
+        <basename file="${file.reference.jersey-core-1.5.jar}" property="manifest.file.reference.jersey-core-1.5.jar"/>
+        <basename file="${file.reference.asm-3.1.jar}" property="manifest.file.reference.asm-3.1.jar"/>
+        <basename file="${file.reference.jsr311-api-1.1.1.jar}" property="manifest.file.reference.jsr311-api-1.1.1.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.libs.restlib.classpath}"/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 "/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.grizzly-http-webserver-1.9.18-e.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.jersey-bundle-1.8.jar}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.jersey-core-1.5.jar}"/>
+            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.asm-3.1.jar}"/>
+            <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.jsr311-api-1.1.1.jar}"/>
         </manifest>
     </target>
     <target depends="compile" if="dist.ear.dir" name="library-inclusion-in-manifest">
-        <copyfiles files="${libs.restlib.classpath}" manifestproperty="manifest.libs.restlib.classpath" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.grizzly-http-webserver-1.9.18-e.jar}" manifestproperty="manifest.file.reference.grizzly-http-webserver-1.9.18-e.jar" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.jersey-bundle-1.8.jar}" manifestproperty="manifest.file.reference.jersey-bundle-1.8.jar" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.jersey-core-1.5.jar}" manifestproperty="manifest.file.reference.jersey-core-1.5.jar" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.asm-3.1.jar}" manifestproperty="manifest.file.reference.asm-3.1.jar" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.jsr311-api-1.1.1.jar}" manifestproperty="manifest.file.reference.jsr311-api-1.1.1.jar" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.libs.restlib.classpath} lib/${manifest.libs.restlib.classpath} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.grizzly-http-webserver-1.9.18-e.jar} lib/${manifest.file.reference.grizzly-http-webserver-1.9.18-e.jar} ${manifest.file.reference.jersey-bundle-1.8.jar} lib/${manifest.file.reference.jersey-bundle-1.8.jar} ${manifest.file.reference.jersey-core-1.5.jar} lib/${manifest.file.reference.jersey-core-1.5.jar} ${manifest.file.reference.asm-3.1.jar} lib/${manifest.file.reference.asm-3.1.jar} ${manifest.file.reference.jsr311-api-1.1.1.jar} lib/${manifest.file.reference.jsr311-api-1.1.1.jar} "/>
         </manifest>
     </target>
     <target name="-copy-meta-inf">
