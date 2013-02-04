@@ -32,10 +32,17 @@ public class Starter {
     public static void main(String[] args) {
         try{
             
+            Blocco asc7 = new Blocco();
+            asc7.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreJMS()));
+            asc7.setAlgoritmo(new Algoritmo7());
+            Thread th7 = new Thread (asc7);
+            th7.start();
             
+            Thread.sleep(3000);
             
             Blocco asc6 = new Blocco();
-            asc6.getConf().put("soapIngresso", "http://localhost:9997/WS/SOAP/");
+            asc6.getConf().put("soapIngresso", "http://localhost:9997/WS/SOAP/?wsdl");
+            asc6.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreJMS()));
             asc6.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
             asc6.setAlgoritmo(new Algoritmo6());
             Thread th6 = new Thread (asc6);
@@ -45,7 +52,7 @@ public class Starter {
             
             Blocco asc5 = new Blocco();
             asc5.getConf().put("restIngresso", "http://localhost:9998/WS/REST/");
-            asc5.getConf().put("soapUscita", "http://localhost:9997/WS/SOAP/");
+            asc5.getConf().put("soapUscita", "http://localhost:9997/WS/SOAP/?wsdl");
             asc5.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSOAP()));
             asc5.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreREST()));
             asc5.setAlgoritmo(new Algoritmo5());
@@ -56,7 +63,7 @@ public class Starter {
           
             Blocco asc4 = new Blocco();
             asc4.getConf().put("restUscita", "http://localhost:9998/WS/REST/");
-            asc4.getConf().put("soapIngresso", "http://localhost:17756/WS/SOAP");
+            asc4.getConf().put("soapIngresso", "http://localhost:17756/WS/SOAP/?wsdl");
             asc4.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreREST()));
             asc4.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
             asc4.setAlgoritmo(new Algoritmo4());
@@ -67,8 +74,8 @@ public class Starter {
             
             Blocco asc3 = new Blocco();
             asc3.getConf().put("socketIngresso",new ServerSocket(17782));
-            asc3.getConf().put("soapUscita","http://localhost:17756/WS/SOAP");
-            asc3.getConf().put("soapIngresso","http://localhost:17754/WS/SOAP");
+            asc3.getConf().put("soapUscita","http://localhost:17756/WS/SOAP/?wsdl");
+            asc3.getConf().put("soapIngresso","http://localhost:17754/WS/SOAP/?wsdl");
             asc3.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSOAP()));
             asc3.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSocket()));
             asc3.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
@@ -81,7 +88,7 @@ public class Starter {
             Blocco asc2 = new Blocco();
             asc2.getConf().put("socketUscita",new Socket("localhost",17782));
             asc2.getConf().put("socketIngresso",new ServerSocket(17781));
-            asc2.getConf().put("soapIngresso","http://localhost:17779/WS/SOAP");
+            asc2.getConf().put("soapIngresso","http://localhost:17779/WS/SOAP/?wsdl");
             asc2.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSocket()));
             asc2.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSocket()));
             asc2.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
@@ -94,7 +101,7 @@ public class Starter {
             Blocco asc1 = new Blocco();
             asc1.getConf().put("socketUscita",new Socket("localhost",17781));
             asc1.getConf().put("socketIngresso",new ServerSocket(17706));
-            asc1.getConf().put("soapIngresso","http://localhost:17780/WS/SOAP");
+            asc1.getConf().put("soapIngresso","http://localhost:17780/WS/SOAP/?wsdl");
             asc1.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSocket()));
             asc1.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSocket()));
             asc1.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));

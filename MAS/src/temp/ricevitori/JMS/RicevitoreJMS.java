@@ -41,7 +41,14 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
 * @throws MessageException If the receive fails.
 ********************************************************************/
 public Message receive() throws MessageException {
-  return getMessageConnection().receive(1);
+    Message mess = getMessageConnection().receive(0);
+        try {
+            System.out.println("Ricevo tramite JMS...");
+            enqueue(((ObjectMessage)mess).getObject());
+        } catch (JMSException ex) {
+            Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  return mess;
 }
 
 public void connect() throws MessageException {
@@ -86,6 +93,11 @@ public void disconnect() throws MessageException {
                      
              this.conf = conf;
              this.monitor = monitor;
+        try {
+            connect();
+        } catch (MessageException ex) {
+            Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        }
              
              Thread t = new Thread(new Runnable() {
                   
@@ -105,13 +117,12 @@ public void disconnect() throws MessageException {
 
     @Override
     public void ricevi() {
+        
         try {
-            receive();
+            while(true)
+                receive();
         } catch (MessageException ex) {
             Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-
-
-	}
+}

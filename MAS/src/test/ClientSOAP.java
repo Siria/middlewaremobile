@@ -19,14 +19,14 @@ public class ClientSOAP {
 
     public static void main(String[] args) throws Exception {
         
-        invia("Inizio SOAP... ");
+        invia("Start... ");
 
         
     }
 
     public static void invia(Object messaggio){
         try {
-            URL url = new URL("http://localhost:17780/WS/SOAP?wsdl");
+            URL url = new URL("http://localhost:17780/WS/SOAP/?wsdl");
             QName qname = new QName("http://SOAP.ricevitori.temp/", "RicevitoreSOAPService");
             Service service = Service.create(url, qname);
             
