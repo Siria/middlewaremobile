@@ -22,13 +22,25 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
     public void configura(Monitor monitor, HashMap conf) {
         this.monitor = monitor;
         this.conf = conf;
+        try {
+            connect();
+        } catch (MessageException ex) {
+            Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void invia(Object messaggio) {
         try {
-            send((Message) messaggio);
-        } catch (MessageException ex) {
+            ObjectMessage message = createObjectMessage();
+            
+                message.setObject(messaggio.toString());
+                if (message != null) {
+                getMessageConnection().send(message);
+                }
+            
+            
+        } catch (JMSException | MessageException ex) {
             Logger.getLogger(TrasmettitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

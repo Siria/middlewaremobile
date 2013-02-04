@@ -10,7 +10,9 @@ package temp.ricevitori.SOAP;
  */
 import java.util.HashMap;
 import javax.jws.WebService;
+import javax.xml.ws.BindingType;
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.http.HTTPBinding;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
 

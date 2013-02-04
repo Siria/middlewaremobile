@@ -14,7 +14,7 @@ public class Algoritmo5 implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-        messaggio = (messaggio + " Algoritmo numero 5...");
+        messaggio = (messaggio + " Algo5...");
         System.out.println(messaggio);
         return messaggio;
     }

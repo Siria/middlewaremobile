@@ -28,6 +28,7 @@ public class REST {
     
     
     public Response ricevi(@PathParam("a") String a) {
+        System.out.println("Ricevo tramite REST...");
         monitor.accodaRichiesta(a);
         return Response.status(200).entity(a).build();
     }   

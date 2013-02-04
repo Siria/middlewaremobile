@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 package temp.trasmettitori.JMS;
+import java.util.Hashtable;
+import java.util.Properties;
 import javax.jms.*;
 import javax.naming.*;
 /**
@@ -10,8 +12,8 @@ import javax.naming.*;
  * @author alessandra
  */
 public class MessageConnection {
-private String destinationName = "jms/myDestination";
-private String factoryName = "jms/myConnectionFactory";
+private String destinationName = "myQueue";
+private String factoryName = "myConnectionFactory";
 private Context context;
 private ConnectionFactory connectionFactory;
 private Connection connection;
@@ -38,7 +40,12 @@ public Context getContext() throws MessageException {
       //-------------------------------------
       // Initialize JNDI.
       //-------------------------------------
-      context = new InitialContext();
+        
+            Properties env = new Properties();
+            
+            env.put("java.naming.provider.url","iiop://127.0.0.1:3700");
+            
+            context = new InitialContext(env);
     } catch (NamingException e) {
       disconnect();
       e.printStackTrace();
@@ -109,6 +116,10 @@ public ConnectionFactory getConnectionFactory() throws MessageException {
       //------------------------------------------
       // Lookup the connection factory using JNDI.
       //------------------------------------------
+        
+        
+        
+        
           connectionFactory = (ConnectionFactory) getContext().lookup(factoryName);
     } catch (NamingException e) {
       disconnect();
