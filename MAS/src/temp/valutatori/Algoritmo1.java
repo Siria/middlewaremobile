@@ -18,7 +18,7 @@ public class Algoritmo1 implements AlgoritmoProxy{
     public Object valuta(Object messaggio){
         messaggio = (messaggio + " Algo1... ");
         System.out.println(messaggio);
-        Evento e = (Evento) messaggio;
+        /*Evento e = (Evento) messaggio;
         switch (e.getTipo()) {
             case "Start" : 
             case "Data" :  
@@ -44,7 +44,7 @@ public class Algoritmo1 implements AlgoritmoProxy{
                 System.out.println("invio blocco filtro-content");
                      break;
             default: break;
-             }
+             }*/
         
         return messaggio;
     }
