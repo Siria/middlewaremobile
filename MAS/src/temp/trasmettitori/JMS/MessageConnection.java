@@ -12,8 +12,8 @@ import javax.naming.*;
  * @author alessandra
  */
 public class MessageConnection {
-private String destinationName = "myQueue";
-private String factoryName = "myConnectionFactory";
+private String destinationName = "jms/myDestination";
+private String factoryName = "jms/myConnectionFactory";
 private Context context;
 private ConnectionFactory connectionFactory;
 private Connection connection;
