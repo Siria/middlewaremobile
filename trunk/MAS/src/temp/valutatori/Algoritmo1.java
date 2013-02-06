@@ -18,8 +18,8 @@ public class Algoritmo1 implements AlgoritmoProxy{
     public Object valuta(Object messaggio){
         messaggio = (messaggio + " Algo1... ");
         System.out.println(messaggio);
-        /*Evento e = (Evento) messaggio;
-        switch (e.getTipo()) {
+        Evento e = (Evento) messaggio;
+        /*switch (e.getTipo()) {
             case "Start" : 
             case "Data" :  
             case "Control" :
@@ -45,7 +45,22 @@ public class Algoritmo1 implements AlgoritmoProxy{
                      break;
             default: break;
              }*/
-        
+        if (e != null) {
+            parametro = parametro.substring(nome.length() + 1);
+            String[] valori = parametro.split(",");
+            for (String valore : valori) {
+                switch (valore) {
+                    case ("rest"):
+                        break;
+                    case ("jms"):
+                        break;
+                    case ("socket"):
+                        break;
+                    case ("soap"):
+                        break;
+                }
+            }
+        }
         return messaggio;
     }
 	
