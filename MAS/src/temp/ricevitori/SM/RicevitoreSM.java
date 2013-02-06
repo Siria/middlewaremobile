@@ -9,11 +9,14 @@ import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
 import test.ClientSM;
 
+
 /**
  *
  * @author alessandra
  */
 public class RicevitoreSM extends Thread implements RicevitoreProxy{
+    private HashMap conf;
+    private Monitor monitor;
 
     @Override
     public void ricevi() {
@@ -40,11 +43,20 @@ public class RicevitoreSM extends Thread implements RicevitoreProxy{
 
     @Override
     public void configura(Monitor monitor, HashMap conf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.conf = conf;
+        this.monitor = monitor;
+        
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ricevi();
+            }
+        });
+        t.start();
     }
-
+    
     @Override
     public void enqueue(Object messaggio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        monitor.accodaRichiesta(messaggio);
     }
 }

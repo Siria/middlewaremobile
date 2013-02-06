@@ -14,8 +14,11 @@ import test.ClientSM;
  * @author alessandra
  */
 public class TrasmettitoreSM extends Thread implements TrasmettitoreProxy{
+    private Monitor monitor;
+    private HashMap conf;
 
 
+    @Override
     public void invia(Object messaggio) {
         while (true) {
             
@@ -36,6 +39,8 @@ public class TrasmettitoreSM extends Thread implements TrasmettitoreProxy{
 
     @Override
     public void configura(Monitor monitor, HashMap conf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.monitor = monitor;
+        this.conf = conf;
+        run();
     }
 }
