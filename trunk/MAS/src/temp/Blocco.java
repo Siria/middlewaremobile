@@ -12,6 +12,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -28,9 +29,12 @@ public class Blocco implements Runnable{
     private Monitor monitor = new Monitor();
     private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
     private LinkedList<TrasmettitoreProxy> trasmettitori = new LinkedList<>();
-    
+
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
+    private int[] time;
+    private int[] time_stamp;
+
 
 
     public HashMap getConf() {
@@ -162,10 +166,21 @@ public class Blocco implements Runnable{
             try{    
     		boolean continua=true;
 			while (continua){
+                                (message,time_stamp)= receive();
                                 Object tmp = monitor.prelevaRichiesta();
+                                this.
+                                time[PID]= time[PID]+1;
+                                for (P : PID) {
+                                time[P]= max(time[P],time_stamp[P]);
+                                }
 				Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
+                                        
+                                        time[PID]= time[PID]+1;
+                                        time_stamp= time;
+                                        //send(message,time_stamp);
+                                        risp = risp+"time_stamp";
                                         trasmettitore.invia(risp);              
                                     }
                                 }
