@@ -13,12 +13,12 @@ import java.io.Serializable;
 public class Evento implements Serializable{
     String context;
     String tipo;
-    String contenuto;
+    String content;
 
     public Evento(String context, String tipo, String contenuto) {
         this.context = context;
         this.tipo = tipo;
-        this.contenuto = contenuto;
+        this.content = content;
     }
 
     public Evento() {
@@ -32,8 +32,8 @@ public class Evento implements Serializable{
         return tipo;
     }
 
-    public String getContenuto() {
-        return contenuto;
+    public String getContent() {
+        return content;
     }
 
     public void setContext(String context) {
@@ -44,8 +44,8 @@ public class Evento implements Serializable{
         this.tipo = tipo;
     }
 
-    public void setContenuto(String contenuto) {
-        this.contenuto = contenuto;
+    public void setContent(String content) {
+        this.content = content;
     }
     
 

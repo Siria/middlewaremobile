@@ -4,8 +4,17 @@
  */
 package temp.valutatori;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import temp.Blocco;
 import temp.Evento;
 import temp.proxy.AlgoritmoProxy;
+import temp.proxy.ProxyTarget;
+import temp.proxy.TrasmettitoreProxy;
 
 /**
  *
@@ -19,49 +28,74 @@ public class Algoritmo1 implements AlgoritmoProxy{
         messaggio = (messaggio + " Algo1... ");
         System.out.println(messaggio);
         Evento e = (Evento) messaggio;
-        /*switch (e.getTipo()) {
-            case "Start" : 
-            case "Data" :  
-            case "Control" :
-                System.out.println("invio blocco filtro-tipo");
-            case "Allarme" : 
-                System.out.println("invio blocco filtro-tipo");
-                break;
-            default: break;
-             }
-        switch (e.getContext()) {
-            case "Position" : 
-            case "My" : 
-            case "Other" : 
-            case "Modify" :
-                System.out.println("invio blocco filtro-context");
-                     break;
-            default: break;
-             }
-                switch (e.getContenuto()) {
-            case "bu" : 
-                System.out.println("ora vediamo...........");
-                System.out.println("invio blocco filtro-content");
-                     break;
-            default: break;
-             }*/
-        if (e != null) {
-            parametro = parametro.substring(nome.length() + 1);
-            String[] valori = parametro.split(",");
-            for (String valore : valori) {
-                switch (valore) {
-                    case ("rest"):
-                        break;
-                    case ("jms"):
-                        break;
-                    case ("socket"):
-                        break;
-                    case ("soap"):
-                        break;
+        return messaggio;
+    }
+    
+   public static void ricevi_disp(Object messaggio) {
+       Evento e = (Evento) messaggio;
+        String[] parametri = e.getContent().toLowerCase().split(";");
+        for (String parametro : parametri) {
+            String type = parametro.split(":")[0];
+            System.out.println("tipo " + type);
+
+            if (type.equals("posizione") ) {
+                parametro = parametro.substring(type.length() + 1);
+                String[] contexts = parametro.split(":");
+                for (String context : contexts) {
+
+                    if (isPosition(context)) {
+                        System.out.println("contesto " + context);
+                        parametro = parametro.substring(context.length() + 1);
+                        String[] contents = parametro.split(",");
+                        for (String content : contents) {
+
+                            if (content.isEmpty()) {
+                                System.out.println("non ho valori");
+                            } else {
+                                System.out.println("contenuto " + content);
+                                System.out.println("Invio al filtro");
+                            }
+                        }
+
+                    }
+                }
+
+            } else if (type.equals("alarm")) {
+                parametro = parametro.substring(type.length() + 1);
+                String[] contexts = parametro.split(":");
+                for (String context : contexts) {
+                    
+                    if (isAlarm(context)) {
+                        System.out.println("contesto " + context);
+                        parametro = parametro.substring(context.length() + 1);
+                        String[] contents = parametro.split(",");
+                        for (String content : contents) {
+
+                            if (content.isEmpty()) {
+                                System.out.println("non ho valori");
+                            } else {
+                                System.out.println("contenuto " + content);
+                                System.out.println("Invio al filtro");
+                            }
+                        }
+                    }
                 }
             }
         }
-        return messaggio;
+    }
+    
+    private static boolean isPosition(String context) {
+        if (context.equals("start") || context.equals("data") || context.equals("control")) {
+            return true;
+        }
+        return false;
+    }
+    private static boolean isAlarm(String context) {
+        if (context.equals("my") || context.equals("other") || context.equals("modify")) {
+            return true;
+        }
+        return false;
+    }
+            
     }
 	
-}

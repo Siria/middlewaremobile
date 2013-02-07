@@ -77,8 +77,8 @@ public void disconnect() throws MessageException {
                      ObjectMessage msg = (ObjectMessage) message;
                      Evento ricevuto = (Evento)msg.getObject();
                      enqueue(ricevuto);
-                     System.out.println("Ricevuto evento: " + ricevuto.getTipo() + " " + ricevuto.getContenuto());
-                     log.info("on message " + ricevuto.getTipo() + " " + ricevuto.getContenuto());
+                     System.out.println("Ricevuto evento: " + ricevuto.getTipo() + " " + ricevuto.getContent());
+                     log.info("on message " + ricevuto.getTipo() + " " + ricevuto.getContent());
                    }
                  } catch (Exception e) {
                    System.out.println("Exception raised: " + e.toString());
