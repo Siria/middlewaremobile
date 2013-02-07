@@ -12,9 +12,10 @@ package blocco.filtro;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Vector;
-import java.lang.Object;
+
+/*
+ * 
+ */
 
 public class VectorClock extends HashMap<String, Integer> implements Serializable
 {
