@@ -37,7 +37,7 @@ public class VectorClock {
         
     }
     
-    //il parametro è il timestamp inviato
+    //il parametro è il timestamp inviato quindi val[i]
     public void receiveAction(int[] val){
     
         for (int i = 0; i < N; i++) {
@@ -51,8 +51,5 @@ public class VectorClock {
         return v[i];
     
     }
-
-
-
 
 }
