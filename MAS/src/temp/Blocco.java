@@ -12,7 +12,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -32,8 +31,11 @@ public class Blocco implements Runnable{
 
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
+
     private int PID;
     private int id;
+    public int timestamp[];
+    
     private VectorClock vc = new VectorClock(this.PID, this.id);
 
 
@@ -156,11 +158,13 @@ public class Blocco implements Runnable{
     @Override
 	public void run(){
 		for (RicevitoreProxy ricevitore : ricevitori){
-                    ricevitore.configura(monitor,conf);                   
+                    ricevitore.configura(monitor,conf); 
+                    vc.doAct();
                 }
                 
                 for (TrasmettitoreProxy trasmettitore : trasmettitori){
-                    trasmettitore.configura(monitor,conf);                   
+                    trasmettitore.configura(monitor,conf); 
+                    vc.doAct();
                 }
                 
             
@@ -169,8 +173,10 @@ public class Blocco implements Runnable{
 			while (continua){
                                 Object tmp = monitor.prelevaRichiesta();
                                 String[] time = tmp.toString().split("-");
+                                for (int i = 0; i < time.length ; i++)
+                                    timestamp[i] = Integer.parseInt(time[i]);
                                 // devo recuperare il timestamp!!!
-                                //vc.receiveAction(timestamp);
+                                vc.receiveAction(timestamp);
                                 Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
