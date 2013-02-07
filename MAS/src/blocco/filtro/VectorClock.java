@@ -9,92 +9,183 @@ package blocco.filtro;
  * @author alessandra
  */
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
+import java.lang.Object;
+
+public class VectorClock extends HashMap<String, Integer> implements Serializable
+{
+
+	private static final long serialVersionUID = 6668164199894268488L;
+
+ void incrementClock(String pUnit)
+	{
+
+		if (this.containsKey(pUnit))
+		{
+			this.put(pUnit, this.get(pUnit).intValue() + 1);
+		}
+
+		else
+		{
+			this.put(pUnit, 1);
+		}
+	}
+
+	public String[] getOrderedIDs()
+	{
+		String[] lResult = new String[this.size()];
+
+		lResult = this.keySet().toArray(lResult);
+
+		Arrays.sort(lResult);
+
+		return lResult;
+	}
+
+	public Integer[] getOrderedValues()
+	{
+		Integer[] lResult = new Integer[this.size()];
+		String[] lKeySet  = this.getOrderedIDs();
+
+		int i = 0;
+		for (String lKey : lKeySet)
+		{
+			lResult[i] = this.get(lKey);
+			i++;
+		}
+
+		return lResult;
+	}
+
+	@Override
+	public Integer get(Object key)
+	{
+		Integer lResult = super.get(key);
+
+		if (lResult == null)
+			lResult = 0;
+
+		return lResult;
+	}
+
+	@Override
+	public VectorClock clone()
+	{
+		return (VectorClock) super.clone();
+	}
+
+	@Override
+	public String toString()
+	{
+		String[] lIDs		= this.getOrderedIDs();
+		Integer[] lRequests = this.getOrderedValues();
+
+		String lText = "(";
+
+		for (int i = 0; i < lRequests.length; i++)
+		{
+			lText += lIDs[i];
+			lText += " = ";
+			lText += lRequests[i].toString();
+
+			if (i + 1 < lRequests.length)
+			{
+				lText += ", ";
+			}
+		}
+
+		lText += ")";
+
+		return lText;
+	}
+
+	public static VectorClock max(VectorClock pOne, VectorClock pTwo)
+	{
+
+		VectorClock lResult = new VectorClock();
 
 
-public class VectorClock {
-       
-        private Vector<Integer> clocks= null;
-        private int localID = 0;
+		for (String lEntry : pOne.keySet())
+		{
+			lResult.put(lEntry, pOne.get(lEntry));
+		}
 
-        public VectorClock(int clientID){
-                clocks= new Vector<Integer>();
-               
-                for (int i=0; i < clientID; i++)
-                        clocks.add(i, 0);
-               
-                localID = clientID-1;
-        }
-       
-        public Vector<Integer> getVector(){
-                return clocks;
-        }
-       
-        public void increment(){
-                clocks.set(localID, clocks.get(localID) + 1);
-        }
-       
-        public void     update(VectorClock c){
-               
-                Iterator<Integer> j = c.getVector().iterator();
-               
-                if (clocks.size() < c.getVector().size())
-                        clocks.setSize(c.getVector().size());
-               
-                for (int i = 0;j.hasNext(); i++){
-                        int next = j.next();
-                        if ( i != localID)
-                                if (clocks.get(i) == null || clocks.get(i) < next)
-                                        clocks.set(i, next);
-                }
-               
-        }
-       
-        public void extend(){
-                clocks.add(0);
-        }
-       
-        public void extend(int e){
-                clocks.add(e);
-        }
-       
+		for (String lEntry : pTwo.keySet())
+		{
+			if (!lResult.containsKey(lEntry) || lResult.get(lEntry) < pTwo.get(lEntry))
+			{
+				lResult.put(lEntry, pTwo.get(lEntry));
+			}
+		}
 
-        public boolean lessThan(VectorClock c){
-               
-                Iterator<Integer> i = clocks.iterator();
-                Iterator<Integer> j = c.getVector().iterator();
-               
-                while (i.hasNext() && j.hasNext()){
-                        if ( i.next() > j.next())
-                                return false;
-                }
-                return true;
-        }
-       
+		return lResult;
+	}
 
-        public boolean equals(VectorClock c){
-               
-                Iterator<Integer> i = clocks.iterator();
-                Iterator<Integer> j = c.getVector().iterator();
-               
-                if (clocks.size() != c.getVector().size())
-                        return false;
-               
-                while (i.hasNext() && j.hasNext()){
-                        if ( i.next() != j.next())
-                                return false;
-                }
-               
-                return true;
-               
-        }
-       
-        public String toString(){
-                return clocks.toString();
-               
-        }
+
+	public static VectorComparator compare(VectorClock pOne, VectorClock pTwo)
+	{
+
+		boolean lEqual	 = true;
+		boolean lGreater = true;
+		boolean lSmaller = true;
+
+	
+		for (String lEntry : pOne.keySet())
+		{
+		
+			if (pTwo.containsKey(lEntry))
+			{
+
+				if (pOne.get(lEntry) < pTwo.get(lEntry))
+				{
+					lEqual	 = false;
+					lGreater = false;
+				}
+				if (pOne.get(lEntry) > pTwo.get(lEntry))
+				{
+					lEqual	 = false;
+					lSmaller = false;
+				}
+			}
+
+			else if (pOne.get(lEntry) != 0)
+			{
+				lEqual	 = false;
+				lSmaller = false;
+			}
+		}
+
+
+		for (String lEntry : pTwo.keySet())
+		{
+
+			if (!pOne.containsKey(lEntry) && (pTwo.get(lEntry) != 0))
+			{
+				lEqual	 = false;
+				lGreater = false;
+			}
+		}
+
+
+		if (lEqual)
+		{
+			return VectorComparator.EQUAL;
+		}
+		else if (lGreater && !lSmaller)
+		{
+			return VectorComparator.GREATER;
+		}
+		else if (lSmaller && !lGreater)
+		{
+			return VectorComparator.SMALLER;
+		}
+		else
+		{
+			return VectorComparator.SIMULTANEOUS;
+		}
+	}
 }
-
-
-    

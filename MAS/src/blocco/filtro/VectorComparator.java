@@ -8,7 +8,10 @@ package blocco.filtro;
  *
  * @author alessandra
  */
-public class filtroTime {
-    private final VectorClock vc = null ;
+public enum VectorComparator {
+
+
+	GREATER, EQUAL, SMALLER, SIMULTANEOUS
+
     
 }
