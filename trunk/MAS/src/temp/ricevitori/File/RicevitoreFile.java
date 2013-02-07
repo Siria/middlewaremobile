@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package temp.ricevitori.SM;
+package temp.ricevitori.File;
 
 import java.util.HashMap;
 import temp.proxy.RicevitoreProxy;
@@ -14,7 +14,7 @@ import test.ClientSM;
  *
  * @author alessandra
  */
-public class RicevitoreSM extends Thread implements RicevitoreProxy{
+public class RicevitoreFile extends Thread implements RicevitoreProxy{
     private HashMap conf;
     private Monitor monitor;
 
@@ -59,6 +59,4 @@ public class RicevitoreSM extends Thread implements RicevitoreProxy{
     public void enqueue(Object messaggio) {
         monitor.accodaRichiesta(messaggio);
     }
-
-
 }
