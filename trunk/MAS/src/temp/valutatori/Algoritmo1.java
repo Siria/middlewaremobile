@@ -4,17 +4,8 @@
  */
 package temp.valutatori;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import temp.Blocco;
 import temp.Evento;
 import temp.proxy.AlgoritmoProxy;
-import temp.proxy.ProxyTarget;
-import temp.proxy.TrasmettitoreProxy;
 
 /**
  *
@@ -25,14 +16,13 @@ public class Algoritmo1 implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
-        messaggio = (messaggio + " Algo1... ");
+        messaggio = (messaggio + " Algoritmo dispatch... ");
         System.out.println(messaggio);
         Evento e = (Evento) messaggio;
-        return messaggio;
+        return ricevi_disp(e);
     }
     
-   public static void ricevi_disp(Object messaggio) {
-       Evento e = (Evento) messaggio;
+   public static Object ricevi_disp(Evento e) {
         String[] parametri = e.getContent().toLowerCase().split(";");
         for (String parametro : parametri) {
             String type = parametro.split(":")[0];
@@ -54,6 +44,7 @@ public class Algoritmo1 implements AlgoritmoProxy{
                             } else {
                                 System.out.println("contenuto " + content);
                                 System.out.println("Invio al filtro");
+                                return e;
                             }
                         }
 
@@ -76,12 +67,14 @@ public class Algoritmo1 implements AlgoritmoProxy{
                             } else {
                                 System.out.println("contenuto " + content);
                                 System.out.println("Invio al filtro");
+                                return e;
                             }
                         }
                     }
                 }
             }
         }
+        return null;
     }
     
     private static boolean isPosition(String context) {

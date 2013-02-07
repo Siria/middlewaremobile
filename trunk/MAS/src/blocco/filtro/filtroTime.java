@@ -9,6 +9,6 @@ package blocco.filtro;
  * @author alessandra
  */
 public class filtroTime {
-    private final VectorClock vc = null ;
+    private final VectorClock vc = new VectorClock() ;
     
 }
