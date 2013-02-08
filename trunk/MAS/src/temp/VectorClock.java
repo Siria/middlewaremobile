@@ -11,15 +11,14 @@ package temp;
  */
 
 public class VectorClock {
-    public int [] v;
+    public int[] v;
     int myId;
     int N;
     
     public VectorClock (int numProc, int id){
         
         myId = id;
-        N = numProc;
-        
+        N = numProc;       
         v = new int[numProc];
         for (int i = 0; i < N; i++)
             v[i] = 0;

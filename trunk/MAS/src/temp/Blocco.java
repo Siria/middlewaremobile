@@ -6,7 +6,7 @@ package temp;
 
 /**
  *
- * @author Seby
+ * @author author
  */
 import java.io.File;
 import java.net.MalformedURLException;
@@ -32,10 +32,10 @@ public class Blocco implements Runnable{
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
 
-    private int PID;
-    private int id;
+    private int PID = ricevitori.size()+trasmettitori.size()+10;
+    private int id = 5;
     public int [] timestamp;
-    private VectorClock vc;
+    private VectorClock vc = new VectorClock(PID, id);
 
 
 
@@ -159,18 +159,15 @@ public class Blocco implements Runnable{
 		for (RicevitoreProxy ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
 
-                    //this.vc.doAct();
-
-                    //vc.doAct();
+                    this.vc.doAct();
 
                 }
                 
                 for (TrasmettitoreProxy trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
 
-                    //this.vc.doAct();
+                    this.vc.doAct();
 
-                    //vc.doAct();
 
                 }
                 
@@ -178,30 +175,18 @@ public class Blocco implements Runnable{
             try{    
     		boolean continua=true;
 			while (continua){
-                            Object tmp = monitor.prelevaRichiesta();
-
-                            try {
-                                
-                                timestamp[1] = Integer.parseInt(tmp.toString().split("--")[1]);
-
-                            } catch (Exception k) {
-                                System.out.println("Non tutti sono numeri timestamp");
-
-                            }
-
+                            
+                            HashMap tmp = (HashMap) monitor.prelevaRichiesta();
+                            timestamp = (int[])tmp.get("timestamp");
                             vc.receiveAction(timestamp);
 
-                            Object risp = algoritmo.valuta(tmp);
+                            HashMap risp = (HashMap) algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
-                                        vc.sendAction();
-
-                                        //risp = risp+"--"+vc.getValue(id);
-
-                                        //send(message,time_stamp);
-                                        //risp = risp+"-time_stamp";
-
-                                        trasmettitore.invia(risp);              
+                                        
+                                       vc.sendAction();
+                                       risp.put("timestamp", vc.getV());
+                                       trasmettitore.invia(risp);              
                                     }
                                 }
                         }
