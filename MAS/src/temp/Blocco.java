@@ -34,7 +34,7 @@ public class Blocco implements Runnable{
 
     private int PID;
     private int id;
-    public int timestamp[];
+    public int [] timestamp;
     private VectorClock vc;
 
 
@@ -178,36 +178,25 @@ public class Blocco implements Runnable{
             try{    
     		boolean continua=true;
 			while (continua){
-                                Object tmp = monitor.prelevaRichiesta();
+                            Object tmp = monitor.prelevaRichiesta();
 
-                                String[] time = tmp.toString().split("--");
-                                // il for parte da 1 perchè prende il 1^ carattere dopo il delimiter "--"
-                                for (int i = 1; i < time.length ; i++) {
-                                    try{
-                                timestamp[i] = Integer.parseInt(time[i]);
+                            try {
+                                
+                                timestamp[1] = Integer.parseInt(tmp.toString().split("--")[1]);
+
+                            } catch (Exception k) {
+                                System.out.println("Non tutti sono numeri timestamp");
+
                             }
-                                    catch(Exception e){ 
-                                        System.out.println("Non tutti sono numeri timestamp");
-                                        break;
-                                    }
-                                        }
 
-                                //String[] time = tmp.toString().split("-");
-                                //for (int i = 0; i < time.length ; i++)
-                                //    timestamp[i] = Integer.parseInt(time[i]);
+                            vc.receiveAction(timestamp);
 
-                                // devo recuperare il timestamp!!!
-                                //vc.receiveAction(timestamp);
-                                Object risp = algoritmo.valuta(tmp);
+                            Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
-                                        //vc.sendAction();
+                                        vc.sendAction();
 
-                                        risp = risp+"--"+vc.getValue(id);
-
-                                        //send(message,time_stamp);
-                                        //risp = risp+"-time_stamp";
-
+                                        risp = risp.toString() +"_"+ vc.getValue(id) +","+ id;
                                         trasmettitore.invia(risp);              
                                     }
                                 }
