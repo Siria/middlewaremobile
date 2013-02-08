@@ -8,18 +8,25 @@ package test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import temp.Evento;
 import temp.ricevitori.SOAP.SOAP;
 
 
 public class ClientSOAP {
 
     public static void main(String[] args) throws Exception {
-        
-        invia("type:posizione;context:start;content:2-2-2");
+        HashMap prop = new HashMap();
+        prop.put("type", "posizione");
+        prop.put("context", "start");
+        prop.put("content", new int[]{2,2,2});
+        Evento e = new Evento(prop);
+        invia(e.toString());
 
         
     }
