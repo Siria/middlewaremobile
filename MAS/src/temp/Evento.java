@@ -6,9 +6,7 @@ package temp;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.beans.XMLDecoder;
