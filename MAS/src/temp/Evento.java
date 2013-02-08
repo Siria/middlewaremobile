@@ -5,53 +5,43 @@
 package temp;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  *
  * @author alessandra
  */
 public class Evento implements Serializable{
-    String context;
-    String tipo;
-    String content;
-
-    public Evento(String context, String tipo, String contenuto) {
-        this.context = context;
-        this.tipo = tipo;
-        this.content = content;
-    }
-
-    public Evento() {
-    }
-
-    public String getContext() {
-        return context;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    private HashMap<String,String> data = new HashMap<>();
     
-
+    //String context;
+    //String tipo;
+    //String content;
 
     
+    public Evento(String s) {
+        String[] dati = s.toLowerCase().split(";");
+        for (String dato : dati){
+            data.put(dato.split(":")[0],dato.split(":")[1]);
+        }
+    }
+
+    public String get(String object) {
+        return data.get(object);
+    }
+
+    public String put(String object, String value) {
+        return data.put(object.toLowerCase(), value);
+    }
     
-    
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder();
+        for (Entry<String,String> s : data.entrySet()){
+            out = out.append(s.getKey()).append(":").append(s.getValue()).append( ";");
+        }
+        return out.toString();
+    }
     
 }

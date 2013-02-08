@@ -16,79 +16,49 @@ public class Algoritmo1 implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
-        messaggio = (messaggio + " Algoritmo dispatch... ");
         System.out.println(messaggio);
-        Evento e = (Evento) messaggio;
-        return ricevi_disp(e);
+        Evento e = new Evento(messaggio.toString());
+        return ricevi_disp(e).toString();
     }
     
    public static Object ricevi_disp(Evento e) {
-        String[] parametri = e.getContent().toLowerCase().split(";");
-        for (String parametro : parametri) {
-            String type = parametro.split(":")[0];
-            System.out.println("tipo " + type);
-
-            if (type.equals("posizione") ) {
-                parametro = parametro.substring(type.length() + 1);
-                String[] contexts = parametro.split(":");
-                for (String context : contexts) {
-
-                    if (isPosition(context)) {
-                        System.out.println("contesto " + context);
-                        parametro = parametro.substring(context.length() + 1);
-                        String[] contents = parametro.split(",");
-                        for (String content : contents) {
-
-                            if (content.isEmpty()) {
-                                System.out.println("non ho valori");
-                            } else {
-                                System.out.println("contenuto " + content);
-                                System.out.println("Invio al filtro");
-                                return e;
-                            }
+            switch (e.get("type")){
+                
+                case "posizione":
+                    switch (e.get("context")){
+                        case "start":
+                            System.out.println("Ho ricevuto " + e.get("content"));
+                            return e;
+                            
+                        case "control":
+                            System.out.println("Ho ricevuto " + e.get("content"));
+                            return e;
+                            
+                        case "data":
+                            System.out.println("Ho ricevuto " + e.get("content"));
+                            return e;
                         }
-
-                    }
-                }
-
-            } else if (type.equals("alarm")) {
-                parametro = parametro.substring(type.length() + 1);
-                String[] contexts = parametro.split(":");
-                for (String context : contexts) {
-                    
-                    if (isAlarm(context)) {
-                        System.out.println("contesto " + context);
-                        parametro = parametro.substring(context.length() + 1);
-                        String[] contents = parametro.split(",");
-                        for (String content : contents) {
-
-                            if (content.isEmpty()) {
-                                System.out.println("non ho valori");
-                            } else {
-                                System.out.println("contenuto " + content);
-                                System.out.println("Invio al filtro");
-                                return e;
-                            }
+                break;
+                
+                case "alarm":
+                    switch (e.get("context")){
+                        case "my":
+                            System.out.println("Ho ricevuto " + e.get("content"));
+                            return e;
+                            
+                        case "other":
+                            System.out.println("Ho ricevuto " + e.get("content"));
+                            return e;
+                            
+                        case "modify":
+                            System.out.println("Ho ricevuto " + e.get("content"));
+                            return e;
                         }
-                    }
-                }
+                break;
             }
+        return null;     
         }
-        return null;
-    }
-    
-    private static boolean isPosition(String context) {
-        if (context.equals("start") || context.equals("data") || context.equals("control")) {
-            return true;
-        }
-        return false;
-    }
-    private static boolean isAlarm(String context) {
-        if (context.equals("my") || context.equals("other") || context.equals("modify")) {
-            return true;
-        }
-        return false;
-    }
+        
             
     }
 	

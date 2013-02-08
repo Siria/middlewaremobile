@@ -19,7 +19,7 @@ public class ClientSOAP {
 
     public static void main(String[] args) throws Exception {
         
-        invia("Start... ");
+        invia("type:posizione;context:start;content:2-2-2");
 
         
     }

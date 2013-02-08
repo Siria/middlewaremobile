@@ -12,8 +12,8 @@ import javax.naming.*;
  * @author alessandra
  */
 public class MessageConnection {
-private String destinationName = "jms/myDestination";
-private String factoryName = "jms/myConnectionFactory";
+private String destinationName = "myDestination"; //cambia i nomi su glassfish perchè a me da errore se metto gli "/"
+private String factoryName = "myConnectionFactory";
 private Context context;
 private ConnectionFactory connectionFactory;
 private Connection connection;
