@@ -158,12 +158,20 @@ public class Blocco implements Runnable{
 	public void run(){
 		for (RicevitoreProxy ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
+
+                    this.vc.doAct();
+
                     //vc.doAct();
+
                 }
                 
                 for (TrasmettitoreProxy trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
+
+                    this.vc.doAct();
+
                     //vc.doAct();
+
                 }
                 
             
@@ -171,17 +179,35 @@ public class Blocco implements Runnable{
     		boolean continua=true;
 			while (continua){
                                 Object tmp = monitor.prelevaRichiesta();
+
+                                String[] time = tmp.toString().split("--");
+                                // il for parte da 1 perchè prende il 1^ carattere dopo il delimiter "--"
+                                for (int i = 1; i < time.length ; i++) {
+                                    try{
+                                timestamp[i] = Integer.parseInt(time[i]);
+                            }
+                                    catch(Exception e){ 
+                                        System.out.println("Non tutti sono numeri timestamp");
+                                        break;
+                                    }
+                                        }
+
                                 //String[] time = tmp.toString().split("-");
                                 //for (int i = 0; i < time.length ; i++)
                                 //    timestamp[i] = Integer.parseInt(time[i]);
+
                                 // devo recuperare il timestamp!!!
                                 //vc.receiveAction(timestamp);
                                 Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
                                         //vc.sendAction();
+
+                                        risp = risp+"--"+vc.getValue(id);
+
                                         //send(message,time_stamp);
                                         //risp = risp+"-time_stamp";
+
                                         trasmettitore.invia(risp);              
                                     }
                                 }
