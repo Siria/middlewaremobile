@@ -159,7 +159,7 @@ public class Blocco implements Runnable{
 		for (RicevitoreProxy ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
 
-                    this.vc.doAct();
+                    //this.vc.doAct();
 
                     //vc.doAct();
 
@@ -168,7 +168,7 @@ public class Blocco implements Runnable{
                 for (TrasmettitoreProxy trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
 
-                    this.vc.doAct();
+                    //this.vc.doAct();
 
                     //vc.doAct();
 
@@ -196,7 +196,11 @@ public class Blocco implements Runnable{
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
                                         vc.sendAction();
 
-                                        risp = risp.toString() +"_"+ vc.getValue(id) +","+ id;
+                                        //risp = risp+"--"+vc.getValue(id);
+
+                                        //send(message,time_stamp);
+                                        //risp = risp+"-time_stamp";
+
                                         trasmettitore.invia(risp);              
                                     }
                                 }
