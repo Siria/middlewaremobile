@@ -44,7 +44,10 @@ public Message receive() throws MessageException {
     Message mess = getMessageConnection().receive(0);
         try {
             System.out.println("Ricevo tramite JMS...");
-            enqueue(((ObjectMessage)mess).getObject());
+            ObjectMessage msg = (ObjectMessage) mess;
+            Evento ricevuto = new Evento(msg.getObject().toString());
+            enqueue(ricevuto);
+            System.out.println("Ricevuto evento - " + ricevuto.toString());
         } catch (JMSException ex) {
             Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,8 +80,8 @@ public void disconnect() throws MessageException {
                      ObjectMessage msg = (ObjectMessage) message;
                      Evento ricevuto = (Evento)msg.getObject();
                      enqueue(ricevuto);
-                     System.out.println("Ricevuto evento: " + ricevuto.getTipo() + " " + ricevuto.getContent());
-                     log.info("on message " + ricevuto.getTipo() + " " + ricevuto.getContent());
+                     System.out.println("Ricevuto evento - " + ricevuto.toString());
+                     log.log(Level.INFO, "Ricevuto evento - {0}", ricevuto.toString()); // e' questo il logger che vogliono loro???
                    }
                  } catch (Exception e) {
                    System.out.println("Exception raised: " + e.toString());

@@ -35,8 +35,7 @@ public class Blocco implements Runnable{
     private int PID;
     private int id;
     public int timestamp[];
-    
-    private VectorClock vc = new VectorClock(this.PID, this.id);
+    private VectorClock vc;
 
 
 
@@ -159,12 +158,12 @@ public class Blocco implements Runnable{
 	public void run(){
 		for (RicevitoreProxy ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
-                    vc.doAct();
+                    //vc.doAct();
                 }
                 
                 for (TrasmettitoreProxy trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
-                    vc.doAct();
+                    //vc.doAct();
                 }
                 
             
@@ -172,17 +171,17 @@ public class Blocco implements Runnable{
     		boolean continua=true;
 			while (continua){
                                 Object tmp = monitor.prelevaRichiesta();
-                                String[] time = tmp.toString().split("-");
-                                for (int i = 0; i < time.length ; i++)
-                                    timestamp[i] = Integer.parseInt(time[i]);
+                                //String[] time = tmp.toString().split("-");
+                                //for (int i = 0; i < time.length ; i++)
+                                //    timestamp[i] = Integer.parseInt(time[i]);
                                 // devo recuperare il timestamp!!!
-                                vc.receiveAction(timestamp);
+                                //vc.receiveAction(timestamp);
                                 Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
-                                        vc.sendAction();
+                                        //vc.sendAction();
                                         //send(message,time_stamp);
-                                        risp = risp+"-time_stamp";
+                                        //risp = risp+"-time_stamp";
                                         trasmettitore.invia(risp);              
                                     }
                                 }
