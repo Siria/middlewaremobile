@@ -32,12 +32,6 @@ public class Blocco implements Runnable{
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
 
-    private int PID = ricevitori.size()+trasmettitori.size()+10;
-    private int id = 5;
-    public int [] timestamp;
-    private VectorClock vc = new VectorClock(PID, id);
-
-
 
     public HashMap getConf() {
         return conf;
@@ -159,16 +153,12 @@ public class Blocco implements Runnable{
 		for (RicevitoreProxy ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
 
-                    this.vc.doAct();
-
                 }
                 
                 for (TrasmettitoreProxy trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
 
-                    this.vc.doAct();
-
-
+                    
                 }
                 
             
@@ -177,20 +167,15 @@ public class Blocco implements Runnable{
 			while (continua){
                             
                             HashMap tmp = (HashMap) monitor.prelevaRichiesta();
-                            timestamp = (int[])tmp.get("timestamp");
-                            vc.receiveAction(timestamp);
-
                             HashMap risp = (HashMap) algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
                                         
-                                       vc.sendAction();
-                                       risp.put("timestamp", vc.getV());
                                        trasmettitore.invia(risp);              
                                     }
                                 }
                         }
-		}catch (Exception e){e.printStackTrace();}
+		}catch (Exception e){}
             }    
 	}
 
