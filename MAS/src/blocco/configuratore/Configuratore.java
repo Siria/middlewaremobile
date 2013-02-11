@@ -2,14 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package blocco.filtro;
+package blocco.configuratore;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import temp.proxy.AlgoritmoProxy;
@@ -22,23 +21,15 @@ import temp.queue.Monitor;
  *
  * @author alessandra
  */
-public class FiltroTime implements Runnable{
+public class Configuratore implements Runnable{
     
     private Monitor monitor = new Monitor();
-    private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
-    private LinkedList<TrasmettitoreProxy> trasmettitori = new LinkedList<>();
+    private RicevitoreProxy ricevitore;
+    private TrasmettitoreProxy trasmettitore;
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
     
-    // tanti ricevitori (max3) e tanti trasmettitori (max3) a seconda che siano socket, shared e/o file
-    private int PID = ricevitori.size()+trasmettitori.size()+1;
-    // id del mio processo
-    private int id = 0;
-    public int [] timestamp;
-    private VectorClock vc = new VectorClock(PID, id);
-
-
-
+   
     public HashMap getConf() {
         return conf;
     }
@@ -67,14 +58,14 @@ public class FiltroTime implements Runnable{
                            
                                 classLoader = URLClassLoader.newInstance(new URL[] { root.toURI().toURL() });
                                 Class<?> cls = Class.forName(valore, true, classLoader);
-                                trasmettitori.add((TrasmettitoreProxy)ProxyTarget.createProxy(cls));
+                                trasmettitore = (TrasmettitoreProxy)ProxyTarget.createProxy(cls);
                                 
                          } catch (MalformedURLException ex) {
-                            Logger.getLogger(blocco.filtro.FiltroTime.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(blocco.configuratore.Configuratore.class.getName()).log(Level.SEVERE, null, ex);
                         
                          }
                     } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(blocco.filtro.FiltroTime.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(blocco.configuratore.Configuratore.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             
@@ -86,10 +77,6 @@ public class FiltroTime implements Runnable{
                 for (String valore : valori){
                     switch (valore){
                         case("socket"):
-                            break;
-                        case("shared"):
-                            break;
-                        case("file"):
                             break;
                     }
                 }
@@ -107,14 +94,7 @@ public class FiltroTime implements Runnable{
         this.monitor = monitor;
     }
 
-    public LinkedList<RicevitoreProxy> getRicevitori() {
-        return ricevitori;
-    }
-
-    public void setRicevitori(LinkedList<RicevitoreProxy> ricevitori) {
-        this.ricevitori = ricevitori;
-    }
-
+  
     public AlgoritmoProxy getAlgoritmo() {
         return algoritmo;
     }
@@ -122,44 +102,24 @@ public class FiltroTime implements Runnable{
     public void setAlgoritmo(AlgoritmoProxy algoritmo) {
         this.algoritmo = algoritmo;
     }
-
-    public LinkedList<TrasmettitoreProxy> getTrasmettitori() {
-        return trasmettitori;
-    }
-
-    public void setTrasmettitori(LinkedList<TrasmettitoreProxy> trasmettitori) {
-        this.trasmettitori = trasmettitori;
-    }
-
    
     @Override
 	public void run(){
-		for (RicevitoreProxy ricevitore : ricevitori){
-                    ricevitore.configura(monitor,conf);
-                    vc.myId = id++;
-                    vc.doAct();
-                }
-                
-                for (TrasmettitoreProxy trasmettitore : trasmettitori){
+		
+                    ricevitore.configura(monitor,conf);                   
                     trasmettitore.configura(monitor,conf);
-                    vc.myId = id++;
-                    vc.doAct();
-
-                }
-                
+           
             
             try{    
     		boolean continua=true;
 			while (continua){
                             
-                            //HashMap tmp = (HashMap)
                            Object risp = monitor.prelevaRichiesta();
-                            System.out.println("Mi trovo nel blocco filtro Time");
-                            HashMap tmp = (HashMap) risp;
-                            tmp.put("Vector", vc);
-                            risp = algoritmo.valuta(tmp);
-                            for (TrasmettitoreProxy trasmettitore : trasmettitori){
-                                       trasmettitore.invia(risp);              
+                            System.out.println("Mi trovo nel blocco configuratore");
+                            // algoritmo invierà comandi
+                            risp = algoritmo.valuta(risp);   
+                                if (risp != null){
+                                   trasmettitore.invia(risp);              
                                     
                                 }
                         }
@@ -167,5 +127,4 @@ public class FiltroTime implements Runnable{
                     e.printStackTrace();}
             }    
 	}
-
 
