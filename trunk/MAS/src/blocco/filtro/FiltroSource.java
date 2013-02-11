@@ -62,11 +62,11 @@ public class FiltroSource implements Runnable{
                                 trasmettitori.add((TrasmettitoreProxy)ProxyTarget.createProxy(cls));
                                 
                          } catch (MalformedURLException ex) {
-                            Logger.getLogger(temp.Blocco.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(blocco.filtro.FiltroSource.class.getName()).log(Level.SEVERE, null, ex);
                         
                          }
                     } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(temp.Blocco.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(blocco.filtro.FiltroSource.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             
