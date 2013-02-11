@@ -6,6 +6,7 @@ package temp.valutatori;
 
 import blocco.filtro.VectorClock;
 import java.util.HashMap;
+import temp.Evento;
 import temp.proxy.AlgoritmoProxy;
 
 /**
@@ -16,7 +17,8 @@ public class AlgoTime implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-        HashMap tmp = (HashMap) messaggio;
+        Evento tmp =  (Evento) messaggio;
+        // funziona questo cast?
         VectorClock vc = (VectorClock) tmp.get("Vector");
         int [] timestamp = (int[])tmp.get("timestamp");
         vc.receiveAction(timestamp);      

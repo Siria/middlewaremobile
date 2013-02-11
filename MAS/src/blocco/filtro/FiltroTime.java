@@ -22,7 +22,7 @@ import temp.queue.Monitor;
  *
  * @author alessandra
  */
-public class filtroTime implements Runnable{
+public class FiltroTime implements Runnable{
     
     private Monitor monitor = new Monitor();
     private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
@@ -158,11 +158,9 @@ public class filtroTime implements Runnable{
                             HashMap tmp = (HashMap) risp;
                             tmp.put("Vector", vc);
                             risp = algoritmo.valuta(tmp);
-                            // controllo inutile
-                                if (risp != null){
-                                    for (TrasmettitoreProxy trasmettitore : trasmettitori){
+                            for (TrasmettitoreProxy trasmettitore : trasmettitori){
                                        trasmettitore.invia(risp);              
-                                    }
+                                    
                                 }
                         }
 		}catch (Exception e){
