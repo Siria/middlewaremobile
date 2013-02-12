@@ -4,10 +4,16 @@
  */
 package temp.ricevitori.File;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.channels.FileLock;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
-import test.ClientSM;
+import temp.trasmettitori.File.TrasmettitoreFile;
 
 
 /**
@@ -20,24 +26,37 @@ public class RicevitoreFile extends Thread implements RicevitoreProxy{
 
     @Override
     public void ricevi() {
+        FileInputStream fis = null;        
+        
         while (true) {
-            synchronized (ClientSM.synchObject) {
-                try {
-                    System.out.println("Ricevitore aspetta");
-                    ClientSM.synchObject.wait();
-                } catch (InterruptedException e) {
-                }
-
-                if (ClientSM.coda.isEmpty()) {
-                    ClientSM.synchObject.notifyAll();
-                    break;
-                }
-                System.out.println("Altrimenti riceve gli eventi in coda");
-                Object last = ClientSM.coda.getLast();
-                //Object removeLast = ClientSM.coda.removeLast();
-                enqueue(last);
-                ClientSM.synchObject.notifyAll();
+         try {
+            File file = new File((String)conf.get("fileIngresso"));
+            fis = new FileInputStream(file);
+            FileLock fl = fis.getChannel().tryLock();
+            boolean continua = true;
+            StringBuilder messaggio = new StringBuilder();
+            while(continua) {
+              int read = fis.read();
+              byte byteread;
+              if (read != -1){
+                  byteread = (byte)read;
+                  messaggio.append((char)(byteread));
+              } else {
+                  continua = false;
+              }
             }
+            
+            enqueue(messaggio.toString());
+            fis.close();
+        } catch (IOException ex) {
+            Logger.getLogger(TrasmettitoreFile.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException ex) {
+                Logger.getLogger(TrasmettitoreFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  
         }
     }
 

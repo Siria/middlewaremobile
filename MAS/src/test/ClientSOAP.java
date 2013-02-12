@@ -21,6 +21,7 @@ import temp.ricevitori.SOAP.SOAP;
 public class ClientSOAP {
 
     public static void main(String[] args) throws Exception {
+        
         HashMap prop = new HashMap();
         prop.put("type", "posizione");
         prop.put("context", "start");

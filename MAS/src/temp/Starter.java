@@ -10,10 +10,12 @@ import temp.proxy.AlgoritmoProxy;
 import temp.proxy.ProxyTarget;
 import temp.proxy.RicevitoreProxy;
 import temp.proxy.TrasmettitoreProxy;
+import temp.ricevitori.File.RicevitoreFile;
 import temp.ricevitori.JMS.RicevitoreJMS;
 import temp.ricevitori.REST.RicevitoreREST;
 import temp.ricevitori.SOAP.RicevitoreSOAP;
 import temp.ricevitori.Socket.RicevitoreSocket;
+import temp.trasmettitori.File.TrasmettitoreFile;
 import temp.trasmettitori.JMS.TrasmettitoreJMS;
 import temp.trasmettitori.REST.TrasmettitoreREST;
 import temp.trasmettitori.SOAP.TrasmettitoreSOAP;
@@ -32,9 +34,18 @@ public class Starter {
     public static void main(String[] args) {
         try{
             
+            Blocco asc8 = new Blocco();
+            asc8.getConf().put("fileIngresso", "data.dat");
+            asc8.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreFile()));
+            asc8.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo7()));
+            Thread th8 = new Thread (asc8);
+            th8.start();
+            
             Blocco asc7 = new Blocco();
+            asc7.getConf().put("fileUscita", "data.dat");
+            asc7.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreFile()));
             asc7.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreJMS()));
-            asc7.setAlgoritmo(new Algoritmo7());
+            asc7.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo7()));
             Thread th7 = new Thread (asc7);
             th7.start();
             
@@ -44,7 +55,7 @@ public class Starter {
             asc6.getConf().put("soapIngresso", "http://localhost:9997/WS/SOAP/?wsdl");
             asc6.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreJMS()));
             asc6.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
-            asc6.setAlgoritmo(new Algoritmo6());
+            asc6.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo6()));
             Thread th6 = new Thread (asc6);
             th6.start();
             
@@ -55,7 +66,7 @@ public class Starter {
             asc5.getConf().put("soapUscita", "http://localhost:9997/WS/SOAP/?wsdl");
             asc5.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSOAP()));
             asc5.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreREST()));
-            asc5.setAlgoritmo(new Algoritmo5());
+            asc5.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo5()));
             Thread th5 = new Thread (asc5);
             th5.start();
             
@@ -66,7 +77,7 @@ public class Starter {
             asc4.getConf().put("soapIngresso", "http://localhost:17756/WS/SOAP/?wsdl");
             asc4.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreREST()));
             asc4.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
-            asc4.setAlgoritmo(new Algoritmo4());
+            asc4.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo4()));
             Thread th4 = new Thread (asc4);
             th4.start();
             

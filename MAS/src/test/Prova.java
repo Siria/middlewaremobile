@@ -3,41 +3,47 @@ package test;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
- 
+import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+
 public class Prova {
  
+    
+    private static int count = 1024;
+    
     public static void main(String[] args) throws Exception {
  
         RandomAccessFile file = null;
+        RandomAccessFile file2 = null;
         FileLock fileLock = null;
         try
         {
+            
             file = new RandomAccessFile("FileToBeLocked", "rw");
-            FileChannel fileChannel = file.getChannel();
- 
-            fileLock = fileChannel.tryLock();
-            if (fileLock != null){
-                System.out.println("File is locked");
-                accessTheLockedFile();
-            }
-        }finally{
-            if (fileLock != null){
-                fileLock.release();
-            }
-        }
-    }
- 
-    static void accessTheLockedFile(){
- 
-        try{
-            FileInputStream input = new FileInputStream("FileToBeLocked");
-            int data = input.read();
+            MappedByteBuffer out = file.getChannel().map(FileChannel.MapMode.READ_WRITE, 0, count);
             
-            Thread.sleep(10000000);
+            file2 = new RandomAccessFile("status", "rw");
+            MappedByteBuffer status = file2.getChannel().map(FileChannel.MapMode.READ_WRITE, 0, count);
             
-            System.out.println(data);
-        }catch (IOException | InterruptedException exception){
-            exception.printStackTrace();
+            for (int i = 0; i < count; i++) {
+            out.put((byte) 'A');
+            }
+            
+            Thread.sleep(10000);
+            
+            for (int i = 0; i < count; i++) {
+            status.put((byte) 'Y');
+            }
+            System.out.println("Writing to Memory Mapped File is completed");
+ 
+            
+        } catch (Exception e){
+
+
         }
     }
 }
+    
+ 
+    
