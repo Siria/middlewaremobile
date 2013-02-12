@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.HashMap;
@@ -31,28 +32,34 @@ public class TrasmettitoreFile implements TrasmettitoreProxy{
 
     @Override
     public void invia(Object messaggio) {
-        FileOutputStream fos = null;        
-        try {
-            File file = new File((String)conf.get("fileUscita"));
-            file.renameTo(new File ("Locked"+(String)conf.get("fileUscita")));
-            fos = new FileOutputStream(file);
-            FileLock fl = fos.getChannel().tryLock();
-            if(fl != null) {
-              fos.write(messaggio.toString().getBytes("UTF-8"));
-              fl.release();
-            }
-            fos.close();
-            file.renameTo(new File((String)conf.get("fileUscita")));
+                 try {
+                     
+                     
+                    File file = new File((String)conf.get("fileUscita"));
             
-        } catch (IOException ex) {
-            Logger.getLogger(TrasmettitoreFile.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException ex) {
-                Logger.getLogger(TrasmettitoreFile.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+                    FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
+                    boolean obtained = false;
+                    FileLock lock = null;
+                    while (!obtained){
+                    try{    
+                    lock = channel.tryLock();
+                    obtained = true;
+                    } catch (Exception e){
+                        System.out.println("sono il trasmettitore");
+		
+                        e.printStackTrace();
+                        Thread.sleep(10);
+                    }
+                    }
+                    channel.write(ByteBuffer.wrap(messaggio.toString().getBytes()));
+                    //System.out.println(messaggio.toString());
+                    lock.release();
+		    channel.close();		    
+		}
+		catch (Exception e) {
+                    System.out.println("sono il trasmettitore");
+			e.printStackTrace();
+		}
         
     }
 

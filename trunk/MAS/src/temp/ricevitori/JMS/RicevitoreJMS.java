@@ -47,7 +47,6 @@ public Message receive() throws MessageException {
             ObjectMessage msg = (ObjectMessage) mess;
             Evento ricevuto = new Evento(msg.getObject().toString());
             enqueue(ricevuto);
-            System.out.println("Ricevuto evento - " + ricevuto.toString());
         } catch (JMSException ex) {
             Logger.getLogger(RicevitoreJMS.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -23,7 +23,7 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
     public HashMap conf = null;
 	@Override
 	public void ricevi(Object messaggio) {
-		System.out.println("Ricevo tramite SOAP");
+		System.out.println("Ricevo tramite SOAP...");
                 this.enqueue(messaggio);                
         }
         
