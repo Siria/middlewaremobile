@@ -40,78 +40,6 @@ public class Blocco implements Runnable{
     public void setConf(HashMap conf) {
         this.conf = conf;
     }
-
-    
-
-    public void configura(String configuration){
-        String[] parametri = configuration.toLowerCase().split(";");
-        for (String parametro : parametri){
-            String nome = parametro.split(":")[0];
-            
-            
-            System.out.println("Nome: " + nome);
-            
-            if (nome.equals("trasmettitore")){
-                parametro = parametro.substring(nome.length()+1);
-                String[] valori = parametro.split(",");
-                for (String valore : valori){
-                    try {  
-                        try {
-                            File root = new File(".");
-                            // per caricare in maniera dinamica della classe
-                            // in base al nome pssato nella variabile valore
-                            // valore= percorso per il file .class della classe java
-                            // ma nebeans mette i .class in una cartella e i .java in un'altra
-                            // che percorso devo mettere
-                            URLClassLoader classLoader;
-                           
-                                classLoader = URLClassLoader.newInstance(new URL[] { root.toURI().toURL() });
-                                Class<?> cls = Class.forName(valore, true, classLoader);
-                                trasmettitori.add((TrasmettitoreProxy)ProxyTarget.createProxy(cls));
-                                
-                         } catch (MalformedURLException ex) {
-                            Logger.getLogger(Blocco.class.getName()).log(Level.SEVERE, null, ex);
-                        
-                         }
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Blocco.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            
-            }
-            
-            if (nome.equals("ricevitore")){
-                parametro = parametro.substring(nome.length()+1);
-                String[] valori = parametro.split(",");
-                for (String valore : valori){
-                    switch (valore){
-                        case("rest"):
-                            break;
-                        case("jms"):
-                            break;
-                        case("socket"):
-                            break;
-                        case("soap"):
-                            break;
-                    }
-                }
-            }
-            
-            if (nome.equals("algoritmo")){
-                parametro = parametro.substring(nome.length()+1);
-                String[] valori = parametro.split(",");
-                for (String valore : valori){
-                    switch (valore){
-                        
-                    }
-                }
-            }
-            
-            
-            
-        }
-    
-    }
     
     public Monitor getMonitor() {
         return monitor;
@@ -166,11 +94,10 @@ public class Blocco implements Runnable{
     		boolean continua=true;
 			while (continua){
                             
-                            HashMap tmp = (HashMap) monitor.prelevaRichiesta();
-                            HashMap risp = (HashMap) algoritmo.valuta(tmp);
+                            Object tmp = monitor.prelevaRichiesta(); //questi lasciamoli object
+                            Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
-                                        
                                        trasmettitore.invia(risp);              
                                     }
                                 }
