@@ -142,7 +142,7 @@ public class FiltroSource implements Runnable{
     		boolean continua=true;
 			while (continua){
                             
-                           Object risp = monitor.prelevaRichiesta();
+                           Object risp = monitor.prelevaMessaggio();
                             System.out.println("Mi trovo nel blocco filtro Source");
                             risp = algoritmo.valuta(risp);   
                                 if (risp != null){

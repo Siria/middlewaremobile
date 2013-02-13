@@ -16,7 +16,6 @@ public class Algoritmo1 implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
-        System.out.println(messaggio);
         Evento e = new Evento(messaggio.toString());
         return ricevi_disp(e).toString();
     }

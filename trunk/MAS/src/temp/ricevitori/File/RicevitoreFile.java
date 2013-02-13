@@ -99,6 +99,6 @@ public class RicevitoreFile extends Thread implements RicevitoreProxy{
     
     @Override
     public void enqueue(Object messaggio) {
-        monitor.accodaRichiesta(messaggio);
+        monitor.accodaMessaggio(messaggio);
     }
 }

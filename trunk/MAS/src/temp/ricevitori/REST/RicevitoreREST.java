@@ -25,7 +25,7 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
     
     @Override
     public void enqueue(Object messaggio){
-    	monitor.accodaRichiesta(messaggio);
+    	monitor.accodaMessaggio(messaggio);
     }
 
     @Override

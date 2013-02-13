@@ -153,7 +153,7 @@ public class FiltroTime implements Runnable{
 			while (continua){
                             
                             //HashMap tmp = (HashMap)
-                           Object risp = monitor.prelevaRichiesta();
+                           Object risp = monitor.prelevaMessaggio();
                             System.out.println("Mi trovo nel blocco filtro Time");
                             HashMap tmp = (HashMap) risp;
                             tmp.put("Vector", vc);
