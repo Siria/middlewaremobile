@@ -142,7 +142,7 @@ public class FiltroValue implements Runnable{
     		boolean continua=true;
 			while (continua){
                             
-                           Object risp = monitor.prelevaRichiesta();
+                           Object risp = monitor.prelevaMessaggio();
                             System.out.println("Mi trovo nel blocco filtro Value");
                             risp = algoritmo.valuta(risp);   
                                 if (risp != null){

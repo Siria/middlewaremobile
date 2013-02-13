@@ -31,7 +31,8 @@ public class RicevitoreSocket implements RicevitoreProxy{
         
         
         try{
-        ServerSocket SS = (ServerSocket)conf.get("socketIngresso");
+        String port = (String)conf.get("socketIngresso");
+        ServerSocket SS = new ServerSocket(Integer.parseInt(port));
 		
 		while(true){
 			final Socket SK = SS.accept();
@@ -61,7 +62,7 @@ public class RicevitoreSocket implements RicevitoreProxy{
     }
     
     public void enqueue(Object messaggio){
-    	monitor.accodaRichiesta(messaggio);
+    	monitor.accodaMessaggio(messaggio);
     }
 
     @Override

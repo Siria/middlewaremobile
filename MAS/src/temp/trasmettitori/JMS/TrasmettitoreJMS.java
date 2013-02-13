@@ -48,6 +48,7 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
     private MessageConnection getMessageConnection() throws MessageException {
         if (messageConnection == null) {
             messageConnection = new MessageConnection();
+            messageConnection.destinationName = (String)conf.get("jmsUscita");
         }
         return messageConnection;
     }

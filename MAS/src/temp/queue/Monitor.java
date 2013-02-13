@@ -16,7 +16,7 @@ public class Monitor {
   private LinkedList<Object> codaRichieste = new LinkedList<>();
   
   // Preleva la prima richiesta in coda
-  public synchronized Object prelevaRichiesta(){
+  public synchronized Object prelevaMessaggio(){
     while (codaRichieste.isEmpty()){
       try {
         wait();
@@ -29,9 +29,10 @@ public class Monitor {
     return codaRichieste.remove(0);
   }
 
-  // Accoda una nuova richiesta
-  public synchronized void accodaRichiesta(Object richiesta){
-    codaRichieste.add(richiesta);
+  // Accoda una nuova messaggio
+  public synchronized void accodaMessaggio(Object messaggio){
+    codaRichieste.add(messaggio);
+    System.out.println("\nSono il monitor e ho appena ricevuto:\n" + messaggio.toString()); // TODO se tolgo questo nn vedo più i messaggi che arrivano
     notifyAll();
   }
   

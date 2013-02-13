@@ -8,16 +8,9 @@ package temp;
  *
  * @author author
  */
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import temp.proxy.AlgoritmoProxy;
-import temp.proxy.ProxyTarget;
 import temp.proxy.RicevitoreProxy;
 import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
@@ -94,7 +87,7 @@ public class Blocco implements Runnable{
     		boolean continua=true;
 			while (continua){
                             
-                            Object tmp = monitor.prelevaRichiesta(); //questi lasciamoli object
+                            Object tmp = monitor.prelevaMessaggio(); //questi lasciamoli object
                             Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){

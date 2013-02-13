@@ -34,11 +34,13 @@ public class TrasmettitoreSocket implements TrasmettitoreProxy{
 
     @Override
     public void configura(Monitor monitor, HashMap conf) {
-         this.SK = (Socket)conf.get("socketUscita");
-        this.monitor = monitor;
-		try{
-		OOS = new ObjectOutputStream(SK.getOutputStream());
-		}catch(Exception e){e.printStackTrace();}
+         String addr = (String)conf.get("socketUscita");
+         String[] param = addr.split(":");
+         this.monitor = monitor;
+            try{
+                this.SK = new Socket(param[0],Integer.parseInt(param[1]));
+        	OOS = new ObjectOutputStream(SK.getOutputStream());
+            }catch(Exception e){e.printStackTrace();}
     }
     
     }

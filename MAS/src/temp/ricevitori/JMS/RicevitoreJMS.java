@@ -31,6 +31,7 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
     private MessageConnection getMessageConnection() throws MessageException {
   if (messageConnection == null) {
     messageConnection = new MessageConnection();
+    messageConnection.destinationName = (String)conf.get("jmsIngresso");
   }
   return messageConnection;
 }
@@ -114,7 +115,7 @@ public void disconnect() throws MessageException {
 
          @Override
          public void enqueue(Object messaggio) {
-             monitor.accodaRichiesta(messaggio);
+             monitor.accodaMessaggio(messaggio);
          }
 
     @Override

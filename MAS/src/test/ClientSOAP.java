@@ -27,8 +27,10 @@ public class ClientSOAP {
         prop.put("context", "start");
         prop.put("content", new int[]{2,2,2});
         Evento e = new Evento(prop);
-        invia(e.toString());
-
+        
+        for (int i = 0; i<1; i++){
+            invia(e.toString());
+        }
         
     }
 

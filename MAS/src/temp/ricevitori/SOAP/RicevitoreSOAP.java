@@ -34,7 +34,7 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
   
     
     public void enqueue(Object messaggio){
-        monitor.accodaRichiesta(messaggio);
+        monitor.accodaMessaggio(messaggio);
     }
 
     @Override

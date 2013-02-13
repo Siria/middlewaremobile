@@ -114,7 +114,7 @@ public class Configuratore implements Runnable{
     		boolean continua=true;
 			while (continua){
                             
-                           Object risp = monitor.prelevaRichiesta();
+                           Object risp = monitor.prelevaMessaggio();
                             System.out.println("Mi trovo nel blocco configuratore");
                             // algoritmo invierà comandi
                             risp = algoritmo.valuta(risp);   
