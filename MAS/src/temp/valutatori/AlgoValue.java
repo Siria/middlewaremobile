@@ -4,6 +4,7 @@
  */
 package temp.valutatori;
 
+import temp.Evento;
 import temp.proxy.AlgoritmoProxy;
 
 /**
@@ -19,7 +20,38 @@ public class AlgoValue implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+         Evento e =  (Evento) messaggio;
+         int x,v,a;
+         if (e.get("type").toString().contentEquals("posizione")) {
+            String[] parametri = e.get("content").toString().toLowerCase().split(";");
+            for (String parametro : parametri) {
+                String[] value = parametro.split(":");
+                 //   for (int i = 0; i < value.length; i++) {
+                        x = Integer.parseInt(value[0]);
+                        v = Integer.parseInt(value[1]);
+                        a = Integer.parseInt(value[2]);
+                        comparelimit(x);
+                        comparev(v);
+                        comparea(a);
+                        System.out.println();
+  
+        }
+
     }
-    
+        return null;
+}
+
+    private void comparelimit(int x) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void comparev(int v) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void comparea(int a) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+
 }
