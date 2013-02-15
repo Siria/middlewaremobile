@@ -6,17 +6,13 @@ package temp.ricevitori.File;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import temp.proxy.RicevitoreProxy;
 import temp.queue.Monitor;
-import temp.trasmettitori.File.TrasmettitoreFile;
 
 
 /**
