@@ -11,11 +11,13 @@ import temp.proxy.TrasmettitoreProxy;
 import temp.ricevitori.File.RicevitoreFile;
 import temp.ricevitori.JMS.RicevitoreJMS;
 import temp.ricevitori.REST.RicevitoreREST;
+import temp.ricevitori.SM.RicevitoreSM;
 import temp.ricevitori.SOAP.RicevitoreSOAP;
 import temp.ricevitori.Socket.RicevitoreSocket;
 import temp.trasmettitori.File.TrasmettitoreFile;
 import temp.trasmettitori.JMS.TrasmettitoreJMS;
 import temp.trasmettitori.REST.TrasmettitoreREST;
+import temp.trasmettitori.SM.TrasmettitoreSM;
 import temp.trasmettitori.SOAP.TrasmettitoreSOAP;
 import temp.trasmettitori.Socket.TrasmettitoreSocket;
 import temp.valutatori.*;
@@ -32,8 +34,19 @@ public class Starter {
     public static void main(String[] args) {
         try{
             
+            Blocco asc7 = new Blocco();
+            asc7.getConf().put("sharedIngresso", "shared.dat");
+            asc7.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSM()));
+            asc7.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo6()));
+            Thread th7 = new Thread (asc7);
+            th7.start();
+            
+            Thread.sleep(1000);
+            
             Blocco asc6 = new Blocco();
-            asc6.getConf().put("fileIngresso", "data.dat");
+            asc6.getConf().put("sharedUscita", "shared.dat");
+            asc6.getConf().put("fileIngresso", "file.dat");
+            asc6.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSM()));
             asc6.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreFile()));
             asc6.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo6()));
             Thread th6 = new Thread (asc6);
@@ -42,7 +55,7 @@ public class Starter {
             Thread.sleep(1000);
             
             Blocco asc5 = new Blocco();
-            asc5.getConf().put("fileUscita", "data.dat");
+            asc5.getConf().put("fileUscita", "file.dat");
             asc5.getConf().put("jmsIngresso", "myDestination");
             asc5.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreFile()));
             asc5.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreJMS()));
