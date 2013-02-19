@@ -20,13 +20,12 @@ import org.w3c.dom.Element;
  *
  * @author alessandra
  */
-public class WriteXMLsoglia /*implements Runnable*/{
-    
-    
+public class WriteXMLsoglia implements Runnable{
+     
  //public WriteXML(String name){
-    public static void main(String args[]){
-    //@Override
-    //public void run(){
+
+    @Override
+    public void run(){
 	  try {
  
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -69,11 +68,11 @@ public class WriteXMLsoglia /*implements Runnable*/{
                 
                 Element min2 = doc.createElement("min");
                 min2.setTextContent("0");
-                soglia2.appendChild(y);
+                soglia2.appendChild(min2);
                 
                 Element max2 = doc.createElement("max");
                 max2.setTextContent("3");
-                soglia2.appendChild(y);
+                soglia2.appendChild(max2);
                 
                 
                 Element soglia3 = doc.createElement("soglia");

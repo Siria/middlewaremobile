@@ -108,15 +108,16 @@ public class Configuratore implements Runnable{
 		
                     ricevitore.configura(monitor,conf);                   
                     trasmettitore.configura(monitor,conf);
-           
-            
+                       
             try{    
     		boolean continua=true;
 			while (continua){
-                            
+                           // prende un messaggio da stream reader
+                            // per adesso il file xml è scritto tramite WriteXMLsoglia
                            Object risp = monitor.prelevaMessaggio();
                             System.out.println("Mi trovo nel blocco configuratore");
                             // algoritmo invierà comandi
+                            // risp è di tipo hashMap<variabile, min e max>
                             risp = algoritmo.valuta(risp);   
                                 if (risp != null){
                                    trasmettitore.invia(risp);              

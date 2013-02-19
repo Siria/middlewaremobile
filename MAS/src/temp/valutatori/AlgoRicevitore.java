@@ -12,7 +12,7 @@ import temp.proxy.AlgoritmoProxy;
  * @author 
  */
 
-public class Algoritmo1 implements AlgoritmoProxy{
+public class AlgoRicevitore implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
