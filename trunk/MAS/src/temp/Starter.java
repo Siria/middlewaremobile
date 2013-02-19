@@ -103,7 +103,7 @@ public class Starter {
             asc1.getConf().put("soapIngresso","http://localhost:17780/WS/SOAP/?wsdl");
             asc1.getTrasmettitori().add((TrasmettitoreProxy)ProxyTarget.createProxy(new TrasmettitoreSOAP()));
             asc1.getRicevitori().add((RicevitoreProxy)ProxyTarget.createProxy(new RicevitoreSOAP()));
-            asc1.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new Algoritmo1()));
+            asc1.setAlgoritmo((AlgoritmoProxy)ProxyTarget.createProxy(new AlgoRicevitore()));
             Thread th1 = new Thread (asc1);
             th1.start();
             

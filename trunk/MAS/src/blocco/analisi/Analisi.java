@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package blocco.filtro;
+package blocco.analisi;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -17,11 +17,12 @@ import temp.proxy.ProxyTarget;
 import temp.proxy.RicevitoreProxy;
 import temp.proxy.TrasmettitoreProxy;
 import temp.queue.Monitor;
+
 /**
  *
  * @author alessandra
  */
-public class FiltroValue implements Runnable{
+public class Analisi implements Runnable{
     
     private Monitor monitor = new Monitor();
     private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
@@ -61,11 +62,11 @@ public class FiltroValue implements Runnable{
                                 trasmettitori.add((TrasmettitoreProxy)ProxyTarget.createProxy(cls));
                                 
                          } catch (MalformedURLException ex) {
-                            Logger.getLogger(blocco.filtro.FiltroValue.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(blocco.filtro.FiltroSource.class.getName()).log(Level.SEVERE, null, ex);
                         
                          }
                     } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(blocco.filtro.FiltroValue.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(blocco.filtro.FiltroSource.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             
@@ -142,7 +143,7 @@ public class FiltroValue implements Runnable{
 			while (continua){
                             
                            Object risp = monitor.prelevaMessaggio();
-                            System.out.println("Mi trovo nel blocco filtro Value");
+                            System.out.println("Mi trovo nel blocco Analisi");
                             risp = algoritmo.valuta(risp);   
                                 if (risp != null){
                                     for (TrasmettitoreProxy trasmettitore : trasmettitori){
@@ -154,4 +155,6 @@ public class FiltroValue implements Runnable{
                     e.printStackTrace();}
             }    
 	}
+
+
 
