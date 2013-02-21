@@ -37,7 +37,7 @@ public class AlgoConfSoglie implements AlgoritmoProxy {
             try {
 
                 //File fXmlFile = new File("file:///home/alessandra/NetBeansProjects/MAS/c:%5Cfile.xml");
-                File fXmlFile = new File("c:\\file_soglie.xml");
+                File fXmlFile = new File("file_soglie.xml");
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(fXmlFile);
