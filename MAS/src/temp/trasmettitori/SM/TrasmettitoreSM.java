@@ -34,7 +34,7 @@ public class TrasmettitoreSM implements TrasmettitoreProxy{
                     if(file.length() < shmSize) {
                         byte[] tmp = new byte[shmSize];
                         file.write(tmp);
-                        file.seek(0); // seek back to start of file.
+                        file.seek(0); 
                       }
                     
                     FileChannel channel = file.getChannel();
@@ -53,9 +53,9 @@ public class TrasmettitoreSM implements TrasmettitoreProxy{
                     }
                     MappedByteBuffer shm = channel.map(FileChannel.MapMode.READ_WRITE, 0, shmSize);
                     lock.release();
-                    channel.close(); // channel not needed anymore.
+                    channel.close(); 
                     
-                    shm.load(); // force file into physical memory.
+                    shm.load(); 
                     shm.put(messaggio.toString().getBytes("UTF-8"));
                    		    
 		}

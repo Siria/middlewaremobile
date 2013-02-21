@@ -1,6 +1,5 @@
 package temp.proxy;
 
-//TargetInterface.java
 
 import blocco.configuratore.AlgoConfSoglie;
 import java.util.HashMap;

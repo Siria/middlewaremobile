@@ -10,18 +10,11 @@ package temp.trasmettitori.JMS;
  */
     public class MessageException extends Exception {
 
-/********************************************************************
-* Constructor.
-********************************************************************/
+
 public MessageException() {
   super();
 }
 
-/********************************************************************
-* Constructor.
-*
-* @param info Information to be sent along with the exception.
-********************************************************************/
 public MessageException(String info) {
   super(info);
 }

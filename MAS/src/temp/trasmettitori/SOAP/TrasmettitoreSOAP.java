@@ -18,7 +18,7 @@ import temp.ricevitori.SOAP.SOAP;
 
 /**
  *
- * @author Seby
+ * @author alessandra
  */
 public class TrasmettitoreSOAP implements TrasmettitoreProxy{
 
