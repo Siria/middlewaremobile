@@ -36,11 +36,6 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
   return messageConnection;
 }
 
-/********************************************************************
-* Attempts to receive a message.
-*
-* @throws MessageException If the receive fails.
-********************************************************************/
 public Message receive() throws MessageException {
     Message mess = getMessageConnection().receive(0);
         try {

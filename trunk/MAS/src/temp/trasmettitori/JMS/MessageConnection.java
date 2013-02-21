@@ -23,23 +23,14 @@ private MessageConsumer messageConsumer;
 private MessageProducer messageProducer;
 private boolean connected = false;
 
-/********************************************************************
-* Constructor
-********************************************************************/
+
 public MessageConnection() {
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
+
 public Context getContext() throws MessageException {
   if (context == null) {
     try {
-      //-------------------------------------
-      // Initialize JNDI.
-      //-------------------------------------
         
             Properties env = new Properties();
             
@@ -55,17 +46,10 @@ public Context getContext() throws MessageException {
   return context;
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
 public MessageConsumer getConsumer() throws MessageException {
   if (messageConsumer == null) {
     try {
-    //-------------------------------------
-    // Create a message sender.
-    //-------------------------------------
+
       messageConsumer = getSession().createConsumer(getDestination());
       if (!connected) {
         getConnection().start();
@@ -80,17 +64,10 @@ public MessageConsumer getConsumer() throws MessageException {
    return messageConsumer;
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
 public MessageProducer getProducer() throws MessageException {
   if (messageProducer == null) {
     try {
-      //-------------------------------------
-      // Create a message sender.
-      //-------------------------------------
+ 
       messageProducer = getSession().createProducer(getDestination());
       if (!connected) {
         getConnection().start();
@@ -105,21 +82,10 @@ public MessageProducer getProducer() throws MessageException {
   return messageProducer;
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
 public ConnectionFactory getConnectionFactory() throws MessageException {
   if (connectionFactory == null) {
     try {
-      //------------------------------------------
-      // Lookup the connection factory using JNDI.
-      //------------------------------------------
-        
-        
-        
-        
+
           connectionFactory = (ConnectionFactory) getContext().lookup(factoryName);
     } catch (NamingException e) {
       disconnect();
@@ -130,18 +96,10 @@ public ConnectionFactory getConnectionFactory() throws MessageException {
   return connectionFactory;
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
 public Connection getConnection() throws MessageException {
   if (connection == null) {
     try {
-      //-------------------------------------
-      // Use the connection factory to create
-      // a JMS connection.
-      //-------------------------------------
+
       connection = getConnectionFactory().createConnection();
     } catch (JMSException e) {
       disconnect();
@@ -152,18 +110,11 @@ public Connection getConnection() throws MessageException {
    return connection;
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
+
 public Session getSession() throws MessageException {
   if (session == null) {
     try {
-      //-------------------------------------
-      // Use the connection to create a
-      // session.
-      //-------------------------------------
+
       session = getConnection().createSession(false, Session.AUTO_ACKNOWLEDGE);
     } catch (JMSException e) {
       disconnect();
@@ -174,21 +125,10 @@ public Session getSession() throws MessageException {
   return session;
 }
 
-/********************************************************************
-* Attempts to connect to the JMS messaging system.
-*
-* @throws MessageException If a connect failure occurs.
-********************************************************************/
 public Destination getDestination() throws MessageException {
   if (destination == null) {
     try {
-      //-------------------------------------
-      // Lookup the destination (queue) using
-      // JNDI. Note that the designated
-      // destination (destinationName) must be
-      // administered within the JMS service
-      // environment.
-      //-------------------------------------
+
       destination = (Destination) getContext().lookup(destinationName);
      } catch (NamingException e) {
        disconnect();
@@ -199,13 +139,8 @@ public Destination getDestination() throws MessageException {
    return destination;
 }
 
-/********************************************************************
-* Attempts to disconnect from the JMS messaging system.
-*
-* @throws MessageException If a disconnect failure occurs.
-********************************************************************/
 public void connect() throws MessageException {
-  // make sure a connection and a session established.
+ 
   getSession();
   if (!connected) {
     try {
@@ -220,11 +155,6 @@ public void connect() throws MessageException {
   }
 }
 
-/********************************************************************
-* Attempts to disconnect from the JMS messaging system.
-*
-* @throws MessageException If a disconnect failure occurs.
-********************************************************************/
 public void disconnect() throws MessageException {
   if (connection != null) {
     try {
@@ -243,16 +173,10 @@ public void disconnect() throws MessageException {
   connected = false;
 }
 
-/********************************************************************
-* Returns true if a connection is currently established.
-********************************************************************/
 public boolean isConnected() {
    return connected;
 }
 
-/********************************************************************
-* Returns true if a connection is currently established.
-********************************************************************/
 public void send(Message message) throws MessageException {
   try {
     getProducer().send(message);
@@ -262,11 +186,7 @@ public void send(Message message) throws MessageException {
   }
 }
 
-/********************************************************************
-* Attempts to receive a message.
-*
-* @throws MessageException If the receive fails.
-********************************************************************/
+
 public Message receive(int n) throws MessageException {
   Message message = null;
 

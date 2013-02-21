@@ -1,7 +1,5 @@
 package temp.proxy;
 
-//TargetInterface.java
-
 import java.util.HashMap;
 import temp.queue.Monitor;
 
