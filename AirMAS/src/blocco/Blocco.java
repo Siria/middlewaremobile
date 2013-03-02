@@ -8,21 +8,21 @@ package blocco;
  *
  * @author author
  */
+import blocco.adapter.AdapterAlgoritmo;
+import blocco.adapter.AdapterRicevitore;
+import blocco.adapter.AdapterTrasmettitore;
+import blocco.queue.Monitor;
 import java.util.HashMap;
 import java.util.LinkedList;
-import blocco.proxy.AlgoritmoProxy;
-import blocco.proxy.RicevitoreProxy;
-import blocco.proxy.TrasmettitoreProxy;
-import blocco.queue.Monitor;
 
 
 public class Blocco implements Runnable{
     
     private Monitor monitor = new Monitor();
-    private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
-    private LinkedList<TrasmettitoreProxy> trasmettitori = new LinkedList<>();
+    private LinkedList<AdapterRicevitore> ricevitori = new LinkedList<>();
+    private LinkedList<AdapterTrasmettitore> trasmettitori = new LinkedList<>();
 
-    private AlgoritmoProxy algoritmo; 
+    private AdapterAlgoritmo algoritmo; 
     private HashMap conf = new HashMap();
 
 
@@ -42,27 +42,27 @@ public class Blocco implements Runnable{
         this.monitor = monitor;
     }
 
-    public LinkedList<RicevitoreProxy> getRicevitori() {
+    public LinkedList<AdapterRicevitore> getRicevitori() {
         return ricevitori;
     }
 
-    public void setRicevitori(LinkedList<RicevitoreProxy> ricevitori) {
+    public void setRicevitori(LinkedList<AdapterRicevitore> ricevitori) {
         this.ricevitori = ricevitori;
     }
 
-    public AlgoritmoProxy getAlgoritmo() {
+    public AdapterAlgoritmo getAlgoritmo() {
         return algoritmo;
     }
 
-    public void setAlgoritmo(AlgoritmoProxy algoritmo) {
+    public void setAlgoritmo(AdapterAlgoritmo algoritmo) {
         this.algoritmo = algoritmo;
     }
 
-    public LinkedList<TrasmettitoreProxy> getTrasmettitori() {
+    public LinkedList<AdapterTrasmettitore> getTrasmettitori() {
         return trasmettitori;
     }
 
-    public void setTrasmettitori(LinkedList<TrasmettitoreProxy> trasmettitori) {
+    public void setTrasmettitori(LinkedList<AdapterTrasmettitore> trasmettitori) {
         this.trasmettitori = trasmettitori;
     }
 
@@ -71,12 +71,12 @@ public class Blocco implements Runnable{
 	
     @Override
 	public void run(){
-		for (RicevitoreProxy ricevitore : ricevitori){
+		for (AdapterRicevitore ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
 
                 }
                 
-                for (TrasmettitoreProxy trasmettitore : trasmettitori){
+                for (AdapterTrasmettitore trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
 
                     
@@ -90,7 +90,7 @@ public class Blocco implements Runnable{
                             Object tmp = monitor.prelevaMessaggio(); //questi lasciamoli object
                             Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
-                                    for (TrasmettitoreProxy trasmettitore : trasmettitori){
+                                    for (AdapterTrasmettitore trasmettitore : trasmettitori){
                                        trasmettitore.invia(risp);              
                                     }
                                 }
