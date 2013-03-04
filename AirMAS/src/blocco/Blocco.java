@@ -73,20 +73,16 @@ public class Blocco implements Runnable{
 	public void run(){
 		for (AdapterRicevitore ricevitore : ricevitori){
                     ricevitore.configura(monitor,conf); 
-
                 }
                 
                 for (AdapterTrasmettitore trasmettitore : trasmettitori){
                     trasmettitore.configura(monitor,conf); 
-
-                    
                 }
                 
-            
+                
             try{    
     		boolean continua=true;
 			while (continua){
-                            
                             Object tmp = monitor.prelevaMessaggio(); //questi lasciamoli object
                             Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){

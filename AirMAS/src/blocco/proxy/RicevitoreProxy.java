@@ -1,9 +1,7 @@
 package blocco.proxy;
 
-import java.util.HashMap;
 import blocco.queue.Monitor;
-
-
+import java.util.HashMap;
 
 public interface RicevitoreProxy{
     

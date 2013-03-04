@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package blocco;
+package test;
 
+import blocco.Blocco;
 import blocco.adapter.AdapterAlgoritmo;
 import blocco.adapter.AdapterRicevitore;
 import blocco.adapter.AdapterTrasmettitore;
@@ -16,7 +17,7 @@ import blocco.proxy.TrasmettitoreProxy;
  *
  * @author Seby
  */
-public class Starter {
+public class StarterOLD {
 
     /**
      * @param args the command line arguments

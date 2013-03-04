@@ -8,6 +8,7 @@ import configuratore.Variabile;
 import java.util.HashMap;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
+import configuratore.AlgoConfSoglie;
 
 /**
  *
@@ -20,7 +21,8 @@ import blocco.proxy.AlgoritmoProxy;
  */
 public class AlgoValue implements AlgoritmoProxy{
     
-    
+    AlgoConfSoglie v = new AlgoConfSoglie();
+    HashMap hvalue = (HashMap) v.valuta(v);
 
 
     @Override
