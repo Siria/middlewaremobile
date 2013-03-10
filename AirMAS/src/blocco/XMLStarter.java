@@ -4,7 +4,6 @@
  */
 package blocco;
 
-import blocco.Blocco;
 import blocco.adapter.AdapterAlgoritmo;
 import blocco.adapter.AdapterRicevitore;
 import blocco.adapter.AdapterTrasmettitore;
