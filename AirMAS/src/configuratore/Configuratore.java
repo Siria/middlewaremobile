@@ -28,6 +28,28 @@ public class Configuratore implements Runnable{
     private TrasmettitoreProxy trasmettitore;
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
+    private static int timeout = 10;
+    /*
+     *     
+    final public static String BACKUP_NAME = "backupmodule.name";
+    final public static String BACKUP_IP = "backupmodule.ip";
+    final public static String BACKUP_SOCKET_PORT = "backupmodule.socket_port";
+    final public static String BACKUP_JMS_CF = "backupmodule.jms_connectionfactory";
+    final public static String BACKUP_JMS_QUEUE = "backupmodule.jms_queue";
+    final public static String BACKUP_WS_PORT = "backupmodule.ws_port";
+    final public static String BACKUP_REST_PORT = "backupmodule.rest_port";
+    final public static String BACKUP_DIR_PATH = "backupmodule.dir_path";
+    final public static String BACKUP_FILE_NAME = "backupmodule.file_name";
+    final public static String BACKUP_TIMEOUT = "receivermodule.timeout";
+     */
+
+    public static int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        Configuratore.timeout = timeout;
+    }
     
    
     public HashMap getConf() {

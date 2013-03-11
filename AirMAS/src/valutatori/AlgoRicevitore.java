@@ -6,6 +6,9 @@ package valutatori;
 
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
+import com.sun.enterprise.config.serverbeans.Module;
+import configuratore.Configuratore;
+import org.glassfish.api.web.Constants;
 
 /**
  *
@@ -54,6 +57,23 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                             return e;
                         }
                 break;
+                    
+                    case "primary_backup" :
+                        switch (e.get("context").toString()){
+                            case "update" :
+                                if(e.get("content").equals("ok")) {
+                                    LogListener.initialIndex = LogListener.endIndex;
+                                    LogListener.oldTransactionStatus = true;
+                                    System.out.println("Replicazione realizzata con successo");
+                                }
+                                else if(e.get("content").equals("fail")) {
+                                    LogListener.oldTransactionStatus = false;
+                                    System.err.println("Replicazione fallita");
+                                }
+                                LogListener.transaction = false;
+                                LogListener.timeout = Configuratore.getTimeout();
+                                break;
+                        }
             }
         return null;     
         }
