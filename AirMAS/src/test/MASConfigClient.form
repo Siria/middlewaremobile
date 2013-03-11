@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="File"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Apri..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salva"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salva con nome..."/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Esci"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Menu>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="AirMAS - Client Configurazione"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jTextConfig" min="-2" pref="143" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton9" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="218" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextConfig" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/gfx/AirMAScc.png"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Applica"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextConfig">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="localhost:60000"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextConfigActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Indirizzo Configuratore"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="jTextAreaXML">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#xa;&lt;AirMAS&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore1&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreSM&lt;/class&gt;&#xa;    &lt;config key=&quot;sharedIngresso&quot;&gt;shared.dat&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore2&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;   &lt;trasmettitore&gt;&#xa;    &lt;class&gt;trasmissione.TrasmettitoreSM&lt;/class&gt;&#xa;    &lt;config key=&quot;sharedUscita&quot;&gt;shared.dat&lt;/config&gt;&#xa;   &lt;/trasmettitore&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreFile&lt;/class&gt;&#xa;    &lt;config key=&quot;fileIngresso&quot;&gt;file.dat&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore3&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;   &lt;trasmettitore&gt;&#xa;    &lt;class&gt;trasmissione.TrasmettitoreFile&lt;/class&gt;&#xa;    &lt;config key=&quot;fileUscita&quot;&gt;file.dat&lt;/config&gt;&#xa;   &lt;/trasmettitore&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreJMS&lt;/class&gt;&#xa;    &lt;config key=&quot;jmsIngresso&quot;&gt;myDestination&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore4&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;   &lt;trasmettitore&gt;&#xa;    &lt;class&gt;trasmissione.TrasmettitoreJMS&lt;/class&gt;&#xa;    &lt;config key=&quot;jmsUscita&quot;&gt;myDestination&lt;/config&gt;&#xa;   &lt;/trasmettitore&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreREST&lt;/class&gt;&#xa;    &lt;config key=&quot;restIngresso&quot;&gt;http://localhost:9998/WS/REST/&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore5&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;   &lt;trasmettitore&gt;&#xa;    &lt;class&gt;trasmissione.TrasmettitoreREST&lt;/class&gt;&#xa;    &lt;config key=&quot;restUscita&quot;&gt;http://localhost:9998/WS/REST/&lt;/config&gt;&#xa;   &lt;/trasmettitore&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreSocket&lt;/class&gt;&#xa;    &lt;config key=&quot;socketIngresso&quot;&gt;17782&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore6&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;   &lt;trasmettitore&gt;&#xa;    &lt;class&gt;trasmissione.TrasmettitoreSocket&lt;/class&gt;&#xa;    &lt;config key=&quot;socketUscita&quot;&gt;localhost:17782&lt;/config&gt;&#xa;   &lt;/trasmettitore&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreSOAP&lt;/class&gt;&#xa;    &lt;config key=&quot;soapIngresso&quot;&gt;http://localhost:17779/WS/SOAP/?wsdl&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa; &lt;blocco id=&quot;Ricevitore7&quot;&gt;&#xa;  &lt;trasmettitori&gt;&#xa;   &lt;trasmettitore&gt;&#xa;    &lt;class&gt;trasmissione.TrasmettitoreSOAP&lt;/class&gt;&#xa;    &lt;config key=&quot;soapUscita&quot;&gt;http://localhost:17779/WS/SOAP/?wsdl&lt;/config&gt;&#xa;   &lt;/trasmettitore&gt;&#xa;  &lt;/trasmettitori&gt;&#xa;  &lt;ricevitori&gt;&#xa;   &lt;ricevitore&gt;&#xa;    &lt;class&gt;ricezione.RicevitoreSOAP&lt;/class&gt;&#xa;    &lt;config key=&quot;soapIngresso&quot;&gt;http://localhost:17780/WS/SOAP/?wsdl&lt;/config&gt;&#xa;   &lt;/ricevitore&gt;&#xa;  &lt;/ricevitori&gt;&#xa;  &lt;algoritmo&gt;&#xa;   &lt;class&gt;valutatori.Algoritmo&lt;/class&gt;&#xa;  &lt;/algoritmo&gt;&#xa; &lt;/blocco&gt;&#xa; &#xa;&lt;/AirMAS&gt;&#xa;&#xa;"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
