@@ -19,6 +19,31 @@ import javax.naming.ServiceUnavailableException;
 import javax.xml.ws.Service;
 import org.apache.commons.io.FileUtils;
 
+// devo sistemare un mare di cose per integrarlo nel prog
+/* i metodi sn richiamati nel seguente ordine
+ * LogListener
+processEvent
+createUpdateMessage
+se mente il file si modifica si setta a TRUE il flag transations
+
+elaborateMessage
+createPrepareCommitMessage
+
+createAckPrepareCommitMessage
+
+createCommitMessage
+
+writeBackupLog
+createAckCommitMessage
+
+writeBackupLog,
+createAckMessage
+
+setta initialIndex
+setta il flag transaction a false
+
+sia receiver che primary hanno un timer
+ */
 
 public class LogListener {
     
