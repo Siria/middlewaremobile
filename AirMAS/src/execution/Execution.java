@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author alessandra
  */
-public class Ececution implements Runnable{
+public class Execution implements Runnable{
     
     private Monitor monitor = new Monitor();
     private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
