@@ -62,16 +62,16 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                         switch (e.get("context").toString()){
                             case "update" :
                                 if(e.get("content").equals("ok")) {
-                                    LogListener.initialIndex = LogListener.endIndex;
-                                    LogListener.oldTransactionStatus = true;
+                                    AlgoReplicatore.initialIndex = AlgoReplicatore.endIndex;
+                                    AlgoReplicatore.oldTransactionStatus = true;
                                     System.out.println("Replicazione realizzata con successo");
                                 }
                                 else if(e.get("content").equals("fail")) {
-                                    LogListener.oldTransactionStatus = false;
+                                    AlgoReplicatore.oldTransactionStatus = false;
                                     System.err.println("Replicazione fallita");
                                 }
-                                LogListener.transaction = false;
-                                LogListener.timeout = Configuratore.getTimeout();
+                                AlgoReplicatore.transaction = false;
+                                AlgoReplicatore.timeout = Configuratore.getTimeout();
                                 break;
                         }
             }

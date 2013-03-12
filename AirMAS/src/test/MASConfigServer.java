@@ -4,12 +4,6 @@
  */
 package test;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.nio.channels.*;
-import javax.swing.*;
-import java.util.*;
 import blocco.adapter.AdapterAlgoritmo;
 import blocco.adapter.AdapterRicevitore;
 import blocco.adapter.AdapterTrasmettitore;
@@ -17,16 +11,13 @@ import blocco.proxy.AlgoritmoProxy;
 import blocco.proxy.ProxyTarget;
 import blocco.proxy.RicevitoreProxy;
 import blocco.proxy.TrasmettitoreProxy;
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.StringReader;
-import java.net.Socket;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
