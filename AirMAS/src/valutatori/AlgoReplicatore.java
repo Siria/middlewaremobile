@@ -3,7 +3,6 @@ package valutatori;
 
 import blocco.proxy.AlgoritmoProxy;
 import com.sun.xml.internal.ws.api.ha.StickyFeature;
-import replicatore.Backup;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -75,10 +74,15 @@ public class AlgoReplicatore implements AlgoritmoProxy{
     
     public void initBackup(){
         int i=0;
-       // Backup backup = new Backup(s, nextIp, nextDirPath, nextFileName, "active");
-        //backupMap.put(s, backup);
+        // queste stringhe sono usate per puntare all'operazione successiva?
+        // in questo caso dovrebbe servire anche l'ip del successivo primary
+        String s = "backup_name";
+        String nextDirPath = "";
+        String nextFileName = "";
+        Backup backup = new Backup(s, nextDirPath, nextFileName, "active");
+        backupMap.put(s, backup);
         if (i == 0) {
-        //    actualPrimaryBackup = backup;
+        actualPrimaryBackup = backup;
         }
         i++;
     }
@@ -155,13 +159,13 @@ public class AlgoReplicatore implements AlgoritmoProxy{
                                     newBackup = true;
                                     transaction = false;
                                     timeout = configuratore.Configuratore.getTimeout();
-                                    System.out.println("New primary backup selected!");
+                                    System.out.println("Primary backup nuovo!");
                                     break;
                                 }
                             }
                             if(!newBackup){
                                 transaction = true;
-                                System.err.println("No more backups are available: replication is impossible!");
+                                System.err.println("Replication non fattibile perchè non ci sono primary!");
                             }
                         }
                     }
@@ -181,7 +185,7 @@ public class AlgoReplicatore implements AlgoritmoProxy{
         String fromName = "receiver";
         String fromIP = "";
         String toName = "primary_backup";
-        String toIP = backup.getIp();
+        //String toIP = backup.getIp();
         String toDestParam1 = "";
         String toDestParam2 = "";
        
@@ -243,10 +247,6 @@ public class AlgoReplicatore implements AlgoritmoProxy{
                 if (kind == StandardWatchEventKinds.OVERFLOW) {
                     continue;
                 }
-                //WatchEvent<Path> ev = cast(event);
-                //Path name = ev.context();
-                //Path child = getDir.resolve(name);
-                //System.out.format("%s: %s\n", event.kind().name(), child);
                 
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                         finalIndex = finalIndex + 3;
@@ -285,6 +285,8 @@ public class AlgoReplicatore implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
+        // in questa parte di codice arriverà un messaggio dal ricevitore in cui avrò ci saranno 
+        // le righe del file da aggiornare e quindi i dati utili al backup;
     }
 }

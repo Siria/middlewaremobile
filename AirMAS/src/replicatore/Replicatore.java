@@ -4,6 +4,7 @@
  */
 package replicatore;
 
+import valutatori.Backup;
 import blocco.proxy.AlgoritmoProxy;
 import blocco.proxy.ProxyTarget;
 import blocco.proxy.RicevitoreProxy;

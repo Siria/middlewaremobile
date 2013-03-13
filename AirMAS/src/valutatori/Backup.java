@@ -1,4 +1,4 @@
-package replicatore;
+package valutatori;
 
 
 
@@ -9,13 +9,11 @@ import org.apache.commons.lang3.StringUtils;
 public class Backup {
     
     private String name;
-    private String ip;
     private String state;
     private String dirPath;
     private String fileName;
     
-    public Backup(String name, String ip, String dirPath, String fileName, String state) {
-        this.ip = ip;
+    public Backup(String name, String dirPath, String fileName, String state) {
         this.name = name;
         this.dirPath = dirPath;
         this.fileName = fileName;
@@ -24,10 +22,6 @@ public class Backup {
     
     public String getName() {
         return name;
-    }
-    
-    public String getIp() {
-        return ip;
     }
 
     public String getDirPath() {
@@ -46,10 +40,6 @@ public class Backup {
         this.name = name;
     }
     
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-    
     public void setDirPath(String dirPath) {
         this.dirPath = dirPath;
     }
@@ -66,7 +56,6 @@ public class Backup {
     public String toString() {
         List<String> list = new ArrayList<>();
         list.add("name=" + name);
-        list.add("ip=" + ip);
         list.add("dirPath=" + dirPath);
         list.add("fileName=" + fileName);
         list.add("state=" + state);
