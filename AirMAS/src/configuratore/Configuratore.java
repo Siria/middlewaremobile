@@ -22,17 +22,55 @@ import blocco.queue.Monitor;
  * @author alessandra
  */
 public class Configuratore implements Runnable{
-    
+
+
     private Monitor monitor = new Monitor();
     private RicevitoreProxy ricevitore;
     private TrasmettitoreProxy trasmettitore;
     private AlgoritmoProxy algoritmo; 
     private HashMap conf = new HashMap();
     private static int timeout = 10;
+    private static String NAME = "backup.name";
+    private static String IP = "backup.ip";
+    public static String DIR_PATH = "backup.dir_path";
+    public static String FILE_NAME = "backup.file_name";
+
+    public static String getIP() {
+        return IP;
+    }
+
+    public static void setIP(String IP) {
+        Configuratore.IP = IP;
+    }
+
+    public static String getDIR_PATH() {
+        return DIR_PATH;
+    }
+
+    public static void setDIR_PATH(String DIR_PATH) {
+        Configuratore.DIR_PATH = DIR_PATH;
+    }
+
+    public static String getFILE_NAME() {
+        return FILE_NAME;
+    }
+
+    public static void setFILE_NAME(String FILE_NAME) {
+        Configuratore.FILE_NAME = FILE_NAME;
+    }
+    
+    
+
+    public static String getNAME() {
+        return NAME;
+    }
+
+    public void setNAME(String NAME) {
+        Configuratore.NAME = NAME;
+    }
+    
     /*
-     *     
-    final public static String BACKUP_NAME = "backupmodule.name";
-    final public static String BACKUP_IP = "backupmodule.ip";
+
     final public static String BACKUP_SOCKET_PORT = "backupmodule.socket_port";
     final public static String BACKUP_JMS_CF = "backupmodule.jms_connectionfactory";
     final public static String BACKUP_JMS_QUEUE = "backupmodule.jms_queue";

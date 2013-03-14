@@ -21,7 +21,8 @@ import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import module.LogListener;
+import valutatori.XMLBuilder;
+
 
 import org.w3c.dom.Document;
 
@@ -38,82 +39,79 @@ public class AlgoPrimary implements AlgoritmoProxy {
     private String updateMessage;
     private int idLastTransaction;
     private int countActiveBackup;
+    private XMLBuilder xmlBuilder;
+
     
     public AlgoPrimary(){
-      /*  dir = new File("backup");
+        dir = new File("backup");
         if(!dir.exists()) {
             dir.mkdir();
         }
         saveOldLog();
         initBackup();
-        Thread t = new Thread(){
-            @Override
-            public void run(){
-                while(true){
-                    if(startTimeout && timeout > 0){
-                        timeout --;
-                        if(timeout == 0){
-                            try {
-                                if(ack.isEmpty()){
-                                    for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
-                                        Backup backup = entry.getValue();
-                                        backup.setState("fault");
-                                        countActiveBackup--;
-                                    }
-                                }
-                                else{
-                                    for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
-                                        String name = entry.getKey();
-                                        Backup backup = entry.getValue();
-                                        if(!ack.contains(name)){
-                                            backup.setState("fault");
-                                            countActiveBackup--;
-                                        }
-                                    }
-                                }
-                                String messageToNextModule = createAckUpdateMessage(updateMessage, "fail");
-                                valuta(messageToNextModule);
-                                startTimeout = false;
-                                timeout = Integer.parseInt(Module.localConfig.getProperties().getProperty(Constants.BACKUP_TIMEOUT));
-                                System.err.println("Transaction timeout!");
-                            } catch (ServiceUnavailableException ex) {
-                                Logger.getLogger(AlgoPrimary.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(LogListener.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        };
+        Thread t;
+        t = new Thread(){
+     @Override
+     public void run(){
+         while(true){
+             if(startTimeout && timeout > 0){
+                 timeout --;
+                 if(timeout == 0){
+                     //try {
+                         if(ack.isEmpty()){
+                             for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
+                                 Backup backup = entry.getValue();
+                                 backup.setState("fault");
+                                 countActiveBackup--;
+                             }
+                         }
+                         else{
+                             for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
+                                 String name = entry.getKey();
+                                 Backup backup = entry.getValue();
+                                 if(!ack.contains(name)){
+                                     backup.setState("fault");
+                                     countActiveBackup--;
+                                 }
+                             }
+                         }
+                         String messageToNextModule = createAckUpdateMessage(updateMessage, "fail");
+                         valuta(messageToNextModule);
+                         startTimeout = false;
+                         timeout = configuratore.Configuratore.getTimeout();
+                         System.err.println("Transaction timeout!");
+                     
+                     //}
+                 }
+             }
+                 try {
+                     Thread.sleep(1000);
+                 } catch (InterruptedException ex) {
+                     Logger.getLogger(AlgoPrimary.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             }
+             }
+
+ };
         t.start();
     }
     
     private void initBackup(){
-       
+        String[] name = configuratore.Configuratore.getNAME().split(",");
+        String[] ipArray = configuratore.Configuratore.getIP().split(",");
+        String[] dir_Path = configuratore.Configuratore.getDIR_PATH().split(",");
+        String[] file_Name = configuratore.Configuratore.getFILE_NAME().split(",");
         int i = 0;
-        if(nameArray.length > 0){
+        if(name.length > 0){
             String nextIp;
-            String nextSocketPort;
-            String nextCF;
-            String nextQueue;
-            String nextWsPort;
-            String nextRestPort;
             String nextDirPath;
             String nextFileName;
-            for(String s: nameArray){
+            
+            for (String s : name) {
                 nextIp = ipArray[i];
-                nextSocketPort = socketPortArray[i];
-                nextCF = cfArray[i];
-                nextQueue = queueArray[i];
-                nextWsPort = wsPortArray[i];
-                nextRestPort = restPortArray[i];
-                nextDirPath = dirPathArray[i];
-                nextFileName = fileNameArray[i];
-                Backup backup = new Backup(s, nextIp, nextSocketPort, nextCF, nextQueue, nextWsPort, nextRestPort, nextDirPath, nextFileName, "active");
+                nextDirPath = dir_Path[i];
+                nextFileName = file_Name[i];
+                Backup backup = new Backup(s, nextIp, nextDirPath, nextFileName, "active");
                 backupMap.put(s, backup);
                 i++;
                 countActiveBackup++;
@@ -123,7 +121,7 @@ public class AlgoPrimary implements AlgoritmoProxy {
            
         public void elaborateMessage(String message) {  
         if(message!=null){
-            try{ 
+         //   try{ 
                 Document document = xmlBuilder.parseStringToXML(message);
                 String sender = xmlBuilder.getElement(document, "/message/header/from/name");
                 String messageToNextModule = null;
@@ -153,7 +151,8 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                     }
                                     messageToNextModule = createAckUpdateMessage(updateMessage, "ok");
                                     if(messageToNextModule != null){
-                                        remoteService.elaborateMessage(messageToNextModule);
+                                        // remoteService.elaborateMessage
+                                        valuta(messageToNextModule);
                                     }
                                 }
                                 break;
@@ -163,7 +162,7 @@ public class AlgoPrimary implements AlgoritmoProxy {
                         objectType = xmlBuilder.getElement(document, "/message/header/object/type");
                         switch(objectType){
                         case "prepare_commit" :
-                                messageToNextModule = createAckPrepareCommitMessage(document);                                  
+                                messageToNextModule = createAckPrepareCommiteMessage(document);                                  
                                 if(messageToNextModule != null){
                                     valuta(messageToNextModule);
                                 }
@@ -175,7 +174,8 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                 }
                                 messageToNextModule = createAckCommitMessage(document);
                                 if(messageToNextModule != null){
-                                    remoteService.elaborateMessage(messageToNextModule);
+                                    // remoteService.elaborateMessage
+                                    valuta(messageToNextModule);
                                 }
                                 break;
                         }
@@ -193,14 +193,15 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                 }
                                 if(ack.size() == countActiveBackup){
                                     startTimeout = false;
-                                    timeout = Integer.parseInt(Module.localConfig.getProperties().getProperty(Constants.BACKUP_TIMEOUT));
+                                    timeout = configuratore.Configuratore.getTimeout();
                                     ack.clear();
                                     for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
                                         backup = entry.getValue();
                                         if(backup.getState().equals("active")){
                                             messageToNextModule = createCommitMessage(backup, updateMessage);
                                             if(messageToNextModule != null){
-                                                remoteService.elaborateMessage(messageToNextModule);
+                                                // remoteService.elaborateMessage
+                                                valuta(messageToNextModule);
                                             }
                                         }
                                         startTimeout = true;
@@ -216,21 +217,22 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                 }
                                 if(ack.size() == countActiveBackup){
                                     startTimeout = false;
-                                    timeout = Integer.parseInt(Module.localConfig.getProperties().getProperty(Constants.BACKUP_TIMEOUT));
+                                    timeout = configuratore.Configuratore.getTimeout();
                                     ack.clear();
                                     if(idTransaction != idLastTransaction){
                                         writeBackupLog(updateMessage);
                                     }
                                     messageToNextModule = createAckUpdateMessage(updateMessage, "ok");
                                     if(messageToNextModule != null){
-                                        remoteService.elaborateMessage(messageToNextModule);
+                                        // remoteService.elaborateMessage
+                                        valuta(messageToNextModule);
                                     }
                                 }
                                 break;
                         }
                 }                
             
-            }
+          // }
         }
     }
 
@@ -296,37 +298,37 @@ public class AlgoPrimary implements AlgoritmoProxy {
     private String createAckCommitMessage(Document document) {
         Map<String, String> map = new TreeMap<>();
         String fromName = "backup";
-        String fromIP = Module.localConfig.getProperties().getProperty(Constants.MODULE_IP);
-        String toName = xmlBuilder.getElement(document, "/message/header/from/name");
-        String toIP = xmlBuilder.getElement(document, "/message/header/from/ip");
+        String fromIP = "";
+        String toName = getElement(document, "/message/header/from/name");
+        String toIP = getElement(document, "/message/header/from/ip");
         String toDestParam1 = "";
         String toDestParam2 = "";
-        String communicationChannel = Module.localConfig.getProperties().getProperty(Constants.OUT_ADAPTER);
-        switch(communicationChannel){
-            case "socket" :
-                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
-                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/socket_port");
-                    break;
-                case "jms" :
-                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/jms_cf");
-                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/jms_queue");          
-                    break;
-                case "ws" :
-                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
-                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/ws_port");             
-                    break;
-                case "rest" :
-                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
-                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/rest_port");
-                    break;
-                case "file" :
-                    //toDestParam1 = 
-                    //toDestParam2 =  
-                    break;
-        }
+      //  String communicationChannel = Module.localConfig.getProperties().getProperty(Constants.OUT_ADAPTER);
+//        switch(communicationChannel){
+//            case "socket" :
+//                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
+//                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/socket_port");
+//                    break;
+//                case "jms" :
+//                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/jms_cf");
+//                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/jms_queue");          
+//                    break;
+//                case "ws" :
+//                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
+//                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/ws_port");             
+//                    break;
+//                case "rest" :
+//                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
+//                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/rest_port");
+//                    break;
+//                case "file" :
+//                    //toDestParam1 = 
+//                    //toDestParam2 =  
+//                    break;
+   //     }
         String objectType = "committed";
         String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
-        String backupName = Module.localConfig.getProperties().getProperty(Constants.BACKUP_NAME);
+        String backupName = configuratore.Configuratore.getNAME();
         map.put("id_transaction", idTransaction);
         map.put("backup_name", backupName);
         String ackCommitMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
@@ -362,7 +364,7 @@ public class AlgoPrimary implements AlgoritmoProxy {
     public Object valuta(Object messaggio) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    }
+    
     private String createCommitMessage(Backup backup, String message) {
         Map<String, String> map = new TreeMap<>(); 
         Document document = xmlBuilder.parseStringToXML(message);
@@ -411,7 +413,7 @@ public class AlgoPrimary implements AlgoritmoProxy {
         map.put("id_transaction", idTransaction);
         String ackTransactionMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
             communicationChannel, objectType, objectContext, map);
-        return ackTransactionMessage;*/
+        return ackTransactionMessage;
     }
 
     @Override

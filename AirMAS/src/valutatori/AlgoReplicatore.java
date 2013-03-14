@@ -77,9 +77,10 @@ public class AlgoReplicatore implements AlgoritmoProxy{
         // queste stringhe sono usate per puntare all'operazione successiva?
         // in questo caso dovrebbe servire anche l'ip del successivo primary
         String s = "backup_name";
+        String nextIp = "";
         String nextDirPath = "";
         String nextFileName = "";
-        Backup backup = new Backup(s, nextDirPath, nextFileName, "active");
+        Backup backup = new Backup(s, nextIp, nextDirPath, nextFileName, "active");
         backupMap.put(s, backup);
         if (i == 0) {
         actualPrimaryBackup = backup;
