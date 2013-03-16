@@ -299,95 +299,38 @@ public class AlgoPrimary implements AlgoritmoProxy {
         Map<String, String> map = new TreeMap<>();
         String fromName = "backup";
         String fromIP = "";
-//        String toName = getElement(document, "/message/header/from/name");
-//        String toIP = getElement(document, "/message/header/from/ip");
-//        String toDestParam1 = "";
-//        String toDestParam2 = "";
-//      //  String communicationChannel = Module.localConfig.getProperties().getProperty(Constants.OUT_ADAPTER);
-////        switch(communicationChannel){
-////            case "socket" :
-////                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
-////                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/socket_port");
-////                    break;
-////                case "jms" :
-////                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/jms_cf");
-////                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/jms_queue");          
-////                    break;
-////                case "ws" :
-////                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
-////                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/ws_port");             
-////                    break;
-////                case "rest" :
-////                    toDestParam1 = xmlBuilder.getElement(document, "/message/body/ip");
-////                    toDestParam2 = xmlBuilder.getElement(document, "/message/body/rest_port");
-////                    break;
-////                case "file" :
-////                    //toDestParam1 = 
-////                    //toDestParam2 =  
-////                    break;
-//   //     }
-//        String objectType = "committed";
-//        String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
-//        String backupName = configuratore.Configuratore.getNAME();
-//        map.put("id_transaction", idTransaction);
-//        map.put("backup_name", backupName);
-        String ackCommitMessage = null ;//= xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
-//            communicationChannel, objectType, null, map);
+        String toName = xmlBuilder.getElement(document, "/message/header/from/name");
+        String toIP = xmlBuilder.getElement(document, "/message/header/from/ip");
+        String toDestParam1 = "";
+        String toDestParam2 = "";
+        String objectType = "committed";
+        String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
+        String backupName = configuratore.Configuratore.getNAME();
+        map.put("id_transaction", idTransaction);
+        map.put("backup_name", backupName);
+        String ackCommitMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2, objectType, null, map);
        return ackCommitMessage;
     }
-//
+
     private String createPrepareCommitMessage(Backup backup, Document document) {
-//         Map<String, String> map = new TreeMap<>(); 
-//        String fromName = "primary_backup";
-//        String fromIP = Module.localConfig.getProperties().getProperty(Constants.MODULE_IP);
-//        String toName = backup.getName();
-//        String toIP = backup.getIp();
-//        String toDestParam1 = "";
-//        String toDestParam2 = "";
-//        String communicationChannel = Module.localConfig.getProperties().getProperty(Constants.OUT_ADAPTER);
-//        switch(communicationChannel){
-//            case "socket" :
-//                    toDestParam1 = backup.getIp();
-//                    toDestParam2 = backup.getSocketPort();
-//                    break;
-//                case "jms" :
-//                    toDestParam1 = backup.getConnectionFactory();
-//                    toDestParam2 = backup.getQueue();          
-//                    break;
-//                case "ws" :
-//                    toDestParam1 = backup.getIp();
-//                    toDestParam2 = backup.getQueue();             
-//                    break;
-//                case "rest" :
-//                    toDestParam1 = backup.getIp();
-//                    toDestParam2 = backup.getRestPort();  
-//                    break;
-//                case "file" :
-//                    //toDestParam1 = 
-//                    //toDestParam2 =  
-//                    break;
-//        }
-//        String objectType = "prepare_commit";
-//        String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
-//        String ip = Module.localConfig.getProperties().getProperty(Constants.MODULE_IP);
-//        String socketPort = Module.localConfig.getProperties().getProperty(Constants.IN_SOCKET_PORT);
-//        String connectionFactory = Module.localConfig.getProperties().getProperty(Constants.IN_JMS_CF);
-//        String queue = Module.localConfig.getProperties().getProperty(Constants.IN_JMS_QUEUE);
-//        String wsPort = Module.localConfig.getProperties().getProperty(Constants.IN_WS_PORT);
-//        String restPort = Module.localConfig.getProperties().getProperty(Constants.IN_REST_PORT);
-//        String dirPath = Module.localConfig.getProperties().getProperty(Constants.IN_DIR_PATH);
-//        String nameFile = Module.localConfig.getProperties().getProperty(Constants.IN_FILE_NAME);
-//        map.put("id_transaction", idTransaction);
-//        map.put("ip", ip);
-//        map.put("socket_port", socketPort);
-//        map.put("jms_cf", connectionFactory);
-//        map.put("jms_queue", queue);
-//        map.put("ws_port", wsPort);
-//        map.put("rest_port", restPort);
-//        map.put("dir__path", dirPath);
-//        map.put("file_name", nameFile);
-        String prepareCommitMessage = null ;//= xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
-//            communicationChannel, objectType, null, map);
+         Map<String, String> map = new TreeMap<>(); 
+        String fromName = "primary_backup";
+        String fromIP = configuratore.Configuratore.getIP();
+        String toName = backup.getName();
+        String toIP = backup.getIp();
+        String toDestParam1 = "";
+        String toDestParam2 = "";
+        String objectType = "prepare_commit";
+        String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
+        String ip = configuratore.Configuratore.getIP();
+        String dirPath = configuratore.Configuratore.getIN_DIR_PATH();
+        String nameFile = configuratore.Configuratore.getIN_FILE_NAME();
+        map.put("id_transaction", idTransaction);
+        map.put("ip", ip);
+        map.put("dir__path", dirPath);
+        map.put("file_name", nameFile);
+        String prepareCommitMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
+             objectType, null, map);
         return prepareCommitMessage;
     }
 
@@ -410,25 +353,26 @@ public class AlgoPrimary implements AlgoritmoProxy {
         map.put("ip", ip);
         map.put("dir__path", dirPath);
         map.put("file_name", nameFile);
-        String ackPrepareCommitMessage = null ;//= xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
-        //    communicationChannel, objectType, null, map);
+        String ackPrepareCommitMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
+         objectType, null, map);
         return ackPrepareCommitMessage;
     }
     private String createCommitMessage(Backup backup, String message) {
         Map<String, String> map = new TreeMap<>(); 
         Document document = xmlBuilder.parseStringToXML(message);
+        String fromName = "primary_backup";
         String fromIP = configuratore.Configuratore.getIP();
-        String toName = xmlBuilder.getElement(document, "/message/header/from/name");
-        String toIP = xmlBuilder.getElement(document, "/message/header/from/ip");
+        String toName = backup.getName();
+        String toIP = backup.getIp();
         String toDestParam1 = "";
         String toDestParam2 = "";
         
         String objectType = "commit";
         String format = xmlBuilder.getElement(document, "/message/body/log_format");
         String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
-        String ip = null ;//= Module.localConfig.getProperties().getProperty(Constants.MODULE_IP);
-        String dirPath = null ;//= Module.localConfig.getProperties().getProperty(Constants.IN_DIR_PATH);
-        String nameFile = null ;//= Module.localConfig.getProperties().getProperty(Constants.IN_FILE_NAME);
+        String ip = configuratore.Configuratore.getBACKUP_IP();
+        String dirPath = configuratore.Configuratore.getIN_DIR_PATH();
+        String nameFile = configuratore.Configuratore.getIN_FILE_NAME();
         String[] arr1 = message.split("<log_message>");
         String[] arr2 = arr1[1].split("</log_message>");
         String updateLogMessage = arr2[0];
@@ -440,34 +384,34 @@ public class AlgoPrimary implements AlgoritmoProxy {
         
         map.put("dir__path", dirPath);
         map.put("file_name", nameFile);
-        String commitMessage = null; //= xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
-            //communicationChannel, objectType, null, map);
+        String commitMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
+          objectType, null, map);
         return commitMessage;
     }
 
 //
     private String createAckUpdateMessage(String message, String status) {
-//        Map<String, String> map = new TreeMap<>();
-//        Document document = xmlBuilder.parseStringToXML(message);
-//        String fromName = "primary_backup";
-//        String fromIP = Module.localConfig.getProperties().getProperty(Constants.MODULE_IP);
-//        String toName = xmlBuilder.getElement(document, "/message/header/from/name");
-//        String toIP = xmlBuilder.getElement(document, "/message/header/from/ip");
-//        String toDestParam1 = "";
-//        String toDestParam2 = "";
-//
-//        String objectType = "update";
-//        String objectContext = status;
-//        String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
-//        map.put("id_transaction", idTransaction);
-        String ackTransactionMessage = null ;//= xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
-//            communicationChannel, objectType, objectContext, map);
+        Map<String, String> map = new TreeMap<>();
+        Document document = xmlBuilder.parseStringToXML(message);
+        String fromName = "primary_backup";
+        String fromIP = configuratore.Configuratore.getIP();
+        String toName = xmlBuilder.getElement(document, "/message/header/from/name");
+        String toIP = xmlBuilder.getElement(document, "/message/header/from/ip");
+        String toDestParam1 = "";
+        String toDestParam2 = "";
+
+        String objectType = "update";
+        String objectContext = status;
+        String idTransaction = xmlBuilder.getElement(document, "/message/body/id_transaction");
+        map.put("id_transaction", idTransaction);
+        String ackTransactionMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
+             objectType, objectContext, map);
         return ackTransactionMessage;
     }
 
     @Override
     public Object valuta(Object messaggio) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return messaggio;
     }
     
 }

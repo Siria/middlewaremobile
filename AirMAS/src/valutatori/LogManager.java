@@ -1,8 +1,6 @@
 package valutatori;
 
 
-import blocco.proxy.AlgoritmoProxy;
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -17,38 +15,10 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.ServiceUnavailableException;
-import javax.xml.ws.Service;
 import org.apache.commons.io.FileUtils;
-import sun.net.www.content.text.PlainTextInputStream;
 
 
-/* i metodi sn richiamati nel seguente ordine
- * AlgoReplicatore
-processEvent
-createUpdateMessage
-se mente il file si modifica si setta a TRUE il flag transations
-
-elaborateMessage
-createPrepareCommitMessage
-
-createAckPrepareCommitMessage
-
-createCommitMessage
-
-writeBackupLog
-createAckCommitMessage
-
-writeBackupLog,
-createAckMessage
-
-setta initialIndex
-setta il flag transaction a false
-
-sia receiver che primary hanno un timer
- */
-
-public class AlgoReplicatore implements AlgoritmoProxy{
+public class LogManager {
     
     private WatchService watcher = null;
     private Map<WatchKey,Path> keys = null;
@@ -63,7 +33,7 @@ public class AlgoReplicatore implements AlgoritmoProxy{
     public static int finalIndex;
     public static int startIndex;
     public static int endIndex;
-    private Service remoteService;
+    private XMLBuilder xmlBuilder = new XMLBuilder();
     public static boolean transaction = false;
     public static int timeout = configuratore.Configuratore.getTimeout();
     private int idTransaction;
@@ -71,27 +41,34 @@ public class AlgoReplicatore implements AlgoritmoProxy{
     private Map<String, Backup> backupMap = new TreeMap<>();
     private Backup actualPrimaryBackup;
     
-    
     public void initBackup(){
-        int i=0;
-        // queste stringhe sono usate per puntare all'operazione successiva?
-        // in questo caso dovrebbe servire anche l'ip del successivo primary
-        String s = "backup_name";
-        String nextIp = "";
-        String nextDirPath = "";
-        String nextFileName = "";
-        Backup backup = new Backup(s, nextIp, nextDirPath, nextFileName, "active");
-        backupMap.put(s, backup);
-        if (i == 0) {
-        actualPrimaryBackup = backup;
+        String[] nameArray = configuratore.Configuratore.getNAME().split(",");
+        String[] ipArray = configuratore.Configuratore.getBACKUP_IP().split(",");
+        String[] dirPathArray = configuratore.Configuratore.getDIR_PATH().split(",");
+        String[] fileNameArray = configuratore.Configuratore.getFILE_NAME().split(",");
+        int i = 0;
+        if(nameArray.length > 0){
+            String nextIp;
+           
+            String nextDirPath;
+            String nextFileName;
+            for(String s: nameArray){
+                nextIp = ipArray[i];
+                
+                nextDirPath = dirPathArray[i];
+                nextFileName = fileNameArray[i];
+                Backup backup = new Backup(s, nextIp,  nextDirPath, nextFileName, "active");
+                backupMap.put(s, backup);
+                if(i==0){
+                    actualPrimaryBackup = backup;
+                }
+                i++;
+            }
         }
-        i++;
     }
-
-
     
     public void initReplicator(){
-        
+
         Thread t = new Thread(){
             @Override
             public void run(){
@@ -135,10 +112,15 @@ public class AlgoReplicatore implements AlgoritmoProxy{
                             }
                         }
                     }
-                
-                } catch (IOException | InterruptedException ex) {
-                    Logger.getLogger(AlgoReplicatore.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) { 
+                    Logger.getLogger(LogManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                catch (IOException ex) {
+                    Logger.getLogger(LogManager.class.getName()).log(Level.SEVERE, null, ex);
+                }            }
+
+            private void valuta(String messageToCommit) {
+                System.out.println("Elaborazione message in corso...");
             }
         };
         t.start();
@@ -160,20 +142,20 @@ public class AlgoReplicatore implements AlgoritmoProxy{
                                     newBackup = true;
                                     transaction = false;
                                     timeout = configuratore.Configuratore.getTimeout();
-                                    System.out.println("Primary backup nuovo!");
+                                    System.out.println("New primary backup selected!");
                                     break;
                                 }
                             }
                             if(!newBackup){
                                 transaction = true;
-                                System.err.println("Replication non fattibile perchè non ci sono primary!");
+                                System.err.println("No more backups are available: replication is impossible!");
                             }
                         }
                     }
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(AlgoReplicatore.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(LogManager.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -184,32 +166,31 @@ public class AlgoReplicatore implements AlgoritmoProxy{
     private String createUpdateMessage(Backup backup, String message) {
         Map<String, String> map = new TreeMap<>(); 
         String fromName = "receiver";
-        String fromIP = "";
+        String fromIP = configuratore.Configuratore.getIP();
         String toName = "primary_backup";
-        //String toIP = backup.getIp();
+        String toIP = backup.getIp();
         String toDestParam1 = "";
         String toDestParam2 = "";
-       
+        
         String objectType = "update";
         String transactionNumber = "" + idTransaction;
-        String ip = "";
-        String dirPath = "";
-        String nameFile = "";
+        String ip = configuratore.Configuratore.getIP();  
+        String dirPath = configuratore.Configuratore.getDIR_PATH();
+        String nameFile = configuratore.Configuratore.getNEXT_DIR_PATH();
         map.put("id_transaction", transactionNumber);
         map.put("ip", ip);
         map.put("dir_path", dirPath);
         map.put("file_name", nameFile);
         map.put("log_format", format);
         map.put("log_message", message);
-        String updateMessage = "udate message da definire";
-      //  String updateMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
-       //     communicationChannel, objectType, null, map);
+        String updateMessage = xmlBuilder.makeXMLString(fromName, fromIP, toName, toIP, toDestParam1, toDestParam2,
+             objectType, null, map);
         return updateMessage;
     }
     
     public void initLogListener(){
         dir = new File("logs");
-        format = "PlainText";
+        format = configuratore.Configuratore.getFORMAT();
         dirName = dir.getName();
         fileName = "/module." + format;
         file = new File(dirName, fileName);
@@ -218,10 +199,10 @@ public class AlgoReplicatore implements AlgoritmoProxy{
             this.watcher = FileSystems.getDefault().newWatchService();
             this.keys = new HashMap<>();
             register(directory);
-        } catch (IOException ex) {
-             
-        }
-        Thread t = new Thread(){
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(LogManager.class.getName()).log(Level.SEVERE, null, ex);
+        }        Thread t = new Thread(){
             @Override
             public void run(){
                 processEvents();
@@ -233,11 +214,13 @@ public class AlgoReplicatore implements AlgoritmoProxy{
     private void processEvents() {
         while(true) {
             WatchKey key = null;
-            try {
-                key = watcher.take();
-            } catch (InterruptedException ex) {
-
-            }
+            
+                try {
+                    key = watcher.take();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LogManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
             Path getDir = keys.get(key);
             if (getDir == null) {
                 System.err.println("WatchKey not recognized!!");
@@ -248,6 +231,7 @@ public class AlgoReplicatore implements AlgoritmoProxy{
                 if (kind == StandardWatchEventKinds.OVERFLOW) {
                     continue;
                 }
+
                 
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                         finalIndex = finalIndex + 3;
@@ -282,12 +266,5 @@ public class AlgoReplicatore implements AlgoritmoProxy{
             }
         }
         keys.put(key, dir);
-    }
-
-    @Override
-    public Object valuta(Object messaggio) {
-        return null;
-        // in questa parte di codice arriverà un messaggio dal ricevitore in cui avrò ci saranno 
-        // le righe del file da aggiornare e quindi i dati utili al backup;
     }
 }

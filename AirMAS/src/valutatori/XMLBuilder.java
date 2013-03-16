@@ -43,8 +43,7 @@ public class XMLBuilder {
     }
     
     public String makeXMLString(String fromName, String fromIP, String toName, String toIP,
-            String toDestParam1, String toDestParam2, String communicationChannel, 
-            String objectType, String objectContext, Map<String, String> bodyParams){
+            String toDestParam1, String toDestParam2,String objectType, String objectContext, Map<String, String> bodyParams){
         String message = "<message><header><from>";
         if(fromName != null){
             message += "<name>" + fromName + "</name>";
@@ -66,10 +65,7 @@ public class XMLBuilder {
             message += "<dest_param2>" + toDestParam2 + "</dest_param2>";
         }
         message += "</to><communication>";
-        if(!communicationChannel.equals("") || communicationChannel != null){
-            message += "<channel>" + communicationChannel +
-                    "</channel>";
-        }
+        
         message += "</communication><object>";
         if(objectType != null){
             message += "<type>" + objectType + "</type>";

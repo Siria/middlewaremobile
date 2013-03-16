@@ -34,7 +34,80 @@ public class Configuratore implements Runnable{
     private static String IP = "backup.ip";
     public static String DIR_PATH = "backup.dir_path";
     public static String FILE_NAME = "backup.file_name";
+    private static String BACKUP_IP = "backup.ip";
+    private static String NEXT_NAME = "nextbackup.name";
+    private static String NEXT_IP = "nextbackup.ip";
+    private static String FORMAT= "backup.format";
+    private static String IN_DIR_PATH = "backup.dir_path";
+    private static String IN_FILE_NAME = "backup.file_name";
+    private static String NEXT_DIR_PATH = "nextbackup.dir_path";
+    private static String NEXT_FILE_NAME = "nextbackup.file_name";   
 
+    public static String getBACKUP_IP() {
+        return BACKUP_IP;
+    }
+
+    public static String getFORMAT() {
+        return FORMAT;
+    }
+
+    public static void setFORMAT(String FORMAT) {
+        Configuratore.FORMAT = FORMAT;
+    }
+
+    public static void setBACKUP_IP(String BACKUP_IP) {
+        Configuratore.BACKUP_IP = BACKUP_IP;
+    }
+
+    public static String getNEXT_NAME() {
+        return NEXT_NAME;
+    }
+
+    public static void setNEXT_NAME(String NEXT_NAME) {
+        Configuratore.NEXT_NAME = NEXT_NAME;
+    }
+
+    public static String getNEXT_IP() {
+        return NEXT_IP;
+    }
+
+    public static void setNEXT_IP(String NEXT_IP) {
+        Configuratore.NEXT_IP = NEXT_IP;
+    }
+
+    public static String getIN_DIR_PATH() {
+        return IN_DIR_PATH;
+    }
+
+    public static void setIN_DIR_PATH(String IN_DIR_PATH) {
+        Configuratore.IN_DIR_PATH = IN_DIR_PATH;
+    }
+
+    public static String getIN_FILE_NAME() {
+        return IN_FILE_NAME;
+    }
+
+    public static void setIN_FILE_NAME(String IN_FILE_NAME) {
+        Configuratore.IN_FILE_NAME = IN_FILE_NAME;
+    }
+
+    public static String getNEXT_DIR_PATH() {
+        return NEXT_DIR_PATH;
+    }
+
+    public static void setNEXT_DIR_PATH(String NEXT_DIR_PATH) {
+        Configuratore.NEXT_DIR_PATH = NEXT_DIR_PATH;
+    }
+
+    public static String getNEXT_FILE_NAME() {
+        return NEXT_FILE_NAME;
+    }
+
+    public static void setNEXT_FILE_NAME(String NEXT_FILE_NAME) {
+        Configuratore.NEXT_FILE_NAME = NEXT_FILE_NAME;
+    }
+    
+        
     public static String getIP() {
         return IP;
     }
@@ -68,18 +141,7 @@ public class Configuratore implements Runnable{
     public void setNAME(String NAME) {
         Configuratore.NAME = NAME;
     }
-    
-    /*
 
-    final public static String BACKUP_SOCKET_PORT = "backupmodule.socket_port";
-    final public static String BACKUP_JMS_CF = "backupmodule.jms_connectionfactory";
-    final public static String BACKUP_JMS_QUEUE = "backupmodule.jms_queue";
-    final public static String BACKUP_WS_PORT = "backupmodule.ws_port";
-    final public static String BACKUP_REST_PORT = "backupmodule.rest_port";
-    final public static String BACKUP_DIR_PATH = "backupmodule.dir_path";
-    final public static String BACKUP_FILE_NAME = "backupmodule.file_name";
-    final public static String BACKUP_TIMEOUT = "receivermodule.timeout";
-     */
 
     public static int getTimeout() {
         return timeout;

@@ -8,19 +8,53 @@ import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
 import com.sun.enterprise.config.serverbeans.Module;
 import configuratore.Configuratore;
+import java.lang.reflect.Proxy;
+import java.util.logging.Level;
+import logger.FileLogger;
 import org.glassfish.api.web.Constants;
 
 /**
  *
- * @author 
+ * @author alessandra
  */
 
 public class AlgoRicevitore implements AlgoritmoProxy{
     
+
+    public static FileLogger logfile;
+    public static Proxy proxy;
+    private LogManager logManager;
+
+
+    private XMLBuilder xmlBuilder = new XMLBuilder();
+   
+
+    
     @Override
     public Object valuta(Object messaggio){
+        logfile = new FileLogger();
+        logfile.init();
+  
         Evento e = new Evento(messaggio.toString());
         return ricevi_disp(e).toString();
+    }
+    
+    
+        public void init() {
+
+
+        logfile = new FileLogger();
+        logfile.init();
+        logManager = new LogManager();
+        logManager.initBackup();
+        logManager.initLogListener();
+        logfile.getLogger().log(Level.INFO, "[{0}] Local configuration loaded", Module.class.getSimpleName());
+        logfile.getLogger().log(Level.INFO, "[{0}] Logger loaded", Module.class.getSimpleName());
+
+        logfile.getLogger().log(Level.INFO, "[{0}] Proxy instanced", Module.class.getSimpleName());
+
+        logManager.initReplicator();
+
     }
     
    public static Object ricevi_disp(Evento e) {
@@ -62,22 +96,26 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                         switch (e.get("context").toString()){
                             case "update" :
                                 if(e.get("content").equals("ok")) {
-                                    AlgoReplicatore.initialIndex = AlgoReplicatore.endIndex;
-                                    AlgoReplicatore.oldTransactionStatus = true;
+                                    LogManager.initialIndex = LogManager.endIndex;
+                                    LogManager.oldTransactionStatus = true;
                                     System.out.println("Replicazione realizzata con successo");
                                 }
                                 else if(e.get("content").equals("fail")) {
-                                    AlgoReplicatore.oldTransactionStatus = false;
+                                    LogManager.oldTransactionStatus = false;
                                     System.err.println("Replicazione fallita");
                                 }
-                                AlgoReplicatore.transaction = false;
-                                AlgoReplicatore.timeout = Configuratore.getTimeout();
+                                LogManager.transaction = false;
+                                LogManager.timeout = Configuratore.getTimeout();
                                 break;
                         }
             }
         return null;     
+        
         }
+   
         
             
     }
+
+
 	
