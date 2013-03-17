@@ -29,14 +29,14 @@ public class LogManager {
     private String format;
     private String fileName;
     private String dirName;
-    public static int initialIndex;
-    public static int finalIndex;
-    public static int startIndex;
-    public static int endIndex;
+    public static int indexFirst;
+    public static int indexLast;
+    public static int start;
+    public static int end;
     private XMLBuilder xmlBuilder = new XMLBuilder();
     public static boolean transaction = false;
     public static int timeout = configuratore.Configuratore.getTimeout();
-    private int idTransaction;
+    private int transID;
     public static boolean oldTransactionStatus = true;
     private Map<String, Backup> backupMap = new TreeMap<>();
     private Backup actualPrimaryBackup;
@@ -67,7 +67,7 @@ public class LogManager {
         }
     }
     
-    public void initReplicator(){
+    public void init(){
 
         Thread t = new Thread(){
             @Override
@@ -78,17 +78,17 @@ public class LogManager {
                         String message = "";
                         if(oldTransactionStatus){
                             if(!transaction){
-                                startIndex = initialIndex; 
-                                endIndex = finalIndex;
-                                if(endIndex != startIndex){
+                                start = indexFirst; 
+                                end = indexLast;
+                                if(end != start){
                                     transaction = true;
                                     oldTransactionStatus = false;
-                                    for(int i = startIndex; i < endIndex; i ++){
+                                    for(int i = start; i < end; i ++){
                                         String line = FileUtils.readLines(file).get(i);
                                         message += line + "|";
                                     }
-                                    idTransaction++;
-                                    String messageToCommit = createUpdateMessage(actualPrimaryBackup, message);
+                                    transID++;
+                                    String messageToCommit = update(actualPrimaryBackup, message);
                                     valuta(messageToCommit);
                                 }
                                 else{
@@ -98,13 +98,13 @@ public class LogManager {
                             }
                         }
                         else{
-                            if(endIndex != startIndex){
+                            if(end != start){
                                 transaction = true;
-                                for(int i = startIndex; i < endIndex; i ++){
+                                for(int i = start; i < end; i ++){
                                     String line = FileUtils.readLines(file).get(i);
                                     message += line + "|";
                                 }
-                                String messageToCommit = createUpdateMessage(actualPrimaryBackup, message);
+                                String messageToCommit = update(actualPrimaryBackup, message);
                                 valuta(messageToCommit);
                             }
                             else{
@@ -163,7 +163,7 @@ public class LogManager {
         t1.start();
     }
     
-    private String createUpdateMessage(Backup backup, String message) {
+    private String update(Backup backup, String message) {
         Map<String, String> map = new TreeMap<>(); 
         String fromName = "receiver";
         String fromIP = configuratore.Configuratore.getIP();
@@ -173,7 +173,7 @@ public class LogManager {
         String toDestParam2 = "";
         
         String objectType = "update";
-        String transactionNumber = "" + idTransaction;
+        String transactionNumber = "" + transID;
         String ip = configuratore.Configuratore.getIP();  
         String dirPath = configuratore.Configuratore.getDIR_PATH();
         String nameFile = configuratore.Configuratore.getNEXT_DIR_PATH();
@@ -188,7 +188,7 @@ public class LogManager {
         return updateMessage;
     }
     
-    public void initLogListener(){
+    public void initLogManager(){
         dir = new File("logs");
         format = configuratore.Configuratore.getFORMAT();
         dirName = dir.getName();
@@ -205,28 +205,28 @@ public class LogManager {
         }        Thread t = new Thread(){
             @Override
             public void run(){
-                processEvents();
+                eventManager();
             }
         };
         t.start();
     }
       
-    private void processEvents() {
+    private void eventManager() {
         while(true) {
-            WatchKey key = null;
+            WatchKey watchKey = null;
             
                 try {
-                    key = watcher.take();
+                    watchKey = watcher.take();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LogManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             
-            Path getDir = keys.get(key);
-            if (getDir == null) {
+            Path path = keys.get(watchKey);
+            if (path == null) {
                 System.err.println("WatchKey not recognized!!");
                 continue;
             }
-            for (WatchEvent<?> event: key.pollEvents()) {
+            for (WatchEvent<?> event: watchKey.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
                 if (kind == StandardWatchEventKinds.OVERFLOW) {
                     continue;
@@ -234,12 +234,12 @@ public class LogManager {
 
                 
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                        finalIndex = finalIndex + 3;
+                        indexLast = indexLast + 2;
                 }
             }
-            boolean valid = key.reset();
+            boolean valid = watchKey.reset();
             if (!valid) {
-                keys.remove(key);
+                keys.remove(watchKey);
                 if (keys.isEmpty()) {
                     break;
                 }

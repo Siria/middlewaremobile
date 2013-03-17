@@ -28,6 +28,7 @@ import org.w3c.dom.Document;
 
 
 
+    
 public class AlgoPrimary implements AlgoritmoProxy {
     
 
@@ -47,7 +48,7 @@ public class AlgoPrimary implements AlgoritmoProxy {
         if(!dir.exists()) {
             dir.mkdir();
         }
-        saveOldLog();
+        logHistory();
         initBackup();
         Thread t;
         t = new Thread(){
@@ -81,7 +82,7 @@ public class AlgoPrimary implements AlgoritmoProxy {
                          timeout = configuratore.Configuratore.getTimeout();
                          System.err.println("Transaction timeout!");
                      
-                     //}
+                     
                  }
              }
                  try {
@@ -118,27 +119,28 @@ public class AlgoPrimary implements AlgoritmoProxy {
             }
         }
     }
-           
-        public void elaborateMessage(String message) {  
+        @Override   
+        public Object valuta(Object messaggio) {  
+        String message = (String)messaggio;
         if(message!=null){
-         //   try{ 
+
                 Document document = xmlBuilder.parseStringToXML(message);
                 String sender = xmlBuilder.getElement(document, "/message/header/from/name");
-                String messageToNextModule = null;
+                String messaggioNextBlock = null;
                 String objectType;
                 switch(sender){
                     case "receiver" :
                         objectType = xmlBuilder.getElement(document, "/message/header/object/type");
                         switch(objectType){
                             case "update" :
-                                updateMessage = message;
+                                updateMessage = (String) message;
                                 if(countActiveBackup > 0){
                                     for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
                                         Backup backup = entry.getValue();
                                         if(backup.getState().equals("active")){
-                                            messageToNextModule = createPrepareCommitMessage(backup, document);
-                                            if(messageToNextModule != null){
-                                                valuta(messageToNextModule);
+                                            messaggioNextBlock = createPrepareCommitMessage(backup, document);
+                                            if(messaggioNextBlock != null){
+                                                valuta(messaggioNextBlock);
                                             }
                                         }
                                         startTimeout = true;
@@ -147,35 +149,36 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                 else{
                                     int idTransaction = Integer.parseInt(xmlBuilder.getElement(document, "/message/body/id_transaction"));
                                     if(idTransaction != idLastTransaction){
-                                        writeBackupLog(updateMessage);
+                                        appendLogFile(updateMessage);
                                     }
-                                    messageToNextModule = createAckUpdateMessage(updateMessage, "ok");
-                                    if(messageToNextModule != null){
-                                        // remoteService.elaborateMessage
-                                        valuta(messageToNextModule);
+                                    messaggioNextBlock = createAckUpdateMessage(updateMessage, "ok");
+                                    if(messaggioNextBlock != null){
+                                        
+                                        valuta(messaggioNextBlock);
                                     }
                                 }
                                 break;
                         }
+                
                         break;
                     case "primary_backup" :
                         objectType = xmlBuilder.getElement(document, "/message/header/object/type");
                         switch(objectType){
                         case "prepare_commit" :
-                                messageToNextModule = createAckPrepareCommitMessage(document);                                  
-                                if(messageToNextModule != null){
-                                    valuta(messageToNextModule);
+                                messaggioNextBlock = createAckPrepareCommitMessage(document);                                  
+                                if(messaggioNextBlock != null){
+                                    valuta(messaggioNextBlock);
                                 }
                                 break;
                             case "commit" :
                                 int idTransaction = Integer.parseInt(xmlBuilder.getElement(document, "/message/body/id_transaction"));
                                 if(idTransaction != idLastTransaction){
-                                    writeBackupLog(message);
+                                    appendLogFile(message);
                                 }
-                                messageToNextModule = createAckCommitMessage(document);
-                                if(messageToNextModule != null){
-                                    // remoteService.elaborateMessage
-                                    valuta(messageToNextModule);
+                                messaggioNextBlock = createAckCommitMessage(document);
+                                if(messaggioNextBlock != null){
+                                    
+                                    valuta(messaggioNextBlock);
                                 }
                                 break;
                         }
@@ -198,10 +201,10 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                     for (Map.Entry<String, Backup> entry : backupMap.entrySet()){
                                         backup = entry.getValue();
                                         if(backup.getState().equals("active")){
-                                            messageToNextModule = createCommitMessage(backup, updateMessage);
-                                            if(messageToNextModule != null){
-                                                // remoteService.elaborateMessage
-                                                valuta(messageToNextModule);
+                                            messaggioNextBlock = createCommitMessage(backup, updateMessage);
+                                            if(messaggioNextBlock != null){
+                                                
+                                                valuta(messaggioNextBlock);
                                             }
                                         }
                                         startTimeout = true;
@@ -220,12 +223,12 @@ public class AlgoPrimary implements AlgoritmoProxy {
                                     timeout = configuratore.Configuratore.getTimeout();
                                     ack.clear();
                                     if(idTransaction != idLastTransaction){
-                                        writeBackupLog(updateMessage);
+                                        appendLogFile(updateMessage);
                                     }
-                                    messageToNextModule = createAckUpdateMessage(updateMessage, "ok");
-                                    if(messageToNextModule != null){
-                                        // remoteService.elaborateMessage
-                                        valuta(messageToNextModule);
+                                    messaggioNextBlock = createAckUpdateMessage(updateMessage, "ok");
+                                    if(messaggioNextBlock != null){
+                                        
+                                        valuta(messaggioNextBlock);
                                     }
                                 }
                                 break;
@@ -234,36 +237,37 @@ public class AlgoPrimary implements AlgoritmoProxy {
             
           // }
         }
-    }
+        return null;
+    } 
 
-    private boolean writeBackupLog(String message) {
+    private boolean appendLogFile(String message) {
         Document document = xmlBuilder.parseStringToXML(message);
-        BufferedWriter bw = null;
+        BufferedWriter tmp = null;
         try {
             String format = xmlBuilder.getElement(document, "/message/body/log_format");
             String directory = dir.getName();
-            File file = new File(directory, "receiver." + format);
-            bw = new BufferedWriter(new FileWriter(file, true));
-            String[] arr1 = message.split("<log_message>");
-            String[] arr2 = arr1[1].split("</log_message>");
-            String[] array = arr2[0].split("\\|");
-            for(String s : array){
+            File file = new File(directory, "ricevitore." + format);
+            tmp = new BufferedWriter(new FileWriter(file, true));
+            String[] line1 = message.split("<log_message>");
+            String[] line2 = line1[1].split("</log_message>");
+            String[] lines = line2[0].split("\\|");
+            for(String s : lines){
                 if(s.equals("")){
-                    bw.newLine();
+                    tmp.newLine();
                 }
                 else{
-                    bw.write(s);
-                    bw.newLine();
-                    bw.flush();
+                    tmp.write(s);
+                    tmp.newLine();
+                    tmp.flush();
                 }
             }
-            bw.newLine();
-            bw.close();
+            tmp.newLine();
+            tmp.close();
         } catch (IOException ex) {
             Logger.getLogger(AlgoPrimary.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                bw.close();
+                tmp.close();
             } catch (IOException ex) {
                 Logger.getLogger(AlgoPrimary.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -271,16 +275,16 @@ public class AlgoPrimary implements AlgoritmoProxy {
         return true;
     }
     
-    private static void saveOldLog() {
-        File dirLogs = new File("backup");
+    private static void logHistory() {
+        File lLog = new File("backup");
         File dirOldLogs = new File("backup/oldLogs");
         if (!dirOldLogs.exists()) {
             dirOldLogs.mkdir();
         }        
         File newFile;
-        if (dirLogs.exists()) {
-            if (dirLogs.listFiles().length > 1) {
-                File[] logs = dirLogs.listFiles();
+        if (lLog.exists()) {
+            if (lLog.listFiles().length > 1) {
+                File[] logs = lLog.listFiles();
                 for (int i = 0 ; i < logs.length; i++) {
                     if(!logs[i].isDirectory()) {
                         String fileName = logs[i].getName();
@@ -409,9 +413,5 @@ public class AlgoPrimary implements AlgoritmoProxy {
         return ackTransactionMessage;
     }
 
-    @Override
-    public Object valuta(Object messaggio) {
-        return messaggio;
-    }
-    
+
 }

@@ -8,6 +8,7 @@ import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
 import com.sun.enterprise.config.serverbeans.Module;
 import configuratore.Configuratore;
+import java.io.File;
 import java.lang.reflect.Proxy;
 import java.util.logging.Level;
 import logger.FileLogger;
@@ -33,6 +34,7 @@ public class AlgoRicevitore implements AlgoritmoProxy{
     @Override
     public Object valuta(Object messaggio){
         logfile = new FileLogger();
+        logHistory();
         logfile.init();
   
         Evento e = new Evento(messaggio.toString());
@@ -47,13 +49,13 @@ public class AlgoRicevitore implements AlgoritmoProxy{
         logfile.init();
         logManager = new LogManager();
         logManager.initBackup();
-        logManager.initLogListener();
-        logfile.getLogger().log(Level.INFO, "[{0}] Local configuration loaded", Module.class.getSimpleName());
-        logfile.getLogger().log(Level.INFO, "[{0}] Logger loaded", Module.class.getSimpleName());
+        logManager.initLogManager();
+        logfile.getLogger().log(Level.INFO, "[{0}] Ho Instanziato il FileLogger", blocco.Blocco.class.getSimpleName());
+        logfile.getLogger().log(Level.INFO, "[{0}] Ho instanziato il LogManager", blocco.Blocco.class.getSimpleName());
 
-        logfile.getLogger().log(Level.INFO, "[{0}] Proxy instanced", Module.class.getSimpleName());
+        logfile.getLogger().log(Level.INFO, "[{0}] Proxy instanced", blocco.Blocco.class.getSimpleName());
 
-        logManager.initReplicator();
+        logManager.init();
 
     }
     
@@ -96,7 +98,7 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                         switch (e.get("context").toString()){
                             case "update" :
                                 if(e.get("content").equals("ok")) {
-                                    LogManager.initialIndex = LogManager.endIndex;
+                                    LogManager.indexFirst = LogManager.end;
                                     LogManager.oldTransactionStatus = true;
                                     System.out.println("Replicazione realizzata con successo");
                                 }
@@ -113,9 +115,33 @@ public class AlgoRicevitore implements AlgoritmoProxy{
         
         }
    
+    private static void logHistory() {
+        File lLogs = new File("logs");
+        File dirOldLogs = new File("logs/oldLogs");
+        if (!dirOldLogs.exists()) {
+            dirOldLogs.mkdir();
+        }        
+        File newFile;
+        if (lLogs.exists()) {
+            if (lLogs.listFiles().length > 1) {
+                File[] logs = lLogs.listFiles();
+                for (int i = 0 ; i < logs.length; i++) {
+                    if(!logs[i].isDirectory()) {
+                        String fileName = logs[i].getName();
+                        String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
+                        int counter = dirOldLogs.listFiles().length; 
+                        newFile = new File(dirOldLogs, tokens[0] + "." + counter + "." + tokens[1]);
+                        logs[i].renameTo(newFile);
+                        break;
+                    }
+                }
+            }
+        }
         
             
     }
+
+}
 
 
 	
