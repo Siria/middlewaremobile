@@ -101,7 +101,31 @@ public class AlgoGlobal implements AlgoritmoProxy{
     public Evento createStartEvent(Evento e){
         // in base all'id posizione iniziale
          String aereoID = (String) e.get("id");
-        //if ()
+
+         if (map.containsKey("01")) 
+            e.put("data", "0:0:0;10:0:0;2:0:0;");
+            
+            if (map.containsKey("02")) 
+            e.put("data", "50:0:0;10:0:0;2:0:0;");
+                        
+            if (map.containsKey("03")) 
+            e.put("data", "100:0:0;10:0:0;2:0:0;");
+                        
+            if (map.containsKey("04")) 
+            e.put("data", "200:0:0;10:0:0;2:0:0;");
+                        
+            if (map.containsKey("05")) 
+            e.put("data", "250:0:0;10:0:0;2:0:0;");
+            
+            
+            
+            
+         
+             
+         
+         
+             
+        
         return null;
 }
     
