@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class FileLogger {
+public class LogFile {
     
     static private FileHandler fileHandler;
     static private Formatter formatter;
@@ -41,7 +41,7 @@ public class FileLogger {
             logger.addHandler(fileHandler);
             fileHandler.setFormatter(formatter);
         } catch (IOException | SecurityException ex) {
-            logger.log(Level.SEVERE, "[{0}] {1}", new Object[]{FileLogger.class.getSimpleName(), ex.getMessage()});
+            logger.log(Level.SEVERE, "[{0}] {1}", new Object[]{LogFile.class.getSimpleName(), ex.getMessage()});
         }
     }
     

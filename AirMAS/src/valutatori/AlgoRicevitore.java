@@ -11,7 +11,7 @@ import configuratore.Configuratore;
 import java.io.File;
 import java.lang.reflect.Proxy;
 import java.util.logging.Level;
-import logger.FileLogger;
+import logger.LogFile;
 import org.glassfish.api.web.Constants;
 
 /**
@@ -22,7 +22,7 @@ import org.glassfish.api.web.Constants;
 public class AlgoRicevitore implements AlgoritmoProxy{
     
 
-    public static FileLogger logfile;
+    public static LogFile logfile;
     public static Proxy proxy;
     private LogManager logManager;
 
@@ -33,7 +33,8 @@ public class AlgoRicevitore implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
-        logfile = new FileLogger();
+        System.out.println("MAI!");
+        logfile = new LogFile();
         logHistory();
         logfile.init();
   
@@ -45,7 +46,7 @@ public class AlgoRicevitore implements AlgoritmoProxy{
         public void init() {
 
 
-        logfile = new FileLogger();
+        logfile = new LogFile();
         logfile.init();
         logManager = new LogManager();
         logManager.initBackup();
