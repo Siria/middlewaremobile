@@ -30,7 +30,7 @@ public class AlgoLocal implements AlgoritmoProxy{
                 case "posizione":
                     switch (e.get("context").toString()){
                         case "start":
-                            setStart();
+                            setStart(e);
                             eventStart(e);
                             return e;
                             
@@ -56,7 +56,10 @@ public class AlgoLocal implements AlgoritmoProxy{
         return null;     
         }
 
-    private void setStart() {
+    private void setStart(Evento e) {
+        
+        
+        
         myPosition = "0:0:0;0:0:0;0:0:0;";    
         previous = "0:0:0;0:0:0;0:0:0;";
         follower = "0:0:0;0:0:0;0:0:0;";

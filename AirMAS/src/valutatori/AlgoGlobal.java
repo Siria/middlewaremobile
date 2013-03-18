@@ -47,7 +47,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
     
     private Object addAereo(Evento e) {
         
-        String aereoID = (String) e.get("id");
+        String aereoID = (String) e.get("id_dest");
         String pos = (String) e.get("data");
         Aereo aereo = new Aereo(aereoID, pos);       
         map.put(aereoID,aereo);
@@ -91,10 +91,19 @@ public class AlgoGlobal implements AlgoritmoProxy{
             }
  }   
         return e;
+        
+        
+        
     }
     
     
-
+    
+    public Evento createStartEvent(Evento e){
+        // in base all'id posizione iniziale
+         String aereoID = (String) e.get("id");
+        //if ()
+        return null;
+}
     
     
     }
