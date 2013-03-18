@@ -25,7 +25,6 @@ public class AlgoGlobal implements AlgoritmoProxy{
                 case "posizione":
                     switch (e.get("context").toString()){
                         case "data":
-                            
                             return addAereo(e);
                     }
                 break;
@@ -47,23 +46,23 @@ public class AlgoGlobal implements AlgoritmoProxy{
     
     private Object addAereo(Evento e) {
         
-        Aereo aereo = (Aereo) e.get("aereo");
-        int aereoID = aereo.getId();     
-        map.put("aereo",aereo);
-
-        for (int id = 0; id < map.size() || id != aereoID; id++)  {         
+        String aereoID = (String) e.get("id");
+        String pos = (String) e.get("data");
+        Aereo aereo = new Aereo(aereoID, pos);       
+        map.put(aereoID,aereo);
+        
+        for (int id = 0; id < map.size() || id != Integer.getInteger(aereoID); id++)  {         
             if (map.containsKey(id)){
                 Aereo a = (Aereo) map.get(id);
                 if (a.getPosition().equals(aereo.getPosition())){
                     // errore!
-                    e.put("analisi", "false");
+                    e.put("analisi", false);
                 }
-                
-           
+
                 else{
                     // devo verificare che sia nella sua traettoria
                     // se lo è proseguo..
-                    e.put("analisi", "true");
+                    e.put("analisi", true);
                 }
             }
  }   
@@ -71,21 +70,22 @@ public class AlgoGlobal implements AlgoritmoProxy{
 }
 
     private Object verifyAlarm(Evento e) {
-        Aereo aereo = (Aereo) e.get("aereo");
-        int aereoID = aereo.getId();
+        String aereoID = (String) e.get("id");
+        String pos = (String) e.get("data");
+        Aereo aereo = new Aereo(aereoID, pos); 
+        int id_a = Integer.getInteger(aereoID);
         
-        for (int id = 0; id < map.size() || id != aereoID; id++)  {         
+        for (int id = 0; id < map.size() || id != id_a; id++)  {         
             if (map.containsKey(id)){
                 Aereo a = (Aereo) map.get(id);
                 if (a.getPosition().equals(aereo.getPosition())){
-                    e.put("analisi", "false");
+                    e.put("analisi", false);
                 }
-                
-           
+       
                 else{
                     // devo verificare che sia nella sua traettoria
                     // se lo è proseguo..
-                    e.put("analisi", "true");
+                    e.put("analisi", true);
                 }
             }
  }   

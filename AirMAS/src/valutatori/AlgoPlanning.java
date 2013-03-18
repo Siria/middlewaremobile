@@ -19,47 +19,29 @@ public class AlgoPlanning implements AlgoritmoProxy{
     public Object valuta(Object messaggio) {
         
         Evento e = (Evento) messaggio;
-       switch (e.get("type").toString()){
+       switch (e.get("analisi").toString()){
                 
-                case "posizione":
-                    switch (e.get("context").toString()){
-                        case "data":
-                            switch(e.get("analisi").toString()){
                                 case "true":
-                                    return e;
+                                    e.put("planning", true);
+                                    return next_execution(e);
                                 case "false":
                                     return planning_move(e);
-                            }
-
                     }
-                break;
-                
-                case "alarm":
-                    switch (e.get("context").toString()){                            
-                        case "my":
-                            switch(e.get("analisi").toString()){
-                             case "true":
-                                    return e;
-                                case "false":
-                                    return planning_move(e);
-                            }
 
-                         case "other":                                               
-
-                        }
-                break;
-            }
         return null;     
 
     }
 
-    private Object planning_move(Evento e) {
+    private Evento planning_move(Evento e) {
         
-        // da implementare dopo aver verificato che i vicini sono
-        // troppo vicini e quindi
-        // devo creare un ALARM OTHER
-        return null;
+        // devo spostarmi perchè le cose vanno male
+        return e;
      
+    }
+
+    private Object next_execution(Evento e) {
+        
+        return e;
     }
 
     }

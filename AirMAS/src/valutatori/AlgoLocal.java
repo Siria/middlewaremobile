@@ -12,11 +12,13 @@ import blocco.proxy.AlgoritmoProxy;
  */
 public class AlgoLocal implements AlgoritmoProxy{
     
-    HashMap<Object, Object> map = new HashMap<>();
-      
+     
+    Aereo me;
+    
     String myPosition;
     String previous;
     String follower;
+    
 
     @Override
     public Object valuta(Object messaggio) {
@@ -27,12 +29,15 @@ public class AlgoLocal implements AlgoritmoProxy{
                     switch (e.get("context").toString()){
                         case "start":
                             setStart();
+                            eventStart(e);
                             return e;
                             
                         case "control":
                             String pos = e.get("content").toString();
-                            if(verify(pos))
-                                e.put("control", false);
+                            if(!verify(pos))
+                                e.put("analisi", false);
+                            else
+                                e.put("analisi", true);
                             return e;
                         }
                 break;
@@ -40,7 +45,8 @@ public class AlgoLocal implements AlgoritmoProxy{
                 case "alarm":
                     switch (e.get("context").toString()){                            
                         case "modify":
-                            modify(e.get("content").toString());                           
+                            modify(e.get("content").toString());
+                            e.put("analisi", true);
                             return e;
                         }
                 break;
@@ -58,9 +64,9 @@ public class AlgoLocal implements AlgoritmoProxy{
 
     private boolean verify(String pos) {
         if (!myPosition.equals(pos)) {
-            return true;
-        }else {
             return false;
+        }else {
+            return true;
         }
         
     }
@@ -70,17 +76,19 @@ public class AlgoLocal implements AlgoritmoProxy{
     }
         
             
-        public boolean neighbors(Evento e){
-        Aereo aereo, aereo_prev, aereo_follow;
-        int aereoID, aereoID_prev, aereoID_follow;
-        aereo = (Aereo) e.get("aereo");
-        aereoID = aereo.getId();
-        aereoID_prev = aereo.getPrevID();
-        aereoID_follow = aereo.getFollowID();
+//        public boolean neighbors(Evento e){
+//        Aereo aereo, aereo_prev, aereo_follow;
+//        int aereoID, aereoID_prev, aereoID_follow;
+//        aereo = (Aereo) e.get("aereo");
+//        aereoID = aereo.getId();
+//        aereoID_prev = aereo.getPrevID();
+//        aereoID_follow = aereo.getFollowID();
+//
+//        return false;
+//        }
 
-        
-
-        return false;
-        }
+    private void eventStart(Evento e) {
+        e.put("analisi", "start");
+    }
     
 }

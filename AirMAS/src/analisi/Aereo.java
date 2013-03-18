@@ -10,16 +10,40 @@ public class Aereo {
     // l'id degli aerei saranno 01, 02, 03, 04, 05 e l'is rappresenta anche l'ordine
     // degli aerei
     //bisogna creare un'associazione tramite l'aereo e la sua struttura
-    int id;
+    String id;
     String position;
     int followID;
     int prevID;
+    String previous;
+    String follower;
 
-    public int getId() {
+    public String getPrevious() {
+        return previous;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setPrevious(String previous) {
+        this.previous = previous;
+    }
+
+    public String getFollower() {
+        return follower;
+    }
+
+    public void setFollower(String follower) {
+        this.follower = follower;
+    }
+
+    
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -46,11 +70,16 @@ public class Aereo {
     public Aereo() {
     }
 
-    public Aereo(int id, String position, int followID, int prevID) {
+    public Aereo(String id, String position, int followID, int prevID) {
         this.id = id;
         this.position = position;
         this.followID = followID;
         this.prevID = prevID;
+    }
+
+    public Aereo(String id, String position) {
+        this.id = id;
+        this.position = position;
     }
 
    
