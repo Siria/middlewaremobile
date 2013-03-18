@@ -14,6 +14,8 @@ public class AlgoExecution implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
+        // qui arriverà un messaggio che conterrà le info riguardanti il disegno che si deve realizzare
+        // e verrà quindi assegnata una traiettori a ad ogni aereo
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
