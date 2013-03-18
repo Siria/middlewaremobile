@@ -2,9 +2,9 @@
 package valutatori;
 
 import analisi.Aereo;
-import java.util.HashMap;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
+import java.util.HashMap;
 
 
 /**
@@ -15,11 +15,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
     
     HashMap<Object, Object> map = new HashMap<>();
     
-    // devo memorizzare lo stato di tutti i position-data
-    // di tutti gli aerei in una struttura 
-    // creo un hashMap<ip_aereo , oggetto_aereo>
-    // in cui memorizzo tutti e 5 gli aerei
-    
+   
     @Override
     public Object valuta(Object messaggio) {
         
@@ -29,56 +25,77 @@ public class AlgoGlobal implements AlgoritmoProxy{
                 case "posizione":
                     switch (e.get("context").toString()){
                         case "data":
-                            addAereo(e);
-                            return e;
+                            
+                            return addAereo(e);
                     }
                 break;
                 
                 case "alarm":
                     switch (e.get("context").toString()){                            
                         case "my":
-                                                       
-                            return e;
-                         case "other":
-                                                      
-                            return e;
+                            
+                            return verifyAlarm(e);
+                         case "other":                                               
+                            return verifyAlarm(e);
                         }
                 break;
             }
         return null;     
-        //
-        //String ip = (String) hmap.get("ip");
-        
+
     }
 
     
-    private boolean addAereo(Evento e) {
-        boolean flag= true;
+    private Object addAereo(Evento e) {
+        
         Aereo aereo = (Aereo) e.get("aereo");
-        int aereoID = aereo.getId();
-        map.put(aereoID,aereo);
+        int aereoID = aereo.getId();     
+        map.put("aereo",aereo);
 
         for (int id = 0; id < map.size() || id != aereoID; id++)  {         
             if (map.containsKey(id)){
                 Aereo a = (Aereo) map.get(id);
-                if (a.getPosition().equals(aereo.getPosition()))
+                if (a.getPosition().equals(aereo.getPosition())){
                     // errore!
-                    flag = false;
+                    e.put("analisi", "false");
+                }
+                
            
-                else
-                    flag = true;
-                    // tutto ok
+                else{
+                    // devo verificare che sia nella sua traettoria
+                    // se lo è proseguo..
+                    e.put("analisi", "true");
+                }
             }
  }   
-        return flag;
+        return e;
 }
+
+    private Object verifyAlarm(Evento e) {
+        Aereo aereo = (Aereo) e.get("aereo");
+        int aereoID = aereo.getId();
+        
+        for (int id = 0; id < map.size() || id != aereoID; id++)  {         
+            if (map.containsKey(id)){
+                Aereo a = (Aereo) map.get(id);
+                if (a.getPosition().equals(aereo.getPosition())){
+                    e.put("analisi", "false");
+                }
+                
+           
+                else{
+                    // devo verificare che sia nella sua traettoria
+                    // se lo è proseguo..
+                    e.put("analisi", "true");
+                }
+            }
+ }   
+        return e;
+    }
     
-    public void init(){
+    
+
     
     
     }
- 
-    
-}
 
 

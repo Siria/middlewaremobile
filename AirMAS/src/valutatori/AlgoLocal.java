@@ -1,6 +1,7 @@
 
 package valutatori;
 
+import analisi.Aereo;
 import java.util.HashMap;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
@@ -10,6 +11,8 @@ import blocco.proxy.AlgoritmoProxy;
  * @author alessandra
  */
 public class AlgoLocal implements AlgoritmoProxy{
+    
+    HashMap<Object, Object> map = new HashMap<>();
       
     String myPosition;
     String previous;
@@ -67,5 +70,17 @@ public class AlgoLocal implements AlgoritmoProxy{
     }
         
             
+        public boolean neighbors(Evento e){
+        Aereo aereo, aereo_prev, aereo_follow;
+        int aereoID, aereoID_prev, aereoID_follow;
+        aereo = (Aereo) e.get("aereo");
+        aereoID = aereo.getId();
+        aereoID_prev = aereo.getPrevID();
+        aereoID_follow = aereo.getFollowID();
+
+        
+
+        return false;
+        }
     
 }

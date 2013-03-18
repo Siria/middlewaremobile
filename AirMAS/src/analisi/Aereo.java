@@ -46,11 +46,14 @@ public class Aereo {
     public Aereo() {
     }
 
-    public Aereo(String position, int follower, int previous) {
+    public Aereo(int id, String position, int followID, int prevID) {
+        this.id = id;
         this.position = position;
-        this.followID = follower;
-        this.prevID = previous;
+        this.followID = followID;
+        this.prevID = prevID;
     }
+
+   
 
     
     public String getPosition() {
