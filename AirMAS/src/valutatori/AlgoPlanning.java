@@ -16,6 +16,8 @@ public class AlgoPlanning implements AlgoritmoProxy{
     public Object valuta(Object messaggio) {
         // in questo algoritmo dovranno essere gestiti i conflitti ed 
         // dovranno essere prese decisioni sulla strategia
+        
+        
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

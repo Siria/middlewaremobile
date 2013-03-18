@@ -1,6 +1,7 @@
 
-package analisi;
+package valutatori;
 
+import analisi.Aereo;
 import java.util.HashMap;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
@@ -11,6 +12,9 @@ import blocco.proxy.AlgoritmoProxy;
  * @author alessandra
  */
 public class AlgoGlobal implements AlgoritmoProxy{
+    
+    HashMap<Object, Object> map = new HashMap<>();
+    
     // devo memorizzare lo stato di tutti i position-data
     // di tutti gli aerei in una struttura 
     // creo un hashMap<ip_aereo , oggetto_aereo>
@@ -47,9 +51,34 @@ public class AlgoGlobal implements AlgoritmoProxy{
         
     }
 
-    private void addAereo(Evento e) {
-        
+    
+    private boolean addAereo(Evento e) {
+        boolean flag= true;
+        Aereo aereo = (Aereo) e.get("aereo");
+        int aereoID = aereo.getId();
+        map.put(aereoID,aereo);
+
+        for (int id = 0; id < map.size() || id != aereoID; id++)  {         
+            if (map.containsKey(id)){
+                Aereo a = (Aereo) map.get(id);
+                if (a.getPosition().equals(aereo.getPosition()))
+                    // errore!
+                    flag = false;
+           
+                else
+                    flag = true;
+                    // tutto ok
+            }
+ }   
+        return flag;
+}
+    
+    public void init(){
+    
+    
     }
+ 
     
 }
- 
+
+

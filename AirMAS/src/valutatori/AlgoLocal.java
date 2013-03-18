@@ -1,5 +1,5 @@
 
-package analisi;
+package valutatori;
 
 import java.util.HashMap;
 import blocco.Evento;
