@@ -32,7 +32,8 @@ import org.xml.sax.SAXException;
  * @author Seby
  */
 public class MASConfigServer extends javax.swing.JFrame {
-
+    
+    static LinkedList<Thread> Threads = new LinkedList<Thread>();
     Applicazione applicazione = new Applicazione();
     
     /**
@@ -281,12 +282,15 @@ public class MASConfigServer extends javax.swing.JFrame {
         jTextAreaXML.append("\n\n\n\nAttendere prego...\n");
         jTextAreaXML.setCaretPosition(jTextAreaXML.getText().length());
             
+        for (Thread th : Threads){
+            th.interrupt();
+        }
+        
         try {
-            File file = new File("config.xml");
                   DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                   
                   InputSource source = new InputSource(new StringReader(s));
-          Document doc = dBuilder.parse(source);
+                  Document doc = dBuilder.parse(source);
                   
                   if (doc.hasChildNodes()) {
                           parse(doc.getChildNodes().item(0).getChildNodes());  
@@ -400,10 +404,15 @@ public class MASConfigServer extends javax.swing.JFrame {
                                     } 
                     }
                     Thread th = new Thread (blocco);
+                    Threads.add(th);
                     th.start();
 
                     Thread.sleep(1000);
                 }
+                
+                
+                //--------------------------------------------------------------------
+                       
         }
  
   }

@@ -1,127 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AirMAS>
-	
-	<blocco id="Ricevitore1">
-		<trasmettitori>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreSM</class>
-				<config key="sharedIngresso">shared.dat</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
-	<blocco id="Ricevitore2">
-		<trasmettitori>
-			<trasmettitore>
-				<class>trasmissione.TrasmettitoreSM</class>
-				<config key="sharedUscita">shared.dat</config>
-			</trasmettitore>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreFile</class>
-				<config key="fileIngresso">file.dat</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
-	<blocco id="Ricevitore3">
-		<trasmettitori>
-			<trasmettitore>
-				<class>trasmissione.TrasmettitoreFile</class>
-				<config key="fileUscita">file.dat</config>
-			</trasmettitore>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreJMS</class>
-				<config key="jmsIngresso">myDestination</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
-	<blocco id="Ricevitore4">
-		<trasmettitori>
-			<trasmettitore>
-				<class>trasmissione.TrasmettitoreJMS</class>
-				<config key="jmsUscita">myDestination</config>
-			</trasmettitore>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreREST</class>
-				<config key="restIngresso">http://localhost:9998/WS/REST/</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
-	<blocco id="Ricevitore5">
-		<trasmettitori>
-			<trasmettitore>
-				<class>trasmissione.TrasmettitoreREST</class>
-				<config key="restUscita">http://localhost:9998/WS/REST/</config>
-			</trasmettitore>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreSocket</class>
-				<config key="socketIngresso">17782</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
-	<blocco id="Ricevitore6">
-		<trasmettitori>
-			<trasmettitore>
-				<class>trasmissione.TrasmettitoreSocket</class>
-				<config key="socketUscita">localhost:17782</config>
-			</trasmettitore>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreSOAP</class>
-				<config key="soapIngresso">http://localhost:17779/WS/SOAP/?wsdl</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
-	<blocco id="Ricevitore7">
-		<trasmettitori>
-			<trasmettitore>
-				<class>trasmissione.TrasmettitoreSOAP</class>
-				<config key="soapUscita">http://localhost:17779/WS/SOAP/?wsdl</config>
-			</trasmettitore>
-		</trasmettitori>
-		<ricevitori>
-			<ricevitore>
-				<class>ricezione.RicevitoreSOAP</class>
-				<config key="soapIngresso">http://localhost:17780/WS/SOAP/?wsdl</config>
-			</ricevitore>
-		</ricevitori>
-		<algoritmo>
-			<class>valutatori.Algoritmo</class>
-		</algoritmo>
-	</blocco>
-	
+ 
+ <blocco id="Ricevitore1">
+  <trasmettitori>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSM</class>
+    <config key="sharedIngresso">shared.dat</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ <blocco id="Ricevitore2">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSM</class>
+    <config key="sharedUscita">shared.dat</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreFile</class>
+    <config key="fileIngresso">file.dat</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ <blocco id="Ricevitore3">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreFile</class>
+    <config key="fileUscita">file.dat</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreJMS</class>
+    <config key="jmsIngresso">myDestination</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ <blocco id="Ricevitore4">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreJMS</class>
+    <config key="jmsUscita">myDestination</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreREST</class>
+    <config key="restIngresso">http://localhost:9998/WS/REST/</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ <blocco id="Ricevitore5">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreREST</class>
+    <config key="restUscita">http://localhost:9998/WS/REST/</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">17782</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ <blocco id="Ricevitore6">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:17782</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSOAP</class>
+    <config key="soapIngresso">http://localhost:17779/WS/SOAP/?wsdl</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ <blocco id="Ricevitore7">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSOAP</class>
+    <config key="soapUscita">http://localhost:17779/WS/SOAP/?wsdl</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSOAP</class>
+    <config key="soapIngresso">http://localhost:17780/WS/SOAP/?wsdl</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </blocco>
+ 
+ 
+ <backup id="Backup1">
+  <trasmettitorePC>
+  	<class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:65000</config>
+  </trasmettitorePC>
+  <ricevitorePC>
+  	<class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">65001</config>
+  </ricevitorePC>
+  
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60021</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60031</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60041</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60012</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60013</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60014</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </backup>
+ 
+ 
+ <backup id="Backup2">
+  <trasmettitorePC>
+  	<class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:65000</config>
+  </trasmettitorePC>
+  <ricevitorePC>
+  	<class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">650002</config>
+  </ricevitorePC>
+  
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60012</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60032</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60042</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">600021</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">600023</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60024</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </backup>
+ 
+ <backup id="Backup3">
+  <trasmettitorePC>
+  	<class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:65000</config>
+  </trasmettitorePC>
+  <ricevitorePC>
+  	<class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">65003</config>
+  </ricevitorePC>
+  
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60013</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60023</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60043</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60031</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60032</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60034</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </backup>
+ 
+  <backup id="Backup4">
+  <trasmettitorePC>
+  	<class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:65000</config>
+  </trasmettitorePC>
+  <ricevitorePC>
+  	<class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">65000</config>
+  </ricevitorePC>
+  
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60014</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60024</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:60034</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60041</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60042</config>
+   </ricevitore>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">60043</config>
+   </ricevitore>
+  </ricevitori>
+  <algoritmo>
+   <class>valutatori.Algoritmo</class>
+  </algoritmo>
+ </backup>
+ 
+ 
 </AirMAS>
 

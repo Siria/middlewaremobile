@@ -18,12 +18,12 @@ import java.util.LinkedList;
 
 public class Blocco implements Runnable{
     
-    private Monitor monitor = new Monitor();
-    private LinkedList<AdapterRicevitore> ricevitori = new LinkedList<>();
-    private LinkedList<AdapterTrasmettitore> trasmettitori = new LinkedList<>();
+     Monitor monitor = new Monitor();
+     LinkedList<AdapterRicevitore> ricevitori = new LinkedList<>();
+     LinkedList<AdapterTrasmettitore> trasmettitori = new LinkedList<>();
 
-    private AdapterAlgoritmo algoritmo; 
-    private HashMap conf = new HashMap();
+     AdapterAlgoritmo algoritmo; 
+     HashMap conf = new HashMap();
 
 
     public HashMap getConf() {

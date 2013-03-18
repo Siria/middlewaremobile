@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package primarybackup;
+package backup;
 
 /**
  *
  * @author Seby
  */
-public class PrimaryBackup {
+public class Client {
     
 }

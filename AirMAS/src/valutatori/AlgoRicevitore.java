@@ -12,7 +12,6 @@ import java.io.File;
 import java.lang.reflect.Proxy;
 import java.util.logging.Level;
 import logger.LogFile;
-import org.glassfish.api.web.Constants;
 
 /**
  *
