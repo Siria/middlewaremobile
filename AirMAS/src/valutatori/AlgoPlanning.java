@@ -15,6 +15,7 @@ public class AlgoPlanning implements AlgoritmoProxy{
 
         // in questo algoritmo dovranno essere gestiti i conflitti ed 
         // dovranno essere prese decisioni sulla strategia
+       // solo per la torre di controllo
         @Override
     public Object valuta(Object messaggio) {
         
@@ -33,14 +34,14 @@ public class AlgoPlanning implements AlgoritmoProxy{
     }
 
     private Evento planning_move(Evento e) {
-        
-        // devo spostarmi perchè le cose vanno male
+        e.put("exec", false);
+        // devo spostarmi perchè le cose vanno come dovrebbero
         return e;
      
     }
 
     private Object next_execution(Evento e) {
-        
+        e.put("exec", true);
         return e;
     }
 
