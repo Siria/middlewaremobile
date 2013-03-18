@@ -22,6 +22,8 @@ public class AlgoLocal implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
+        System.out.println("Sono nel blocco AlgoLocal");
+        
         Evento e = (Evento) messaggio;
        switch (e.get("type").toString()){
                 

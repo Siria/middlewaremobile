@@ -18,6 +18,7 @@ public class AlgoPlanning implements AlgoritmoProxy{
        // solo per la torre di controllo
         @Override
     public Object valuta(Object messaggio) {
+        System.out.println("Sono nel blocco Planning");
         
         Evento e = (Evento) messaggio;
        switch (e.get("analisi").toString()){

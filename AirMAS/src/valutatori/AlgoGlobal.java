@@ -18,6 +18,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
    
     @Override
     public Object valuta(Object messaggio) {
+        System.out.println("Sono nel blocco AlgoGlobal");
         
         Evento e = (Evento) messaggio;
        switch (e.get("type").toString()){

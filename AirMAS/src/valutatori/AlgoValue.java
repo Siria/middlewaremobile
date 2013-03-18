@@ -27,19 +27,22 @@ public class AlgoValue implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-         Evento e =  (Evento) messaggio;
-         int x,v,a;
-         if (e.get("type").toString().contentEquals("posizione")) {
+        System.out.println("Sono nel blocco Filtro Value");
+        
+        Evento e =  new Evento(messaggio.toString());
+        
+        int x,v,a;
+         if (e.get("type").toString().equals("posizione")) {
             String[] parametri = e.get("content").toString().toLowerCase().split(";");
             for (String parametro : parametri) {
                 String[] value = parametro.split(":");
-                 //   for (int i = 0; i < value.length; i++) {
                         x = Integer.parseInt(value[0]);
                         v = Integer.parseInt(value[1]);
                         a = Integer.parseInt(value[2]);
-                        if (compare(x,v,a))
-                            return messaggio;
-                        System.out.println();
+                        if (compare(x,v,a)){
+                            return e;
+                        }    
+                        
         }
 
     }

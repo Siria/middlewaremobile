@@ -32,10 +32,10 @@ public class AlgoRicevitore implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
-        System.out.println("MAI!");
-        logfile = new LogFile();
-        logHistory();
-        logfile.init();
+        System.out.println("Sono nel Blocco Ricevitore");
+        //logfile = new LogFile();
+        //logHistory();
+        //logfile.init();
   
         Evento e = new Evento(messaggio.toString());
         return ricevi_disp(e).toString();
@@ -43,7 +43,6 @@ public class AlgoRicevitore implements AlgoritmoProxy{
     
     
         public void init() {
-
 
         logfile = new LogFile();
         logfile.init();

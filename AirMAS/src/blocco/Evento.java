@@ -20,7 +20,9 @@ public class Evento implements Serializable{
     private HashMap data = new HashMap();
     
     
-    public Evento(String s){      
+    public Evento(){}
+    
+    public Evento(String s){
         try (XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(s.getBytes("UTF-8")))) {
             data = (HashMap)decoder.readObject();
         } catch (Exception ex) {
@@ -51,6 +53,7 @@ public class Evento implements Serializable{
          catch (Exception ex) {
             Logger.getLogger(Evento.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return baos.toString();
     }
     

@@ -16,17 +16,22 @@ public class AlgoTime implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-        Evento tmp =  (Evento) messaggio;
+        System.out.println("Sono nel blocco Filtro Time");
+        
+        
+        Evento e =  new Evento(messaggio.toString());
+        
+        
         // funziona questo cast?
-        VectorClock vc = (VectorClock) tmp.get("Vector");
-        int [] timestamp = (int[])tmp.get("timestamp");
+        VectorClock vc = (VectorClock) e.get("Vector");
+        int [] timestamp = (int[])e.get("timestamp");
         vc.receiveAction(timestamp);      
         // dopo aver effettuato le operazioni in ricezione 
         // incremento il vc con sendAction()                                    
         vc.sendAction();
-        tmp.put("timestamp", vc.getV());
+        e.put("timestamp", vc.getV());
         //serve il cast ad Object?
-        return tmp;
+        return e;
     }
     
 }

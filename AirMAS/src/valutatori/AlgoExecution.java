@@ -15,8 +15,7 @@ public class AlgoExecution implements AlgoritmoProxy{
 
     @Override
     public Object valuta(Object messaggio) {
-        
-        
+        System.out.println("Sono nel blocco Execution");
         // qui arriverà un messaggio che conterrà le info riguardanti il disegno che si deve realizzare
         // e verrà quindi assegnata una traiettoria ad ogni aereo
         

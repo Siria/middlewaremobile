@@ -91,11 +91,11 @@ public class Replicatore implements Runnable{
                                 trasmettitori.add((TrasmettitoreProxy)ProxyTarget.createProxy(cls));
                                 
                          } catch (MalformedURLException ex) {
-                            Logger.getLogger(filtro.FiltroSource.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(replicatore.Replicatore.class.getName()).log(Level.SEVERE, null, ex);
                         
                          }
                     } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(filtro.FiltroSource.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(replicatore.Replicatore.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             

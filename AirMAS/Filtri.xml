@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>regola4</string>
+   <object class="configuratore.Vincolo" id="Vincolo0">
+    <void class="configuratore.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo0">
+       <void class="configuratore.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo0">
+          <void class="configuratore.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo0"/>
+            <string>0</string>
+           </void>
+          </void>
+         </object>
+         <string>&gt;</string>
+        </void>
+       </void>
+      </object>
+      <string>Accelerazione</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>regola1</string>
+   <object class="configuratore.Vincolo" id="Vincolo1">
+    <void class="configuratore.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo1">
+       <void class="configuratore.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo1">
+          <void class="configuratore.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo1"/>
+            <string>1000</string>
+           </void>
+          </void>
+         </object>
+         <string>&lt;</string>
+        </void>
+       </void>
+      </object>
+      <string>Accelerazione</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>regola3</string>
+   <object class="configuratore.Vincolo" id="Vincolo2">
+    <void class="configuratore.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo2">
+       <void class="configuratore.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo2">
+          <void class="configuratore.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo2"/>
+            <string>500</string>
+           </void>
+          </void>
+         </object>
+         <string>!=</string>
+        </void>
+       </void>
+      </object>
+      <string>Accelerazione</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>regola2</string>
+   <object class="configuratore.Vincolo" id="Vincolo3">
+    <void class="configuratore.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo3">
+       <void class="configuratore.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo3">
+          <void class="configuratore.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo3"/>
+            <string>50</string>
+           </void>
+          </void>
+         </object>
+         <string>&gt;</string>
+        </void>
+       </void>
+      </object>
+      <string>Accelerazione</string>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
+

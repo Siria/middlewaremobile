@@ -9,6 +9,7 @@ package configuratore;
  * @author alessandra
  */
 public class Variabile {
+    String id;
     String min;
     String max;
 
