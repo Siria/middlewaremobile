@@ -4,8 +4,11 @@
  */
 package valutatori;
 
+import analisi.Aereo;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  *
@@ -190,14 +193,29 @@ public class AlgoExecution implements AlgoritmoProxy{
 
     }
 
-    private String getNextPosition(Object get) {
+    private String getNextPosition(Object position) {
         // Y+1
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        String pos = (String) position;
+
+            String[] parametri = pos.toString().toLowerCase().split(";");
+            String p[] = parametri[0].split(":"); //posizione  
+
+                int y = Integer.getInteger(p[1]);
+                y++;
+                return String.valueOf(y);
     }
 
-    private String getSafePosition(Object get) {
+    private String getSafePosition(Object position) {
         // Z - 5
-        throw new UnsupportedOperationException("Not yet implemented");
+         String pos = (String) position;
+
+            String[] parametri = pos.toString().toLowerCase().split(";");
+            String p[] = parametri[0].split(":"); //posizione  
+
+                int z = Integer.getInteger(p[2]);
+                z = z-5;
+                return String.valueOf(z);
     }
     
 }
