@@ -160,9 +160,34 @@ public class AlgoExecution implements AlgoritmoProxy{
         s2 = temp;
     }
 
-    private String getContentFromID(Object get) {
+    private String getContentFromID(Object idObject) {
         // devo dare la posizione iniziale in base all'id di destinazione del messaggio
-        throw new UnsupportedOperationException("Not yet implemented");
+        String id = (String) idObject;
+        String pos = null;
+        switch(id){
+                
+            case "01":
+            pos = "0:0:0;10:0:0;2:0:0;" ; 
+                break;
+                
+            case "02":
+            pos = "50:0:0;10:0:0;2:0:0;";  
+                break;
+           
+            case"03":
+            pos = "100:0:0;10:0:0;2:0:0;";  
+                break;
+                  
+            case "04":
+            pos = "200:0:0;10:0:0;2:0:0;";     
+                break;
+                       
+            case "05":
+            pos = "250:0:0;10:0:0;2:0:0;";
+                break;
+        }
+        return pos;
+
     }
 
     private String getNextPosition(Object get) {
