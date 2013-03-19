@@ -30,41 +30,50 @@ public class AlgoLocal implements AlgoritmoProxy{
                 case "posizione":
                     switch (e.get("context").toString()){
                         case "start":
-                            setStart(e);
-                            eventStart(e);
-                            return e;
-                            
-                        case "control":
-                            String pos = e.get("content").toString();
-                            if(!verify(pos))
-                                e.put("analisi", false);
-                            else
-                                e.put("analisi", true);
-                            return e;
+                            return setStart(e);
+                                                         
+                        case "control":  
+                           return control (e);
+                                                      
                         }
                 break;
                 
                 case "alarm":
                     switch (e.get("context").toString()){                            
                         case "modify":
-                            modify(e.get("content").toString());
-                            e.put("analisi", true);
-                            return e;
+                            return modify(e);
                         }
                 break;
             }
         return null;     
         }
 
-    private void setStart(Evento e) {
-        
-        
-        
-        myPosition = "0:0:0;0:0:0;0:0:0;";    
-        previous = "0:0:0;0:0:0;0:0:0;";
-        follower = "0:0:0;0:0:0;0:0:0;";
+    private Object setStart(Evento e) {
+        String startPos = e.get("content").toString();
+        myPosition = startPos;
+        return e;
     }
 
+
+    private Object modify(Evento e) {
+        String pos = e.get("content").toString();
+        myPosition = pos;
+        e.put("analisi", true);
+        return e;
+    }
+
+
+    private Object control(Evento e) {
+        String pos = e.get("content").toString();
+        if (!verify(pos)) {
+            e.put("analisi", false);
+        } else {
+            e.put("analisi", true);
+        }
+        return e;
+    }
+    
+    
     private boolean verify(String pos) {
         if (!myPosition.equals(pos)) {
             return false;
@@ -73,25 +82,4 @@ public class AlgoLocal implements AlgoritmoProxy{
         }
         
     }
-
-    private void modify(String pos) {
-        myPosition = pos;
-    }
-        
-            
-//        public boolean neighbors(Evento e){
-//        Aereo aereo, aereo_prev, aereo_follow;
-//        int aereoID, aereoID_prev, aereoID_follow;
-//        aereo = (Aereo) e.get("aereo");
-//        aereoID = aereo.getId();
-//        aereoID_prev = aereo.getPrevID();
-//        aereoID_follow = aereo.getFollowID();
-//
-//        return false;
-//        }
-
-    private void eventStart(Evento e) {
-        e.put("analisi", "start");
-    }
-    
 }
