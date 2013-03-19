@@ -47,9 +47,33 @@ public class AlgoExecution implements AlgoritmoProxy{
     
 }       return e;
 }
+            /* nel messaggio ho 
+         * id_source
+         * id_dest
+         * type
+         * content
+         * context
+         * sourceType
+         * max_p
+         * */
     
     public Evento createStartEvent(Evento e){
-        return null;
+
+        swap (e.get("id_source"), e.get("id_dest"));
+        String type = "posizione";
+        String context = "start";
+        String sourceType = "torre";
+        String content = getContentFromID(e.get("id_dest"));
+        String max_p = "300";
+                
+        Evento newEvento = new Evento();
+        
+        newEvento.put("type", type);
+        newEvento.put("context", context);
+        newEvento.put("content", content);
+        newEvento.put("sourceType", sourceType);
+        newEvento.put("max_p", max_p);
+        return newEvento;
     
     }
     
@@ -58,23 +82,98 @@ public class AlgoExecution implements AlgoritmoProxy{
     public Evento createDataEvent(Evento e){
         // procedi con la creazione di un messaggio
                  // per la torre
-        return null;
+        swap (e.get("id_source"), e.get("id_dest"));
+        String type = "posizione";
+        String context = "data";
+        String sourceType = "aereo";
+        String content = (String) e.get("myPosition");
+        String max_p = "300";
+                
+        Evento newEvento = new Evento();
+        
+        newEvento.put("type", type);
+        newEvento.put("context", context);
+        newEvento.put("content", content);
+        newEvento.put("sourceType", sourceType);
+        newEvento.put("max_p", max_p);
+        return newEvento;
 }
     
     public Evento createControlEvent(Evento e){
-                         // procedi con l'esecuzione e crea il messaggio 
-                 // per l'aereo per continuare senza problemi
-        return null;
+
+        swap (e.get("id_source"), e.get("id_dest"));
+        String type = "posizione";
+        String context = "control";
+        String sourceType = "torre";
+        String content = getNextPosition(e.get("content"));
+        String max_p = "300";
+                
+        Evento newEvento = new Evento();
+        
+        newEvento.put("type", type);
+        newEvento.put("context", context);
+        newEvento.put("content", content);
+        newEvento.put("sourceType", sourceType);
+        newEvento.put("max_p", max_p);
+        return newEvento;
+
 }
     
     public Evento createAlarmModifyEvent(Evento e){
-        return null;
+        swap (e.get("id_source"), e.get("id_dest"));
+        String type = "alarm";
+        String context = "modify";
+        String sourceType = "torre";
+        String content = getSafePosition(e.get("content"));
+        String max_p = "300";
+                
+        Evento newEvento = new Evento();
+        
+        newEvento.put("type", type);
+        newEvento.put("context", context);
+        newEvento.put("content", content);
+        newEvento.put("sourceType", sourceType);
+        newEvento.put("max_p", max_p);
+        return newEvento;
 }
     
     public Evento createMyAlarmEvent(Evento e){
-        return null;
+        swap (e.get("id_source"), e.get("id_dest"));
+        String type = "alarm";
+        String context = "my";
+        String sourceType = "aereo";
+        String content = (String) e.get("myPosition");
+        String max_p = "300";
+                
+        Evento newEvento = new Evento();
+        
+        newEvento.put("type", type);
+        newEvento.put("context", context);
+        newEvento.put("content", content);
+        newEvento.put("sourceType", sourceType);
+        newEvento.put("max_p", max_p);
+        return newEvento;
 }
-    
+    public  void swap(Object s1, Object s2) {
+        Object temp = s1;
+        s1 = s2;
+        s2 = temp;
+    }
+
+    private String getContentFromID(Object get) {
+        // devo dare la posizione iniziale in base all'id di destinazione del messaggio
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private String getNextPosition(Object get) {
+        // Y+1
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private String getSafePosition(Object get) {
+        // Z - 5
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
     
 }
 

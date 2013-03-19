@@ -69,6 +69,7 @@ public class AlgoLocal implements AlgoritmoProxy{
             e.put("analisi", false);
         } else {
             e.put("analisi", true);
+            e.put("myPosition", myPosition);
         }
         return e;
     }
