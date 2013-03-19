@@ -5,23 +5,29 @@
 package blocco;
 
 
+import blocco.adapter.AdapterAlgoritmo;
 import blocco.adapter.AdapterRicevitore;
 import blocco.adapter.AdapterTrasmettitore;
+import blocco.queue.Monitor;
 
 /**
  *
  * @author Seby
  */
-public class BloccoBidirezionale extends Blocco{
+public class BloccoBidirezionale implements Runnable{
     
+    AdapterRicevitore ricevitore;
+    AdapterTrasmettitore trasmettitore;
+    public Monitor monitor = new Monitor();
+    public Configurazione conf = new Configurazione();
+    public AdapterAlgoritmo algoritmo; 
+     
     Boolean isTrasmettitoriConf = false;
     public Boolean isPrimary = false;
     
     public void configuraRicevitori(){
-        for (AdapterRicevitore ricevitore : ricevitori){
             ricevitore.configura(monitor,conf); 
-        }
-    
+        
     
     if (!isPrimary){
         Thread t = new Thread(new Runnable() {
@@ -46,9 +52,7 @@ public class BloccoBidirezionale extends Blocco{
     }
     
     public void configuraTrasmettitori(){
-        for (AdapterTrasmettitore trasmettitore : trasmettitori){
-            trasmettitore.configura(monitor,conf); 
-        }
+        trasmettitore.configura(monitor,conf); 
         isTrasmettitoriConf = true;
     }
     
@@ -57,21 +61,18 @@ public class BloccoBidirezionale extends Blocco{
            configuraTrasmettitori();
        } 
         
-       for (AdapterTrasmettitore trasmettitore : trasmettitori){
             trasmettitore.invia(messaggio);              
-       }
+       
     }   
     
-    public boolean inviaConAck(Object messaggio, int Timeout){
+    public int inviaConAck(Object messaggio, int Timeout){
        if (isPrimary){
         
        if (!isTrasmettitoriConf){
            configuraTrasmettitori();
        } 
         
-       for (AdapterTrasmettitore trasmettitore : trasmettitori){
             trasmettitore.invia(messaggio);              
-       }
        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -85,7 +86,7 @@ public class BloccoBidirezionale extends Blocco{
             if (t.isAlive()){
                 t.interrupt();
                 t=null;
-                return false;
+                return 0;
             }
             
             
@@ -95,9 +96,72 @@ public class BloccoBidirezionale extends Blocco{
             
         }
         //questi lasciamoli object
-        return true;
+        return 1;
     }
-        return false;
+        return 0;
     }
    
+    
+        @Override
+	public void run(){
+		    ricevitore.configura(monitor,conf); 
+                    trasmettitore.configura(monitor,conf); 
+                
+            try{    
+    		boolean continua=true;
+			while (continua){
+                            Object tmp = monitor.prelevaMessaggio(); //questi lasciamoli object
+                            Object risp = algoritmo.valuta(tmp);
+                                if (risp != null){
+                                       trasmettitore.invia(risp);              
+  
+                                }
+                        }
+		}catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        
+       public AdapterRicevitore getRicevitore() {
+        return ricevitore;
+    }
+
+    public void setRicevitore(AdapterRicevitore ricevitore) {
+        this.ricevitore = ricevitore;
+    }
+
+    public AdapterTrasmettitore getTrasmettitore() {
+        return trasmettitore;
+    }
+
+    public void setTrasmettitore(AdapterTrasmettitore trasmettitore) {
+        this.trasmettitore = trasmettitore;
+    }
+
+    public Monitor getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
+
+    public Configurazione getConf() {
+        return conf;
+    }
+
+    public void setConf(Configurazione conf) {
+        this.conf = conf;
+    }
+
+    public AdapterAlgoritmo getAlgoritmo() {
+        return algoritmo;
+    }
+
+    public void setAlgoritmo(AdapterAlgoritmo algoritmo) {
+        this.algoritmo = algoritmo;
+    }
+        
+           
+        
 }

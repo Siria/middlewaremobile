@@ -34,8 +34,7 @@ public class AlgoPlanning implements AlgoritmoProxy{
                              planning_move(e); 
                             break;
                     } 
-                    return e;
-                   
+                    return e;               
     }
 
     private Object planning_move(Evento e) {

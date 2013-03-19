@@ -128,6 +128,92 @@
   </algoritmo>
  </blocco>
  
+ 
+
+
+ <backup id="Backup1">
+  <blocchiB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55000</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55001</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55021</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55012</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55031</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55013</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+  </blocchiB>
+ </backup> 
+ 
+ <backup id="Backup2">
+  <blocchiB>
+   <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55000</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55002</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55012</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55021</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55032</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55023</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+  </blocchiB>
+ </backup> 
+ 
+ <backup id="Backup3">
+  <blocchiB>
+   <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55000</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55003</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55013</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55031</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55023</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55032</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+  </blocchiB>
+ </backup> 
+ 
+ 
+ 
+ 
+
+ 
  <blocco id="Ricezione">
   <trasmettitori>
    <trasmettitore>
@@ -145,8 +231,5 @@
    <class>valutatori.AlgoRicevitore</class>
   </algoritmo>
  </blocco>
- 
- 
- 
 </AirMAS>
 
