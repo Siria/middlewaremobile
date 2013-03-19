@@ -31,14 +31,16 @@ public class AlgoGlobal implements AlgoritmoProxy{
                 case "posizione":
                     switch (e.get("context").toString()){
                         case "data":
-                            return tryUpdateAir(e);
+                            tryUpdateAir(e);
+                            break;
                     }
                 break;
                 
                 case "alarm":
                     switch (e.get("context").toString()){                            
                         case "my":                   
-                            return verifyAlarm(e);
+                            verifyAlarm(e);
+                            break;
                         }
                 break;
             }

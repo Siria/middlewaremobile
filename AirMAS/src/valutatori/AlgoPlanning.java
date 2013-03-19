@@ -20,35 +20,38 @@ public class AlgoPlanning implements AlgoritmoProxy{
     public Object valuta(Object messaggio) {
         System.out.println("Sono nel blocco Planning");
         
-        Evento e =  new Evento(messaggio.toString());
-        System.out.println(e.toString());
+        Evento e =  (Evento) messaggio;
+        //System.out.println(e.toString());
                     switch (e.get("analisi").toString()){
                         case "start":
                             // prepara l'invio di messaggi per i 5 aerei
-                            return e;
+                            startMessage(e);
+                            break;
                         case "true":
                             e.put("planning", true);
-                            return next_execution(e);
-                        case "false" : case "conglict":
-                            return planning_move(e);
+                            next_execution(e);
+                            break;
+                        case "false" : case "conflict":
+                            planning_move(e); 
+                            break;
+                    } 
 
-                            
-                    }
-
-        return null;     
-
+                    return e;
     }
 
-    private Evento planning_move(Evento e) {
+    private void planning_move(Evento e) {
         e.put("exec", false);
-        // devo spostarmi perchè le cose vanno come dovrebbero
-        return e;
+        
      
     }
 
-    private Object next_execution(Evento e) {
+    private void next_execution(Evento e) {
         e.put("exec", true);
-        return e;
+        
+    }
+
+    private void startMessage(Evento e) {
+        e.put("exec", "start");
     }
 
     }

@@ -22,7 +22,7 @@ public class AlgoExecution implements AlgoritmoProxy{
         // e verrà quindi assegnata una traiettoria ad ogni aereo
         
         Evento e =  new Evento(messaggio.toString());
-         if(e.get("sourceType").toString().equalsIgnoreCase("aereo"))
+         if(e.get("sourceType").toString().equalsIgnoreCase("torre"))
          {
              if(e.get("planning").toString().equals(true)){
                  return createDataEvent(e);
@@ -31,19 +31,21 @@ public class AlgoExecution implements AlgoritmoProxy{
                  return createMyAlarmEvent(e); 
                  
              } }
-         else if (e.get("sourceType").toString().equals("torre")){
+         else if (e.get("sourceType").toString().equals("aereo")){
             
              if (e.get("planning").toString().equals(true)) {
                  return createControlEvent(e);
                  
-             }}else{ 
+             }else if (e.get("planning").toString().equals(false)){ 
+             // devo spostarmi di 5 metri
              return createAlarmModifyEvent(e); 
 
-             }
-        return null;
-
+             }else
+                 return createStartEvent(e);
+         
+   
     
-    
+}       return e;
 }
     
     public Evento createStartEvent(Evento e){
