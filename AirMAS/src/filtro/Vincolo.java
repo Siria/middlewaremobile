@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package configuratore;
+package filtro;
 
 import blocco.Evento;
 import java.beans.XMLEncoder;

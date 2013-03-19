@@ -2,48 +2,20 @@
 <java version="1.7.0_07" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
-   <string>regola4</string>
-   <object class="configuratore.Vincolo" id="Vincolo0">
-    <void class="configuratore.Vincolo" method="getField">
+   <string>r6</string>
+   <object class="filtro.Vincolo" id="Vincolo0">
+    <void class="filtro.Vincolo" method="getField">
      <string>id</string>
      <void method="set">
       <object idref="Vincolo0">
-       <void class="configuratore.Vincolo" method="getField">
+       <void class="filtro.Vincolo" method="getField">
         <string>type</string>
         <void method="set">
          <object idref="Vincolo0">
-          <void class="configuratore.Vincolo" method="getField">
+          <void class="filtro.Vincolo" method="getField">
            <string>riferimento</string>
            <void method="set">
             <object idref="Vincolo0"/>
-            <string>0</string>
-           </void>
-          </void>
-         </object>
-         <string>&gt;</string>
-        </void>
-       </void>
-      </object>
-      <string>Accelerazione</string>
-     </void>
-    </void>
-   </object>
-  </void>
-  <void method="put">
-   <string>regola1</string>
-   <object class="configuratore.Vincolo" id="Vincolo1">
-    <void class="configuratore.Vincolo" method="getField">
-     <string>id</string>
-     <void method="set">
-      <object idref="Vincolo1">
-       <void class="configuratore.Vincolo" method="getField">
-        <string>type</string>
-        <void method="set">
-         <object idref="Vincolo1">
-          <void class="configuratore.Vincolo" method="getField">
-           <string>riferimento</string>
-           <void method="set">
-            <object idref="Vincolo1"/>
             <string>1000</string>
            </void>
           </void>
@@ -52,63 +24,147 @@
         </void>
        </void>
       </object>
-      <string>Accelerazione</string>
+      <string>a1</string>
      </void>
     </void>
    </object>
   </void>
   <void method="put">
-   <string>regola3</string>
-   <object class="configuratore.Vincolo" id="Vincolo2">
-    <void class="configuratore.Vincolo" method="getField">
+   <string>r1</string>
+   <object class="filtro.Vincolo" id="Vincolo1">
+    <void class="filtro.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo1">
+       <void class="filtro.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo1">
+          <void class="filtro.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo1"/>
+            <string>torre</string>
+           </void>
+          </void>
+         </object>
+         <string>==</string>
+        </void>
+       </void>
+      </object>
+      <string>sourceType</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>r2</string>
+   <object class="filtro.Vincolo" id="Vincolo2">
+    <void class="filtro.Vincolo" method="getField">
      <string>id</string>
      <void method="set">
       <object idref="Vincolo2">
-       <void class="configuratore.Vincolo" method="getField">
+       <void class="filtro.Vincolo" method="getField">
         <string>type</string>
         <void method="set">
          <object idref="Vincolo2">
-          <void class="configuratore.Vincolo" method="getField">
+          <void class="filtro.Vincolo" method="getField">
            <string>riferimento</string>
            <void method="set">
             <object idref="Vincolo2"/>
-            <string>500</string>
+            <string>aereo</string>
            </void>
           </void>
          </object>
-         <string>!=</string>
+         <string>==</string>
         </void>
        </void>
       </object>
-      <string>Accelerazione</string>
+      <string>sourceType</string>
      </void>
     </void>
    </object>
   </void>
   <void method="put">
-   <string>regola2</string>
-   <object class="configuratore.Vincolo" id="Vincolo3">
-    <void class="configuratore.Vincolo" method="getField">
+   <string>r3</string>
+   <object class="filtro.Vincolo" id="Vincolo3">
+    <void class="filtro.Vincolo" method="getField">
      <string>id</string>
      <void method="set">
       <object idref="Vincolo3">
-       <void class="configuratore.Vincolo" method="getField">
+       <void class="filtro.Vincolo" method="getField">
         <string>type</string>
         <void method="set">
          <object idref="Vincolo3">
-          <void class="configuratore.Vincolo" method="getField">
+          <void class="filtro.Vincolo" method="getField">
            <string>riferimento</string>
            <void method="set">
             <object idref="Vincolo3"/>
-            <string>50</string>
+            <string>300</string>
            </void>
           </void>
          </object>
-         <string>&gt;</string>
+         <string>&lt;</string>
         </void>
        </void>
       </object>
-      <string>Accelerazione</string>
+      <string>s1</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>r4</string>
+   <object class="filtro.Vincolo" id="Vincolo4">
+    <void class="filtro.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo4">
+       <void class="filtro.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo4">
+          <void class="filtro.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo4"/>
+            <string>300</string>
+           </void>
+          </void>
+         </object>
+         <string>&lt;</string>
+        </void>
+       </void>
+      </object>
+      <string>s2</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>r5</string>
+   <object class="filtro.Vincolo" id="Vincolo5">
+    <void class="filtro.Vincolo" method="getField">
+     <string>id</string>
+     <void method="set">
+      <object idref="Vincolo5">
+       <void class="filtro.Vincolo" method="getField">
+        <string>type</string>
+        <void method="set">
+         <object idref="Vincolo5">
+          <void class="filtro.Vincolo" method="getField">
+           <string>riferimento</string>
+           <void method="set">
+            <object idref="Vincolo5"/>
+            <string>300</string>
+           </void>
+          </void>
+         </object>
+         <string>&lt;</string>
+        </void>
+       </void>
+      </object>
+      <string>s3</string>
      </void>
     </void>
    </object>

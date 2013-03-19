@@ -4,6 +4,7 @@
  */
 package trasmissione;
 
+import blocco.Configurazione;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,11 +16,11 @@ public class TrasmettitoreJMS implements TrasmettitoreProxy {
 
     Logger log;
     Monitor monitor;
-    public HashMap conf = null;
+    public Configurazione conf = null;
     private MessageConnection messageConnection;
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         this.monitor = monitor;
         this.conf = conf;
         try {

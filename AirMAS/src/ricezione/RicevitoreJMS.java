@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package ricezione;
+import blocco.Configurazione;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,7 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
 
     Logger log;
     Monitor monitor;
-    public HashMap conf = null;
+    public Configurazione conf = null;
     private MessageConnection messageConnection;
 
     public RicevitoreJMS() {
@@ -39,7 +40,7 @@ public class RicevitoreJMS implements MessageListener, RicevitoreProxy {
 public Message receive() throws MessageException {
     Message mess = getMessageConnection().receive(0);
         try {
-            System.out.println("Ricevo tramite JMS...");
+            System.out.println("\nRicevo tramite JMS...");
             ObjectMessage msg = (ObjectMessage) mess;
             Evento ricevuto = new Evento(msg.getObject().toString());
             enqueue(ricevuto);
@@ -87,7 +88,7 @@ public void disconnect() throws MessageException {
     
 
          @Override
-         public void configura(Monitor monitor, HashMap conf) {
+         public void configura(Monitor monitor, Configurazione conf) {
                      
              this.conf = conf;
              this.monitor = monitor;

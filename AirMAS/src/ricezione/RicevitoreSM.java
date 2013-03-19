@@ -5,6 +5,7 @@
 package ricezione;
 
 
+import blocco.Configurazione;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.RandomAccessFile;
@@ -22,7 +23,7 @@ import blocco.queue.Monitor;
  * @author alessandra
  */
 public class RicevitoreSM extends Thread implements RicevitoreProxy{
-    private HashMap conf;
+    private Configurazione conf;
     private Monitor monitor;
 
     @Override
@@ -91,7 +92,7 @@ public class RicevitoreSM extends Thread implements RicevitoreProxy{
                     //file.delete();
                     
                     if (nLetti > 0){
-                        System.out.println("Ricevo tramite Shared Memory...");
+                        System.out.println("\nRicevo tramite Shared Memory...");
                         enqueue(messaggio.toString());                    
                     }
                     
@@ -107,7 +108,7 @@ public class RicevitoreSM extends Thread implements RicevitoreProxy{
     }}
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         this.conf = conf;
         this.monitor = monitor;
         

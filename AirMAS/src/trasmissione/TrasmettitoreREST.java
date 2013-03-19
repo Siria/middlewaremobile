@@ -4,6 +4,7 @@
  */
 package trasmissione;
 
+import blocco.Configurazione;
 import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -21,7 +22,7 @@ import blocco.queue.Monitor;
 public class TrasmettitoreREST implements TrasmettitoreProxy {
     
     Monitor monitor;
-    HashMap conf;
+    Configurazione conf;
  
     
     
@@ -40,7 +41,7 @@ public class TrasmettitoreREST implements TrasmettitoreProxy {
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         this.monitor = monitor;
         this.conf = conf;
     }

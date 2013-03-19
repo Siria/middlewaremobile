@@ -4,6 +4,7 @@
  */
 package ricezione;
 
+import blocco.Configurazione;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.RandomAccessFile;
@@ -13,6 +14,7 @@ import java.nio.channels.FileLock;
 import java.util.HashMap;
 import blocco.proxy.RicevitoreProxy;
 import blocco.queue.Monitor;
+import java.util.LinkedList;
 
 
 /**
@@ -20,7 +22,7 @@ import blocco.queue.Monitor;
  * @author alessandra
  */
 public class RicevitoreFile extends Thread implements RicevitoreProxy{
-    private HashMap conf;
+    private Configurazione conf;
     private Monitor monitor;
 
     @Override
@@ -63,7 +65,7 @@ public class RicevitoreFile extends Thread implements RicevitoreProxy{
                     //file.delete();
                     
                     if (nLetti > 0){
-                        System.out.println("Ricevo tramite File...");
+                        System.out.println("\nRicevo tramite File...");
                         enqueue(messaggio.toString());                    
                     }
                     lock.release();
@@ -80,7 +82,7 @@ public class RicevitoreFile extends Thread implements RicevitoreProxy{
     }}
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         this.conf = conf;
         this.monitor = monitor;
         

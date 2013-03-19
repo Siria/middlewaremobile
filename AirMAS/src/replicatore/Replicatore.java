@@ -4,6 +4,7 @@
  */
 package replicatore;
 
+import blocco.Configurazione;
 import valutatori.Backup;
 import blocco.proxy.AlgoritmoProxy;
 import blocco.proxy.ProxyTarget;
@@ -35,7 +36,7 @@ public class Replicatore implements Runnable{
     private LinkedList<RicevitoreProxy> ricevitori = new LinkedList<>();
     private LinkedList<TrasmettitoreProxy> trasmettitori = new LinkedList<>();
     private AlgoritmoProxy algoritmo; 
-    private HashMap conf = new HashMap();
+    private Configurazione conf = new Configurazione();
     
     // da qui
     private WatchService watcher = null;
@@ -60,11 +61,11 @@ public class Replicatore implements Runnable{
     private Backup actualPrimaryBackup;
     
    
-    public HashMap getConf() {
+    public Configurazione getConf() {
         return conf;
     }
 
-    public void setConf(HashMap conf) {
+    public void setConf(Configurazione conf) {
         this.conf = conf;
     }
 

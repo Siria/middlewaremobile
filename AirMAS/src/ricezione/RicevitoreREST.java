@@ -4,6 +4,7 @@
  */
 package ricezione;
 
+import blocco.Configurazione;
 import ricezione.MyResource;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.jersey.core.spi.component.ComponentContext;
@@ -22,7 +23,7 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
 
     
     static Monitor monitor;
-    public HashMap conf = null;
+    public Configurazione conf = null;
     
     @Override
     public void enqueue(Object messaggio){
@@ -30,7 +31,7 @@ public class RicevitoreREST extends PerRequestTypeInjectableProvider<MyResource,
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
                 
         this.monitor = monitor;
         this.conf = conf;

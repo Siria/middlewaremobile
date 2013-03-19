@@ -7,7 +7,7 @@ package valutatori;
 import java.util.HashMap;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
-import configuratore.ConfFiltri;
+import filtro.ConfFiltri;
 
 /**
  *
@@ -15,21 +15,20 @@ import configuratore.ConfFiltri;
  */
 public class AlgoSource implements AlgoritmoProxy{
 
-    ConfFiltri e = new ConfFiltri();
+    ConfFiltri filtri = new ConfFiltri();
     
     @Override
     public Object valuta(Object messaggio) {
         System.out.println("Sono nel blocco Filtro Source");
         
         Evento e =  new Evento(messaggio.toString());
-                
-                    if (e.get("sourceType").toString().startsWith("aereo") || e.get("sourceType").toString().equals("torre")) {
-                    return e;    
+                    if (filtri.checkOR("sourceType", e.get("sourceType").toString())){
+                        System.out.println("Ho ricevuto un messaggio da: " + e.get("sourceType").toString().toUpperCase());
+                        return e;
                     } else {
-                    return null;
+                        System.out.println("Origine del messaggio: SCONOSCIUTA");
+                        return null;
                     }
-                    
-                    
                     
         }     
     }

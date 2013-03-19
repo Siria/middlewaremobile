@@ -4,6 +4,7 @@
  */
 package ricezione;
 
+import blocco.Configurazione;
 import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
@@ -19,7 +20,7 @@ import blocco.queue.Monitor;
 public class RicevitoreSocket implements RicevitoreProxy{
 
     private Monitor monitor;
-    public HashMap conf = null;
+    public Configurazione conf = null;
 
     public void setMonitor(Monitor monitor) {
         this.monitor = monitor;
@@ -43,7 +44,7 @@ public class RicevitoreSocket implements RicevitoreProxy{
                                     ObjectInputStream OIS = new ObjectInputStream(SK.getInputStream());
                                     while(true){
                                     Object tmp = OIS.readObject();
-                                    System.out.println("Ricevo tramite Socket...");
+                                    System.out.println("\nRicevo tramite Socket...");
                                     enqueue(tmp);
                                     }
                                 } catch (EOFException exf){
@@ -66,7 +67,7 @@ public class RicevitoreSocket implements RicevitoreProxy{
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         
         this.conf = conf;
         this.monitor = monitor;

@@ -4,6 +4,7 @@
  */
 package trasmissione;
 
+import blocco.Configurazione;
 import blocco.proxy.TrasmettitoreProxy;
 import blocco.queue.Monitor;
 import java.io.ObjectInputStream;
@@ -33,7 +34,7 @@ public class TrasmettitoreSocket implements TrasmettitoreProxy{
    
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
          String addr = (String)conf.get("socketUscita");
          String[] param = addr.split(":");
          this.monitor = monitor;

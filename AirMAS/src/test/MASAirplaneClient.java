@@ -4,10 +4,13 @@
  */
 package test;
 
+import blocco.Configurazione;
 import blocco.Evento;
 import blocco.adapter.AdapterTrasmettitore;
 import blocco.proxy.ProxyTarget;
 import blocco.proxy.TrasmettitoreProxy;
+import blocco.queue.Monitor;
+import configuratore.Configuratore;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -26,6 +29,8 @@ import ricezione.SOAP;
 public class MASAirplaneClient extends javax.swing.JFrame {
 
     Applicazione applicazione = new Applicazione();
+    AdapterTrasmettitore tx;
+    
     
     /**
      * Creates new form MASConfigClient
@@ -48,6 +53,9 @@ public class MASAirplaneClient extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -67,7 +75,19 @@ public class MASAirplaneClient extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<java version=\"1.7.0_07\" class=\"java.beans.XMLDecoder\">\n <object class=\"java.util.HashMap\">\n  <void method=\"put\">\n   <string>id_source</string>\n   <string>00</string>\n  </void>\n  <void method=\"put\">\n   <string>id_dest</string>\n   <string>01</string>\n  </void>\n  <void method=\"put\">\n   <string>content</string>\n   <string>10:10:10;10:0:0;0:0:0</string>\n  </void>\n  <void method=\"put\">\n   <string>context</string>\n   <string>my</string>\n  </void>\n  <void method=\"put\">\n   <string>type</string>\n   <string>alarm</string>\n  </void>\n  <void method=\"put\">\n   <string>sourceType</string>\n   <string>torre</string>\n  </void>\n </object>\n</java>");
         jScrollPane1.setViewportView(jTextArea1);
+
+        jTextField1.setText("socketUscita");
+
+        jTextField2.setText("localhost:50001");
+
+        jTextField3.setText("trasmissione.TrasmettitoreSocket");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -82,25 +102,35 @@ public class MASAirplaneClient extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+            .add(layout.createSequentialGroup()
+                .add(jLabel1)
+                .add(0, 0, Short.MAX_VALUE))
+            .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jScrollPane1)
-                    .add(layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(jButton9))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(jLabel1)
-                        .add(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .add(jButton9)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(layout.createSequentialGroup()
+                            .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 177, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 400, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jLabel1)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton9)
                 .addContainerGap())
@@ -111,18 +141,24 @@ public class MASAirplaneClient extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         
-        HashMap prop = new HashMap();
-        prop.put("type", "posizione");
-        prop.put("context", "start");
-        prop.put("content", new int[]{2,2,2});
-        Evento e = new Evento(prop);
-        e.toString();
-        for (int i = 0; i<1; i++){
-            invia(e.toString());
+            try {
+                tx = new AdapterTrasmettitore((TrasmettitoreProxy)ProxyTarget.createProxy(Class.forName(jTextField3.getText()).newInstance()));
+                tx.config(new Monitor(), new Configurazione(jTextField1.getText(),jTextField2.getText()));
+                tx.invia(jTextArea1.getText());
+            } catch (    InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+                Logger.getLogger(MASAirplaneClient.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
+        
+        
+       
     
-    
+        
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     
 
@@ -274,5 +310,8 @@ public class MASAirplaneClient extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

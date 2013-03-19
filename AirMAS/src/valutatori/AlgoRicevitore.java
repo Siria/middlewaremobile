@@ -64,15 +64,10 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                 case "posizione":
                     switch (e.get("context").toString()){
                         case "start":
-                            System.out.println("Ho ricevuto " + e.get("content").toString()); //bisogna fare i cast espliciti tipo ((String)e.get("content")).toString()
-                            return e;
-                            
                         case "control":
-                            System.out.println("Ho ricevuto " + e.get("content").toString());
-                            return e;
-                            
                         case "data":
-                            System.out.println("Ho ricevuto " + e.get("content").toString());
+                            System.out.println("Ho ricevuto un messaggio di tipo: POSIZIONE");
+                            System.out.println("Contenuto del messaggio: " + e.get("content").toString());
                             return e;
                         }
                 break;
@@ -80,15 +75,10 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                 case "alarm":
                     switch (e.get("context").toString()){
                         case "my":
-                            System.out.println("Ho ricevuto " + e.get("content").toString());
-                            return e;
-                            
                         case "other":
-                            System.out.println("Ho ricevuto " + e.get("content").toString());
-                            return e;
-                            
                         case "modify":
-                            System.out.println("Ho ricevuto " + e.get("content").toString());
+                            System.out.println("Ho ricevuto un messaggio di tipo: ALARM");
+                            System.out.println("Contenuto del messaggio: " + e.get("content").toString());
                             return e;
                         }
                 break;
@@ -109,6 +99,8 @@ public class AlgoRicevitore implements AlgoritmoProxy{
                                 LogManager.timeout = Configuratore.getTimeout();
                                 break;
                         }
+                    default:
+                    System.out.println("Ho ricevuto un messaggio di tipo: SCONOSCIUTO");            
             }
         return null;     
         

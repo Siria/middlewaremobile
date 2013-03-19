@@ -32,7 +32,7 @@ public class Monitor {
   // Accoda una nuova messaggio
   public synchronized void accodaMessaggio(Object messaggio){
     codaRichieste.add(messaggio);
-    System.out.println("\nSono il monitor e ho appena ricevuto:\n" + messaggio.toString()); // TODO se tolgo questo nn vedo più i messaggi che arrivano
+    //System.out.println("\nSono il monitor e ho appena ricevuto qualcosa...\n");//:\n" + messaggio.toString()); // TODO se tolgo questo nn vedo più i messaggi che arrivano
     notifyAll();
   }
   

@@ -33,7 +33,7 @@ public class REST {
     
     
     public Response ricevi(@PathParam("a") String a) {
-        System.out.println("Ricevo tramite REST...");
+        System.out.println("\nRicevo tramite REST...");
         try {
             monitor.accodaMessaggio(URLDecoder.decode(a, "UTF-8"));
         } catch (UnsupportedEncodingException ex) {

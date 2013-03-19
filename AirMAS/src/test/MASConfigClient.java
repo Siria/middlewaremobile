@@ -4,15 +4,9 @@
  */
 package test;
 
-import blocco.adapter.AdapterAlgoritmo;
-import blocco.adapter.AdapterRicevitore;
 import blocco.adapter.AdapterTrasmettitore;
-import blocco.proxy.AlgoritmoProxy;
 import blocco.proxy.ProxyTarget;
-import blocco.proxy.RicevitoreProxy;
 import blocco.proxy.TrasmettitoreProxy;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.LinkedList;
 import javax.swing.UIManager;
 
@@ -79,7 +73,7 @@ public class MASConfigClient extends javax.swing.JFrame {
 
         jTextAreaXML.setColumns(20);
         jTextAreaXML.setRows(5);
-        jTextAreaXML.setText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AirMAS>\n \n <blocco id=\"Ricevitore1\">\n  <trasmettitori>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSM</class>\n    <config key=\"sharedIngresso\">shared.dat</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricevitore2\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSM</class>\n    <config key=\"sharedUscita\">shared.dat</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreFile</class>\n    <config key=\"fileIngresso\">file.dat</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricevitore3\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreFile</class>\n    <config key=\"fileUscita\">file.dat</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreJMS</class>\n    <config key=\"jmsIngresso\">myDestination</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricevitore4\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreJMS</class>\n    <config key=\"jmsUscita\">myDestination</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreREST</class>\n    <config key=\"restIngresso\">http://localhost:9998/WS/REST/</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricevitore5\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreREST</class>\n    <config key=\"restUscita\">http://localhost:9998/WS/REST/</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">17782</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricevitore6\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:17782</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSOAP</class>\n    <config key=\"soapIngresso\">http://localhost:17779/WS/SOAP/?wsdl</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricevitore7\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSOAP</class>\n    <config key=\"soapUscita\">http://localhost:17779/WS/SOAP/?wsdl</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSOAP</class>\n    <config key=\"soapIngresso\">http://localhost:17780/WS/SOAP/?wsdl</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.Algoritmo</class>\n  </algoritmo>\n </blocco>\n \n</AirMAS>\n\n");
+        jTextAreaXML.setText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AirMAS>\n \n <blocco id=\"Esecutore\">\n  <trasmettitori>\n   \n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50008</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoExecution</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Planning\">\n  <trasmettitori>\n  <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50008</config>\n   </trasmettitore> \n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50007</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoPlanning</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"AnalisiLocale\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50007</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50006</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoLocal</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"AnalisiGlobale\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50007</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50005</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoGlobal</class>\n  </algoritmo>\n </blocco>\n\n<blocco id=\"FiltraggioValue\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50005</config>\n   </trasmettitore>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50006</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50004</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoValue</class>\n  </algoritmo>\n </blocco>\n\n<blocco id=\"FiltraggioTime\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50004</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50003</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoTime</class>\n  </algoritmo>\n </blocco>\n \n<blocco id=\"FiltraggioSource\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50003</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50002</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoSource</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Ricezione\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50002</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50001</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoRicevitore</class>\n  </algoritmo>\n </blocco>\n</AirMAS>");
         jScrollPane1.setViewportView(jTextAreaXML);
 
         jMenu1.setText("File");
@@ -105,6 +99,11 @@ public class MASConfigClient extends javax.swing.JFrame {
         jMenu1.add(jSeparator1);
 
         jMenuItem4.setText("Esci");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -172,6 +171,11 @@ public class MASConfigClient extends javax.swing.JFrame {
     private void jTextConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextConfigActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextConfigActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private class Applicazione{
         private LinkedList<Blocco> blocchi = new LinkedList<>();

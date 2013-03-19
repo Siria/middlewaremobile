@@ -8,6 +8,7 @@ package ricezione;
  *
  * @author Seby
  */
+import blocco.Configurazione;
 import java.util.HashMap;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
@@ -20,10 +21,10 @@ import blocco.queue.Monitor;
 public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
     
     Monitor monitor;
-    public HashMap conf = null;
+    public Configurazione conf = null;
 	@Override
 	public void ricevi(Object messaggio) {
-		System.out.println("Ricevo tramite SOAP...");
+		System.out.println("\nRicevo tramite SOAP...");
                 this.enqueue(messaggio);                
         }
         
@@ -38,7 +39,7 @@ public class RicevitoreSOAP implements SOAP,RicevitoreProxy{
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         
         this.conf = conf;
         this.monitor = monitor;

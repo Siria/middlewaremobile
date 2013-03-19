@@ -14,23 +14,23 @@ import blocco.adapter.AdapterTrasmettitore;
 import blocco.queue.Monitor;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 
 public class Blocco implements Runnable{
     
-     Monitor monitor = new Monitor();
-     LinkedList<AdapterRicevitore> ricevitori = new LinkedList<>();
-     LinkedList<AdapterTrasmettitore> trasmettitori = new LinkedList<>();
+     public Monitor monitor = new Monitor();
+     public LinkedList<AdapterRicevitore> ricevitori = new LinkedList<>();
+     public LinkedList<AdapterTrasmettitore> trasmettitori = new LinkedList<>();
 
-     AdapterAlgoritmo algoritmo; 
-     HashMap conf = new HashMap();
+     public AdapterAlgoritmo algoritmo; 
+     public Configurazione conf = new Configurazione();
 
-
-    public HashMap getConf() {
+    public Configurazione getConf() {
         return conf;
     }
 
-    public void setConf(HashMap conf) {
+    public void setConf(Configurazione conf) {
         this.conf = conf;
     }
     

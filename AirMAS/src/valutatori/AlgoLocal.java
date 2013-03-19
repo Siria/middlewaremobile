@@ -24,7 +24,7 @@ public class AlgoLocal implements AlgoritmoProxy{
     public Object valuta(Object messaggio) {
         System.out.println("Sono nel blocco AlgoLocal");
         
-        Evento e = (Evento) messaggio;
+        Evento e =  new Evento(messaggio.toString());
        switch (e.get("type").toString()){
                 
                 case "posizione":
@@ -63,8 +63,6 @@ public class AlgoLocal implements AlgoritmoProxy{
         myPosition = "0:0:0;0:0:0;0:0:0;";    
         previous = "0:0:0;0:0:0;0:0:0;";
         follower = "0:0:0;0:0:0;0:0:0;";
-    
-    
     }
 
     private boolean verify(String pos) {

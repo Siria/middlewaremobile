@@ -43,30 +43,42 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jButton9" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="jButton9" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jTextField3" min="-2" pref="177" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextField1" min="-2" pref="95" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="196" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="150" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton9" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -101,9 +113,28 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#xa;&lt;java version=&quot;1.7.0_07&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;&#xa; &lt;object class=&quot;java.util.HashMap&quot;&gt;&#xa;  &lt;void method=&quot;put&quot;&gt;&#xa;   &lt;string&gt;id_source&lt;/string&gt;&#xa;   &lt;string&gt;00&lt;/string&gt;&#xa;  &lt;/void&gt;&#xa;  &lt;void method=&quot;put&quot;&gt;&#xa;   &lt;string&gt;id_dest&lt;/string&gt;&#xa;   &lt;string&gt;01&lt;/string&gt;&#xa;  &lt;/void&gt;&#xa;  &lt;void method=&quot;put&quot;&gt;&#xa;   &lt;string&gt;content&lt;/string&gt;&#xa;   &lt;string&gt;10:10:10;10:0:0;0:0:0&lt;/string&gt;&#xa;  &lt;/void&gt;&#xa;  &lt;void method=&quot;put&quot;&gt;&#xa;   &lt;string&gt;context&lt;/string&gt;&#xa;   &lt;string&gt;my&lt;/string&gt;&#xa;  &lt;/void&gt;&#xa;  &lt;void method=&quot;put&quot;&gt;&#xa;   &lt;string&gt;type&lt;/string&gt;&#xa;   &lt;string&gt;alarm&lt;/string&gt;&#xa;  &lt;/void&gt;&#xa;  &lt;void method=&quot;put&quot;&gt;&#xa;   &lt;string&gt;sourceType&lt;/string&gt;&#xa;   &lt;string&gt;torre&lt;/string&gt;&#xa;  &lt;/void&gt;&#xa; &lt;/object&gt;&#xa;&lt;/java&gt;"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="socketUscita"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="localhost:50001"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="trasmissione.TrasmettitoreSocket"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

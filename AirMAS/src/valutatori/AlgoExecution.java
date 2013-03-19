@@ -21,8 +21,8 @@ public class AlgoExecution implements AlgoritmoProxy{
         // qui arriverà un messaggio che conterrà le info riguardanti il disegno che si deve realizzare
         // e verrà quindi assegnata una traiettoria ad ogni aereo
         
-        Evento e = (Evento) messaggio;
-         if(e.get("sourceType").toString().startsWith("aereo"))
+        Evento e =  new Evento(messaggio.toString());
+         if(e.get("sourceType").toString().equalsIgnoreCase("aereo"))
          {
              if(e.get("planning").toString().equals(true)){
                  return createDataEvent(e);

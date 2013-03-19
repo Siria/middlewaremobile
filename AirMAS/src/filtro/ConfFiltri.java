@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package configuratore;
+package filtro;
 
+import filtro.Vincolo;
 import blocco.Evento;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -36,11 +37,22 @@ public class ConfFiltri extends Evento{
         this.loadFiltri(new File("Filtri.xml"));
     }
     
-    public Boolean checkAll(String id, String attuale){
+    public Boolean checkOR(String id, String attuale){
+        for (String nomeRegola : regole.keySet()){
+            if (regole.get(nomeRegola).getId().equals(id)){
+                if(regole.get(nomeRegola).check(id, attuale)){
+                   return true;
+                };
+            }
+        }
+        return false;
+    }
+    
+    public Boolean checkAND(String id, String attuale){
         for (String nomeRegola : regole.keySet()){
             if (regole.get(nomeRegola).getId().equals(id)){
                 if(!regole.get(nomeRegola).check(id, attuale)){
-                    return false;
+                   return false;
                 };
             }
         }

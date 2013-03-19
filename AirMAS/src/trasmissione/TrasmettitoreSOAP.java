@@ -4,6 +4,7 @@
  */
 package trasmissione;
 
+import blocco.Configurazione;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class TrasmettitoreSOAP implements TrasmettitoreProxy{
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         try {
             this.url = new URL((String)conf.get("soapUscita"));
         } catch (MalformedURLException ex) {

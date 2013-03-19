@@ -4,9 +4,11 @@
  */
 package blocco.adapter;
 
+import blocco.Configurazione;
 import blocco.proxy.RicevitoreProxy;
 import blocco.queue.Monitor;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  *
@@ -26,7 +28,7 @@ public class AdapterRicevitore implements TargetRicevitore, RicevitoreProxy {
     }
 
     @Override
-    public void config(Monitor monitor, HashMap conf) {
+    public void config(Monitor monitor, Configurazione conf) {
         ricevitore.configura(monitor, conf);
     }
 
@@ -41,7 +43,7 @@ public class AdapterRicevitore implements TargetRicevitore, RicevitoreProxy {
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         ricevitore.configura(monitor, conf);
     }
     

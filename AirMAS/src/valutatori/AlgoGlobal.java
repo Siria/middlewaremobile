@@ -20,8 +20,8 @@ public class AlgoGlobal implements AlgoritmoProxy{
     public Object valuta(Object messaggio) {
         System.out.println("Sono nel blocco AlgoGlobal");
         
-        Evento e = (Evento) messaggio;
-       switch (e.get("type").toString()){
+        Evento e =  new Evento(messaggio.toString());
+        switch (e.get("type").toString()){
                 
                 case "posizione":
                     switch (e.get("context").toString()){
@@ -32,8 +32,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
                 
                 case "alarm":
                     switch (e.get("context").toString()){                            
-                        case "my":
-                            
+                        case "my":                   
                             return verifyAlarm(e);
                          case "other":                                               
                             return verifyAlarm(e);

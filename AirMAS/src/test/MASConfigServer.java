@@ -92,6 +92,11 @@ public class MASConfigServer extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         jMenuItem4.setText("Esci");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -133,8 +138,6 @@ public class MASConfigServer extends javax.swing.JFrame {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.getAccessibleContext().setAccessibleName("Porta Configuratore");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -174,6 +177,11 @@ public class MASConfigServer extends javax.swing.JFrame {
     private void jTextConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextConfigActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextConfigActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private class Applicazione{
         private LinkedList<Blocco> blocchi = new LinkedList<>();
@@ -301,7 +309,7 @@ public class MASConfigServer extends javax.swing.JFrame {
             jTextAreaXML.append("\n\n\n\n ----------------------------------------");
             jTextAreaXML.append("\n ----- Middleware for Autonomic Systems -----");
             jTextAreaXML.append("\n ----------------------------------------");
-            jTextAreaXML.append("\n\nTutto OK: avviare un Client...");
+            jTextAreaXML.append("\n\nTutto OK: avviare un Client...\n\n\n");
             jTextAreaXML.setCaretPosition(jTextAreaXML.getText().length());
                   
                   

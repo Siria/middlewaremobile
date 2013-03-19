@@ -4,9 +4,11 @@
  */
 package blocco.adapter;
 
+import blocco.Configurazione;
 import blocco.proxy.TrasmettitoreProxy;
 import blocco.queue.Monitor;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  *
@@ -26,7 +28,7 @@ public class AdapterTrasmettitore implements TargetTrasmettitore, TrasmettitoreP
     }
 
     @Override
-    public void config(Monitor monitor, HashMap conf) {
+    public void config(Monitor monitor, Configurazione conf) {
         trasmettitore.configura(monitor, conf);
     }
 
@@ -36,7 +38,7 @@ public class AdapterTrasmettitore implements TargetTrasmettitore, TrasmettitoreP
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         trasmettitore.configura(monitor, conf);
     }
     

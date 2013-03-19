@@ -4,6 +4,7 @@
  */
 package trasmissione;
 
+import blocco.Configurazione;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -19,7 +20,7 @@ import blocco.queue.Monitor;
  */
 public class TrasmettitoreFile implements TrasmettitoreProxy{
     private Monitor monitor;
-    private HashMap conf;
+    private Configurazione conf;
 
 
     @Override
@@ -56,7 +57,7 @@ public class TrasmettitoreFile implements TrasmettitoreProxy{
     }
 
     @Override
-    public void configura(Monitor monitor, HashMap conf) {
+    public void configura(Monitor monitor, Configurazione conf) {
         this.monitor = monitor;
         this.conf = conf;
     }

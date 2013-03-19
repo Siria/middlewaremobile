@@ -4,6 +4,7 @@
  */
 package configuratore;
 
+import blocco.Configurazione;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +17,7 @@ import blocco.proxy.ProxyTarget;
 import blocco.proxy.RicevitoreProxy;
 import blocco.proxy.TrasmettitoreProxy;
 import blocco.queue.Monitor;
+import java.util.LinkedList;
 
 /**
  *
@@ -28,7 +30,7 @@ public class Configuratore implements Runnable{
     private RicevitoreProxy ricevitore;
     private TrasmettitoreProxy trasmettitore;
     private AlgoritmoProxy algoritmo; 
-    private HashMap conf = new HashMap();
+    private Configurazione conf = new Configurazione();
     private static int timeout = 10;
     private static String NAME = "backup.name";
     private static String IP = "backup.ip";
@@ -152,11 +154,11 @@ public class Configuratore implements Runnable{
     }
     
    
-    public HashMap getConf() {
+    public Configurazione getConf() {
         return conf;
     }
 
-    public void setConf(HashMap conf) {
+    public void setConf(Configurazione conf) {
         this.conf = conf;
     }
 
