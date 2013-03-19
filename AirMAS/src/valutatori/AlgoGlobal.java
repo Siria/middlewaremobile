@@ -42,7 +42,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
                         }
                 break;
             }
-        return null;     
+        return e;     
 
     }
 
@@ -66,7 +66,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
     }
 
     private boolean verifyPos(Evento e) {
-        String aereoID = (String) e.get("id");
+        String aereoID = (String) e.get("id_dest");
         String pos = (String) e.get("data");
         Aereo aereo = new Aereo(aereoID, pos);
         int id_a = Integer.getInteger(aereoID);
@@ -92,7 +92,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
         }
     }
     
-    public Evento createStartEvent(){
+    public void createStartEvent(){
 
         Aereo a1 = new Aereo("01" ,"0:0:0;10:0:0;2:0:0;");
         Aereo a2 = new Aereo("02" ,"50:0:0;10:0:0;2:0:0;");
@@ -106,19 +106,22 @@ public class AlgoGlobal implements AlgoritmoProxy{
             map.put(a4.getId(), a4);    
             map.put(a5.getId(), a5);
 
-        return null;
 }
             
             
     public boolean neighbors(Evento e) {
+        
+        String id = (String) e.get("id_dest");
+        Aereo a1 = (Aereo) map.get(id);
 
         Collection<Object> collection = map.values();
         Iterator<Object> iterator = collection.iterator();
-        Aereo a1 = new Aereo();
+        //Aereo a1 = new Aereo();
         Aereo a2 = new Aereo();
-        while (iterator.hasNext()) {
-            a1 = (Aereo) iterator.next();
+        while ( iterator.hasNext() ) {
+            //a1 = (Aereo) iterator.next();
             a2 = (Aereo) iterator.next();
+            if ( id != a2.getId() ){
 
             String[] parametri = a1.getPosition().toString().toLowerCase().split(";");
             String p[] = parametri[0].split(":"); //posizione  
@@ -136,11 +139,12 @@ public class AlgoGlobal implements AlgoritmoProxy{
                 }
             }
         }
-        e.put("analisi", "conflict");
-        return false;
+
         
     }
-
+        e.put("analisi", "conflict");
+        return false;
+    }
     private void updatePos(String aereoID, String pos) {
         Aereo aereo = (Aereo) map.get(aereoID);
         aereo.setPosition(pos);      

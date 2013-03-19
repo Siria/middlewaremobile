@@ -37,7 +37,7 @@ public class AlgoExecution implements AlgoritmoProxy{
                  return createControlEvent(e);
                  
              }}else{ 
-             return createAlarmEvent(e);
+             return createAlarmModifyEvent(e); 
 
              }
         return null;
@@ -45,6 +45,11 @@ public class AlgoExecution implements AlgoritmoProxy{
     
     
 }
+    
+    public Evento createStartEvent(Evento e){
+        return null;
+    
+    }
     
 
     
@@ -60,7 +65,7 @@ public class AlgoExecution implements AlgoritmoProxy{
         return null;
 }
     
-    public Evento createAlarmEvent(Evento e){
+    public Evento createAlarmModifyEvent(Evento e){
         return null;
 }
     

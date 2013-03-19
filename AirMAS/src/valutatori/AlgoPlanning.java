@@ -24,13 +24,15 @@ public class AlgoPlanning implements AlgoritmoProxy{
         System.out.println(e.toString());
                     switch (e.get("analisi").toString()){
                         case "start":
-                            // TODO e con questo che ci facciamo???
+                            // prepara l'invio di messaggi per i 5 aerei
                             return e;
                         case "true":
                             e.put("planning", true);
                             return next_execution(e);
-                        case "false":
+                        case "false" : case "conglict":
                             return planning_move(e);
+
+                            
                     }
 
         return null;     

@@ -45,7 +45,7 @@ public class AlgoLocal implements AlgoritmoProxy{
                         }
                 break;
             }
-        return null;     
+        return e;     
         }
 
     private Object setStart(Evento e) {
