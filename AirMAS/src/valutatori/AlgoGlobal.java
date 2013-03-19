@@ -59,7 +59,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
                 updatePos(aereoID, pos);
                 e.put("analisi", true);
             } else {
-                createStartEvent();
+                changeStartPos(e);
                 setStart(e);
             }
         }
@@ -183,8 +183,35 @@ public class AlgoGlobal implements AlgoritmoProxy{
         return e;
     }
 
-   
+    private void changeStartPos(Evento e) {
+        
+        // prendo l'id di e
+        // nella mappa lo aggiusto tramite switch
+        String aereoID = (String) e.get("id_dest");
+        switch(aereoID){    
+            
+            case "01":
+            updatePos(aereoID,  "0:0:0;10:0:0;2:0:0;") ; 
+                break;
+                
+            case "02":
+            updatePos(aereoID,  "50:0:0;10:0:0;2:0:0;");  
+                break;
+           
+            case"03":
+            updatePos(aereoID,  "100:0:0;10:0:0;2:0:0;");  
+                break;
+                  
+            case "04":
+            updatePos(aereoID,  "200:0:0;10:0:0;2:0:0;");     
+                break;
+                       
+            case "05":
+            updatePos(aereoID,  "250:0:0;10:0:0;2:0:0;");
+                break;
+        }
     
     }
 
 
+}
