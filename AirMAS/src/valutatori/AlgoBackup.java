@@ -4,11 +4,13 @@
  */
 package valutatori;
 
+import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Document;
@@ -18,52 +20,62 @@ import org.w3c.dom.Document;
  * @author Seby
  */
 public class AlgoBackup implements AlgoritmoProxy{
-    private XMLBuilder xmlBuilder;
     
     @Override
     public Object valuta(Object messaggio){
         // TODO qua va la funzione che scrive su file
-        System.out.println("Ho ricevuto: " + messaggio );
-            if (messaggio.toString().equals("prepareToCommit")){
-                return "ack";
-            } else {
-                writeLog(messaggio.toString());
-                return "ack";
+        if (messaggio.toString().length() > 30){
+            System.out.println("Ho ricevuto: " + messaggio.toString().substring(0, 20) + "...");
+        } else {
+            System.out.println("Ho ricevuto: " + messaggio.toString());
+        }    
+            switch (messaggio.toString()){
+                case "ack":
+                break;
+                case "prepareToCommit":
+                    return "ack";
+                case "":
+                    return null;
+                default:
+                    Evento e = new Evento(messaggio.toString());
+                    String ID = (String)e.get("id_backup");
+
+                    System.out.println("Sono Backup"+ ID +": scrivo nel mio Log");
+                    writeLog(messaggio.toString(), ID);
+                    return "ack";
+                    
             }
+            return null;
         
     }
     
-    public void writeLog(String messaggio){
+    public void writeLog(String messaggio, String ID){
 
-        Document document = xmlBuilder.parseStringToXML(messaggio);
         BufferedWriter tmp = null;
         try {
-            String format = "LogFormat";
-            String directory = "/message/";
-            File file = new File(directory, "ricevitore." + format);
+            File file = new File("ricevitore"+ID+".txt");
             tmp = new BufferedWriter(new FileWriter(file, true));
-            String[] lines = messaggio.split("<log_message>");
-
-            for(String s : lines){
-                if (!s.contentEquals("ack")){
-                if(s.equals("")){
-                    tmp.newLine();
+            
+                if (messaggio.equals("ack")){
                 }
                 else{
-                    tmp.write(s);
+                    java.util.Date date= new java.util.Date();
+                    
+                    tmp.write("--- " + new Timestamp(date.getTime()) + " ---\n\n");
+                    tmp.write(messaggio);
                     tmp.newLine();
                     tmp.flush();
                 }
-            }    }
+                
             tmp.newLine();
             tmp.close();
         } catch (IOException ex) {
-            Logger.getLogger(AlgoPrimary.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlgoBackup.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 tmp.close();
             } catch (IOException ex) {
-                Logger.getLogger(AlgoPrimary.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AlgoBackup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

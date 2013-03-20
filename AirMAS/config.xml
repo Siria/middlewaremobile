@@ -128,9 +128,6 @@
   </algoritmo>
  </blocco>
  
- 
-
-
  <backup id="Backup1">
   <blocchiB>
     <bloccoB>
@@ -155,6 +152,10 @@
      <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
     </bloccoB>
   </blocchiB>
+  <trasmettitori>
+  </trasmettitori>
+  <ricevitori>
+  </ricevitori>
  </backup> 
  
  <backup id="Backup2">
@@ -181,6 +182,10 @@
      <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
     </bloccoB>
   </blocchiB>
+  <trasmettitori>
+  </trasmettitori>
+  <ricevitori>
+  </ricevitori>
  </backup> 
  
  <backup id="Backup3">
@@ -207,14 +212,23 @@
      <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
     </bloccoB>
   </blocchiB>
+  <trasmettitori>
+  </trasmettitori>
+  <ricevitori>
+  </ricevitori>
  </backup> 
  
  
- 
- 
-
- 
- <blocco id="Ricezione">
+ <backup id="ClientReplicazione">
+  <blocchiB>
+    <bloccoB>
+     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>
+     <configUscita key="socketUscita">localhost:55001</configUscita>
+     <classIngresso>ricezione.RicevitoreSocket</classIngresso>
+     <configIngresso key="socketIngresso">55000</configIngresso>
+     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>
+    </bloccoB>
+  </blocchiB>
   <trasmettitori>
    <trasmettitore>
     <class>trasmissione.TrasmettitoreSocket</class>
@@ -225,6 +239,23 @@
    <ricevitore>
     <class>ricezione.RicevitoreSocket</class>
     <config key="socketIngresso">50001</config>
+   </ricevitore>
+  </ricevitori>
+ </backup> 
+ 
+
+ 
+ <blocco id="Ricezione">
+  <trasmettitori>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:50001</config>
+   </trasmettitore>
+  </trasmettitori>
+  <ricevitori>
+   <ricevitore>
+    <class>ricezione.RicevitoreSocket</class>
+    <config key="socketIngresso">50000</config>
    </ricevitore>
   </ricevitori>
   <algoritmo>

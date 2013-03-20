@@ -7,7 +7,12 @@ package test;
 import blocco.adapter.AdapterTrasmettitore;
 import blocco.proxy.ProxyTarget;
 import blocco.proxy.TrasmettitoreProxy;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
+import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
 /**
@@ -44,8 +49,6 @@ public class MASConfigClient extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
 
@@ -73,7 +76,7 @@ public class MASConfigClient extends javax.swing.JFrame {
 
         jTextAreaXML.setColumns(20);
         jTextAreaXML.setRows(5);
-        jTextAreaXML.setText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AirMAS>\n \n <blocco id=\"Esecutore\">\n  <trasmettitori>\n   \n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50008</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoExecution</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Planning\">\n  <trasmettitori>\n  <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50008</config>\n   </trasmettitore> \n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50007</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoPlanning</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"AnalisiLocale\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50007</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50006</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoLocal</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"AnalisiGlobale\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50007</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50005</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoGlobal</class>\n  </algoritmo>\n </blocco>\n\n<blocco id=\"FiltraggioValue\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50005</config>\n   </trasmettitore>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50006</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50004</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoValue</class>\n  </algoritmo>\n </blocco>\n\n<blocco id=\"FiltraggioTime\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50004</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50003</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoTime</class>\n  </algoritmo>\n </blocco>\n \n<blocco id=\"FiltraggioSource\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50003</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50002</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoSource</class>\n  </algoritmo>\n </blocco>\n \n \n\n\n <backup id=\"Backup1\">\n  <blocchiB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55000</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55001</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55021</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55012</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55031</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55013</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n </backup> \n \n <backup id=\"Backup2\">\n  <blocchiB>\n   <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55000</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55002</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55012</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55021</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55032</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55023</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n </backup> \n \n <backup id=\"Backup3\">\n  <blocchiB>\n   <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55000</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55003</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55013</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55031</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55023</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55032</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n </backup> \n \n \n \n \n\n \n <blocco id=\"Ricezione\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50002</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50001</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoRicevitore</class>\n  </algoritmo>\n </blocco>\n</AirMAS>\n\n\n");
+        jTextAreaXML.setText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AirMAS>\n \n <blocco id=\"Esecutore\">\n  <trasmettitori>\n   \n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50008</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoExecution</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"Planning\">\n  <trasmettitori>\n  <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50008</config>\n   </trasmettitore> \n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50007</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoPlanning</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"AnalisiLocale\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50007</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50006</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoLocal</class>\n  </algoritmo>\n </blocco>\n \n <blocco id=\"AnalisiGlobale\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50007</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50005</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoGlobal</class>\n  </algoritmo>\n </blocco>\n\n<blocco id=\"FiltraggioValue\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50005</config>\n   </trasmettitore>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50006</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50004</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoValue</class>\n  </algoritmo>\n </blocco>\n\n<blocco id=\"FiltraggioTime\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50004</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50003</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoTime</class>\n  </algoritmo>\n </blocco>\n \n<blocco id=\"FiltraggioSource\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50003</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50002</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoSource</class>\n  </algoritmo>\n </blocco>\n \n <backup id=\"Backup1\">\n  <blocchiB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55000</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55001</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55021</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55012</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55031</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55013</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n  <trasmettitori>\n  </trasmettitori>\n  <ricevitori>\n  </ricevitori>\n </backup> \n \n <backup id=\"Backup2\">\n  <blocchiB>\n   <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55000</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55002</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55012</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55021</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55032</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55023</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n  <trasmettitori>\n  </trasmettitori>\n  <ricevitori>\n  </ricevitori>\n </backup> \n \n <backup id=\"Backup3\">\n  <blocchiB>\n   <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55000</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55003</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55013</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55031</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55023</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55032</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n  <trasmettitori>\n  </trasmettitori>\n  <ricevitori>\n  </ricevitori>\n </backup> \n \n \n <backup id=\"ClientReplicazione\">\n  <blocchiB>\n    <bloccoB>\n     <classUscita>trasmissione.TrasmettitoreSocket</classUscita>\n     <configUscita key=\"socketUscita\">localhost:55001</configUscita>\n     <classIngresso>ricezione.RicevitoreSocket</classIngresso>\n     <configIngresso key=\"socketIngresso\">55000</configIngresso>\n     <classAlgoritmo>valutatori.AlgoBackup</classAlgoritmo>\n    </bloccoB>\n  </blocchiB>\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50002</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50001</config>\n   </ricevitore>\n  </ricevitori>\n </backup> \n \n\n \n <blocco id=\"Ricezione\">\n  <trasmettitori>\n   <trasmettitore>\n    <class>trasmissione.TrasmettitoreSocket</class>\n    <config key=\"socketUscita\">localhost:50001</config>\n   </trasmettitore>\n  </trasmettitori>\n  <ricevitori>\n   <ricevitore>\n    <class>ricezione.RicevitoreSocket</class>\n    <config key=\"socketIngresso\">50000</config>\n   </ricevitore>\n  </ricevitori>\n  <algoritmo>\n   <class>valutatori.AlgoRicevitore</class>\n  </algoritmo>\n </blocco>\n</AirMAS>\n\n");
         jScrollPane1.setViewportView(jTextAreaXML);
 
         jMenu1.setText("File");
@@ -85,17 +88,6 @@ public class MASConfigClient extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Salva");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setText("Salva con nome...");
-        jMenu1.add(jMenuItem3);
         jMenu1.add(jSeparator1);
 
         jMenuItem4.setText("Esci");
@@ -150,11 +142,36 @@ public class MASConfigClient extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            
+            BufferedReader br = null;
+ 
+		try {
+ 
+			String sCurrentLine;
+ 
+			br = new BufferedReader(new FileReader(selectedFile.getAbsolutePath().toString()));
+                        jTextAreaXML.setText("");
+			while ((sCurrentLine = br.readLine()) != null) {
+                                jTextAreaXML.append(sCurrentLine+"\n");
+			}
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+            
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         try{
@@ -311,8 +328,6 @@ public class MASConfigClient extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;

@@ -39,4 +39,9 @@ public class Monitor {
   public synchronized void test (){
       System.out.println("si sono il monitor e ho" + codaRichieste.size() + " richieste");
   }
+  
+  public synchronized void empty (){
+      codaRichieste.clear();
+  }
+  
 } 

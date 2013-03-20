@@ -415,7 +415,7 @@ public class MASConfigServer extends javax.swing.JFrame {
                     Threads.add(th);
                     th.start();
 
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
                 
                 
@@ -451,8 +451,6 @@ public class MASConfigServer extends javax.swing.JFrame {
                                                 bloccoB.setRicevitore(new AdapterRicevitore((RicevitoreProxy)ProxyTarget.createProxy(Class.forName(valoreBloccoB.getTextContent()).newInstance())));        
                                                 break;
                                             
-                                                
-                                                
                                             case("configIngresso"):
                                             case("configUscita"):    
                                                 //System.out.println(valoreTrasmettitore.getNodeValue()+"+"+valoreTrasmettitore.getTextContent()+"+"+valoreTrasmettitore.getAttributes().item(0).getNodeValue());
@@ -471,12 +469,70 @@ public class MASConfigServer extends javax.swing.JFrame {
                             backup.getBlocchiB().add(bloccoB);
                         }
                         }
+                        NodeList tmp =    tempNode.getChildNodes();
+                        NodeList listaTrasmettitori = tempNode.getChildNodes().item(3).getChildNodes(); // Trasmettitori
+                            for (int c = 0; c < listaTrasmettitori.getLength(); c++){
+                                Node trasmettitore = listaTrasmettitori.item(c);
+                                if (trasmettitore.getNodeType() == Node.ELEMENT_NODE) {
+        
+                                //System.out.println(trasmettitore.getNodeName());
+                                NodeList valoriTrasmettitore = trasmettitore.getChildNodes();
+                                    for (int d = 0; d < valoriTrasmettitore.getLength(); d++){
+                                        Node valoreTrasmettitore = valoriTrasmettitore.item(d);
+                                        if (valoreTrasmettitore.getNodeType() == Node.ELEMENT_NODE) {
+         
+                                        //System.out.println(valoreTrasmettitore.getNodeName());
+                                
+                                        switch (valoreTrasmettitore.getNodeName()){
+                                            case("class"):
+                                                //System.out.println(valoreTrasmettitore.getNodeValue()+"+"+valoreTrasmettitore.getTextContent());
+                                                backup.setTrasmettitore(new AdapterTrasmettitore((TrasmettitoreProxy)ProxyTarget.createProxy(Class.forName(valoreTrasmettitore.getTextContent()).newInstance())));        
+                                                break;
+                                                
+                                            case("config"):
+                                                //System.out.println(valoreTrasmettitore.getNodeValue()+"+"+valoreTrasmettitore.getTextContent()+"+"+valoreTrasmettitore.getAttributes().item(0).getNodeValue());
+                                                backup.getConf().put(valoreTrasmettitore.getAttributes().item(0).getNodeValue(), valoreTrasmettitore.getTextContent());
+                                            break;     
+                                        }
+                                    }
+                            }
+                        }
+                        }
+                        NodeList listaRicevitori = tempNode.getChildNodes().item(5).getChildNodes(); // Ricevitori 
+                            for (int c = 0; c < listaRicevitori.getLength(); c++){
+                                
+                                Node ricevitore = listaRicevitori.item(c);
+                                if (ricevitore.getNodeType() == Node.ELEMENT_NODE) {
+        
+                                //System.out.println(ricevitore.getNodeName());
+                                
+                                NodeList valoriRicevitore = ricevitore.getChildNodes();
+                                    for (int d = 0; d < valoriRicevitore.getLength(); d++){
+                                        Node valoreRicevitore = valoriRicevitore.item(d);
+                                        if (valoreRicevitore.getNodeType() == Node.ELEMENT_NODE) {
+        
+                                        //System.out.println(valoreRicevitore.getNodeName());
+                                
+                                        switch (valoreRicevitore.getNodeName()){
+                                            case("class"):
+                                                //System.out.println(valoreRicevitore.getNodeValue()+"+"+valoreRicevitore.getTextContent());
+                                                backup.setRicevitore(new AdapterRicevitore((RicevitoreProxy)ProxyTarget.createProxy(Class.forName(valoreRicevitore.getTextContent()).newInstance())));        
+                                                break;
+                                                
+                                            case("config"):
+                                                //System.out.println(valoreRicevitore.getNodeValue()+"+"+valoreRicevitore.getTextContent()+"+"+valoreRicevitore.getAttributes().item(0).getNodeValue());
+                                                backup.getConf().put(valoreRicevitore.getAttributes().item(0).getNodeValue(), valoreRicevitore.getTextContent());
+                                            break;     
+                                        }
+                                    }
+                            }
+                                }}    
                     }    
                     Thread th = new Thread (backup);
                     Threads.add(th);
                     th.start();
 
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
                 
                 
@@ -567,7 +623,7 @@ public class MASConfigServer extends javax.swing.JFrame {
                     Threads.add(th);
                     th.start();
 
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
                 
         }

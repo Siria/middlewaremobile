@@ -19,13 +19,13 @@ import java.util.Map.Entry;
 
 public class Blocco implements Runnable{
     
-     public Monitor monitor = new Monitor();
      public LinkedList<AdapterRicevitore> ricevitori = new LinkedList<>();
      public LinkedList<AdapterTrasmettitore> trasmettitori = new LinkedList<>();
 
      public AdapterAlgoritmo algoritmo; 
      public Configurazione conf = new Configurazione();
-
+     public Monitor monitor = new Monitor();
+     
     public Configurazione getConf() {
         return conf;
     }
@@ -83,9 +83,12 @@ public class Blocco implements Runnable{
             try{    
     		boolean continua=true;
 			while (continua){
-                            Object tmp = monitor.prelevaMessaggio(); //questi lasciamoli object
+                            Object tmp = monitor.prelevaMessaggio(); 
                             Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
+                                    
+                                    // TODO controllare la destinazione del messaggio e fare caso exec
+                                    
                                     for (AdapterTrasmettitore trasmettitore : trasmettitori){
                                        trasmettitore.invia(risp);              
                                     }
