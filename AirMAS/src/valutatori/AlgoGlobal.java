@@ -33,6 +33,10 @@ public class AlgoGlobal implements AlgoritmoProxy{
                         case "data":
                             tryUpdateAir(e);
                             break;
+                        case "rstart":
+                            changeStartPos(e);
+                            setStart(e);
+                            break;
                     }
                 break;
                 
@@ -97,11 +101,11 @@ public class AlgoGlobal implements AlgoritmoProxy{
     
     public void createStartEvent(){
 
-        Aereo a1 = new Aereo("01" ,"0:0:0;10:0:0;2:0:0;");
-        Aereo a2 = new Aereo("02" ,"50:0:0;10:0:0;2:0:0;");
-        Aereo a3 = new Aereo("03" ,"100:0:0;10:0:0;2:0:0;");
-        Aereo a4 = new Aereo("04" ,"200:0:0;10:0:0;2:0:0;");
-        Aereo a5 = new Aereo("05" ,"250:0:0;10:0:0;2:0:0;");
+        Aereo a1 = new Aereo("1" ,"0:0:0;10:0:0;2:0:0;");
+        Aereo a2 = new Aereo("2" ,"50:0:0;10:0:0;2:0:0;");
+        Aereo a3 = new Aereo("3" ,"100:0:0;10:0:0;2:0:0;");
+        Aereo a4 = new Aereo("4" ,"200:0:0;10:0:0;2:0:0;");
+        Aereo a5 = new Aereo("5" ,"250:0:0;10:0:0;2:0:0;");
 
             map.put(a1.getId(), a1);
             map.put(a2.getId(), a2);
@@ -190,23 +194,23 @@ public class AlgoGlobal implements AlgoritmoProxy{
         String aereoID = (String) e.get("id_dest");
         switch(aereoID){    
             
-            case "01":
+            case "1":
             updatePos(aereoID,  "0:0:0;10:0:0;2:0:0;") ; 
                 break;
                 
-            case "02":
+            case "2":
             updatePos(aereoID,  "50:0:0;10:0:0;2:0:0;");  
                 break;
            
-            case"03":
+            case"3":
             updatePos(aereoID,  "100:0:0;10:0:0;2:0:0;");  
                 break;
                   
-            case "04":
+            case "4":
             updatePos(aereoID,  "200:0:0;10:0:0;2:0:0;");     
                 break;
                        
-            case "05":
+            case "5":
             updatePos(aereoID,  "250:0:0;10:0:0;2:0:0;");
                 break;
         }

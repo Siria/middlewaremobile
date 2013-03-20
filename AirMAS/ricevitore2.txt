@@ -701,3 +701,40 @@
 </java>
 
 
+--- 2013-03-20 08:45:26.721 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_15" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>torre</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>01</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>my</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>00</string>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>2</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>alarm</string>
+  </void>
+ </object>
+</java>
+
+

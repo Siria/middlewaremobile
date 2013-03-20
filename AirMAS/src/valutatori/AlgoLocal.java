@@ -2,7 +2,6 @@
 package valutatori;
 
 import analisi.Aereo;
-import java.util.HashMap;
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
 

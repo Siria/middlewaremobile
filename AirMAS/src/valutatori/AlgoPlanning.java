@@ -6,7 +6,6 @@ package valutatori;
 
 import blocco.Evento;
 import blocco.proxy.AlgoritmoProxy;
-
 /**
  *
  * @author alessandra

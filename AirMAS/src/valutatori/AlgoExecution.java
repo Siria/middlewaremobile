@@ -169,23 +169,23 @@ public class AlgoExecution implements AlgoritmoProxy{
         String pos = null;
         switch(id){
                 
-            case "01":
+            case "1":
             pos = "0:0:0;10:0:0;2:0:0;" ; 
                 break;
                 
-            case "02":
+            case "2":
             pos = "50:0:0;10:0:0;2:0:0;";  
                 break;
            
-            case"03":
+            case"3":
             pos = "100:0:0;10:0:0;2:0:0;";  
                 break;
                   
-            case "04":
+            case "4":
             pos = "200:0:0;10:0:0;2:0:0;";     
                 break;
                        
-            case "05":
+            case "5":
             pos = "250:0:0;10:0:0;2:0:0;";
                 break;
         }
