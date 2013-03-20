@@ -41,7 +41,7 @@ public class MASConfigServer extends javax.swing.JFrame {
      */
     public MASConfigServer() {
         initComponents();
-        
+        ascolta();
     }
 
     /**
@@ -142,6 +142,19 @@ public class MASConfigServer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jTextConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextConfigActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextConfigActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    public void ascolta(){
         try{
             new JTextAreaStream().redirectSystemOutputTo(jTextAreaXML);
         
@@ -172,17 +185,8 @@ public class MASConfigServer extends javax.swing.JFrame {
             
            
         }catch (Exception e){e.printStackTrace();}
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jTextConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextConfigActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextConfigActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
+    }
+    
     private class Applicazione{
         private LinkedList<Blocco> blocchi = new LinkedList<>();
     

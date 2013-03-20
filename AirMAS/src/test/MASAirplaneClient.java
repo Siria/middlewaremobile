@@ -41,6 +41,17 @@ public class MASAirplaneClient extends javax.swing.JFrame {
         initComponents();
          
     }
+    
+    public MASAirplaneClient(HashMap conf) {
+        initComponents();
+        jTextField1.setText(conf.get("MASconfig").toString());
+        jTextField2.setText(conf.get("MASvalue").toString());
+        jTextField3.setText(conf.get("MASclass").toString());
+        jTextField4.setText(conf.get("AEREOclass").toString());
+        jTextField5.setText(conf.get("AEREOconfig").toString());
+        jTextField6.setText(conf.get("AEREOvalue").toString());
+        ascolta();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,6 +135,11 @@ public class MASAirplaneClient extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         jMenuItem4.setText("Esci");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -224,7 +240,16 @@ public class MASAirplaneClient extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-         try {
+         ascolta();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    public void ascolta(){
+        try {
                 if (t != null){
                 if (t.isAlive()){
                     t.interrupt();
@@ -261,9 +286,8 @@ public class MASAirplaneClient extends javax.swing.JFrame {
             } catch (Exception ex) {
                 Logger.getLogger(MASAirplaneClient.class.getName()).log(Level.SEVERE, null, ex);
             }
-    }//GEN-LAST:event_jButton10ActionPerformed
-
     
+    }
 
     public static void invia(Object messaggio){
         try {

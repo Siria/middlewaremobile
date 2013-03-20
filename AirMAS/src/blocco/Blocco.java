@@ -87,10 +87,17 @@ public class Blocco implements Runnable{
                             Object risp = algoritmo.valuta(tmp);
                                 if (risp != null){
                                     
-                                    // TODO controllare la destinazione del messaggio e fare caso exec
+                                    Evento e = new Evento(risp.toString());
+                                    if (e.get("sourceType").toString().equals("torre")){
+                                        int dest = Integer.parseInt(e.get("id_dest").toString());
+                                        dest = dest-1;
+                                        
+                                        trasmettitori.get(dest).invia(risp);
+                                    } else {
                                     
-                                    for (AdapterTrasmettitore trasmettitore : trasmettitori){
-                                       trasmettitore.invia(risp);              
+                                        for (AdapterTrasmettitore trasmettitore : trasmettitori){
+                                           trasmettitore.invia(risp);              
+                                        }
                                     }
                                 }
                         }

@@ -91,7 +91,7 @@ public class AlgoGlobal implements AlgoritmoProxy{
 
     }
     
-        private void init() {
+    private void init() {
         if(map.isEmpty()){
             System.out.println("All'interno dell'init");
             createStartEvent();

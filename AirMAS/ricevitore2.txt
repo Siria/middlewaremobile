@@ -701,10 +701,195 @@
 </java>
 
 
---- 2013-03-20 08:45:26.721 ---
+--- 2013-03-20 08:56:56.902 ---
 
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.7.0_15" class="java.beans.XMLDecoder">
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>torre</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>01</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>my</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>00</string>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>2</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>alarm</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 08:58:05.872 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>torre</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>01</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>my</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>00</string>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>2</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>alarm</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 09:29:45.754 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>torre</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>01</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>my</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>00</string>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>2</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>alarm</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 09:29:53.121 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>torre</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>01</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>my</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>00</string>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>2</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>alarm</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 09:32:32.897 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>data</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>2</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 10:17:43.628 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
    <string>content</string>

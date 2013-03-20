@@ -3,7 +3,14 @@
  
  <blocco id="Esecutore">
   <trasmettitori>
-   
+  <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:40001</config>
+   </trasmettitore>
+   <trasmettitore>
+    <class>trasmissione.TrasmettitoreSocket</class>
+    <config key="socketUscita">localhost:40002</config>
+   </trasmettitore>
   </trasmettitori>
   <ricevitori>
    <ricevitore>

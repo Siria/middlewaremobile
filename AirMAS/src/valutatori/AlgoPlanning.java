@@ -24,13 +24,13 @@ public class AlgoPlanning implements AlgoritmoProxy{
                     switch (e.get("analisi").toString()){
                         case "start":
                             // prepara l'invio di messaggi per i 5 aerei
-                             startMessage(e);
+                            startMessage(e);
                             break;
                         case "true":
-                             next_execution(e);
+                            next_execution(e);
                             break;
                         case "false" : case "conflict":
-                             planning_move(e); 
+                            planning_move(e); 
                             break;
                     } 
                     return e;               
