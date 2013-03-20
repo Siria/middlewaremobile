@@ -38,20 +38,27 @@ public class Starter {
                 conf.put("AEREOclass", "ricezione.RicevitoreSocket");
                 conf.put("AEREOconfig", "socketIngresso");
                 
-                conf.put("AEREOvalue", "40001");
-                new MASAirplaneClient(conf).setVisible(true);
-                
-                conf.put("AEREOvalue", "40002");
-                new MASAirplaneClient(conf).setVisible(true);
-                
-                conf.put("AEREOvalue", "40003");
+                conf.put("AEREOvalue", "40005");
                 new MASAirplaneClient(conf).setVisible(true);
                 
                 conf.put("AEREOvalue", "40004");
                 new MASAirplaneClient(conf).setVisible(true);
                 
-                conf.put("AEREOvalue", "40005");
+                conf.put("AEREOvalue", "40003");
                 new MASAirplaneClient(conf).setVisible(true);
+                
+                conf.put("AEREOvalue", "40002");
+                new MASAirplaneClient(conf).setVisible(true);
+                
+                conf.put("AEREOvalue", "40001");
+                new MASAirplaneClient(conf).setVisible(true);
+                
+                
+                
+                
+                
+                
+                
                 
                 new MASConfigClient().setVisible(true);
                 

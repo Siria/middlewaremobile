@@ -21,11 +21,15 @@ public class AlgoExecution implements AlgoritmoProxy{
         
         
         System.out.println("Sono nel blocco Execution");
+        
+        
         // qui arriverà un messaggio che conterrà le info riguardanti il disegno che si deve realizzare
         // e verrà quindi assegnata una traiettoria ad ogni aereo
         
         Evento e =  new Evento(messaggio.toString());
-         if(e.get("sourceType").toString().equalsIgnoreCase("torre"))
+        
+        /*
+        if(e.get("sourceType").toString().equalsIgnoreCase("torre"))
          {
              if(e.get("planning").toString().equals(true)){
                  return createDataEvent(e);
@@ -34,21 +38,22 @@ public class AlgoExecution implements AlgoritmoProxy{
                  return createMyAlarmEvent(e); 
                  
              } }
-         else if (e.get("sourceType").toString().equals("aereo")){
+         else*/
+        
+        
+         if (e.get("sourceType").toString().equals("aereo")){
             
-             if (e.get("planning").toString().equals(true)) {
+             if (e.get("planning").toString().equals("true")) {
                  return createControlEvent(e);
-                 
-             }else if (e.get("planning").toString().equals(false)){ 
+             }
+             if (e.get("planning").toString().equals("false")){ 
              // devo spostarmi di 5 metri
-             return createAlarmModifyEvent(e); 
+                return createAlarmModifyEvent(e); 
 
-             }else
-                 return createStartEvent(e);
-         
-   
-    
-}       return e;
+             } 
+                return createStartEvent(e);
+        }       
+        return e;
 }
             /* nel messaggio ho 
          * id_source
@@ -62,7 +67,6 @@ public class AlgoExecution implements AlgoritmoProxy{
     
     public Evento createStartEvent(Evento e){
 
-        swap (e.get("id_source"), e.get("id_dest"));
         String type = "posizione";
         String context = "start";
         String sourceType = "torre";
@@ -71,6 +75,8 @@ public class AlgoExecution implements AlgoritmoProxy{
                 
         Evento newEvento = new Evento();
         
+        newEvento.put("id_dest", e.get("id_source"));
+        newEvento.put("id_source", e.get("id_dest"));
         newEvento.put("type", type);
         newEvento.put("context", context);
         newEvento.put("content", content);
@@ -85,7 +91,7 @@ public class AlgoExecution implements AlgoritmoProxy{
     public Evento createDataEvent(Evento e){
         // procedi con la creazione di un messaggio
                  // per la torre
-        swap (e.get("id_source"), e.get("id_dest"));
+        
         String type = "posizione";
         String context = "data";
         String sourceType = "aereo";
@@ -94,6 +100,8 @@ public class AlgoExecution implements AlgoritmoProxy{
                 
         Evento newEvento = new Evento();
         
+        newEvento.put("id_dest", e.get("id_source"));
+        newEvento.put("id_source", e.get("id_dest"));
         newEvento.put("type", type);
         newEvento.put("context", context);
         newEvento.put("content", content);
@@ -104,7 +112,7 @@ public class AlgoExecution implements AlgoritmoProxy{
     
     public Evento createControlEvent(Evento e){
 
-        swap (e.get("id_source"), e.get("id_dest"));
+        
         String type = "posizione";
         String context = "control";
         String sourceType = "torre";
@@ -113,6 +121,8 @@ public class AlgoExecution implements AlgoritmoProxy{
                 
         Evento newEvento = new Evento();
         
+        newEvento.put("id_dest", e.get("id_source"));
+        newEvento.put("id_source", e.get("id_dest"));
         newEvento.put("type", type);
         newEvento.put("context", context);
         newEvento.put("content", content);
@@ -123,15 +133,17 @@ public class AlgoExecution implements AlgoritmoProxy{
 }
     
     public Evento createAlarmModifyEvent(Evento e){
-        swap (e.get("id_source"), e.get("id_dest"));
+        
         String type = "alarm";
         String context = "modify";
         String sourceType = "torre";
-        String content = getSafePosition(e.get("content"));
+        String content = getSafePosition(e.get("content").toString());
         String max_p = "300";
                 
         Evento newEvento = new Evento();
         
+        newEvento.put("id_dest", e.get("id_source"));
+        newEvento.put("id_source", e.get("id_dest"));
         newEvento.put("type", type);
         newEvento.put("context", context);
         newEvento.put("content", content);
@@ -141,7 +153,7 @@ public class AlgoExecution implements AlgoritmoProxy{
 }
     
     public Evento createMyAlarmEvent(Evento e){
-        swap (e.get("id_source"), e.get("id_dest"));
+        
         String type = "alarm";
         String context = "my";
         String sourceType = "aereo";
@@ -149,7 +161,8 @@ public class AlgoExecution implements AlgoritmoProxy{
         String max_p = "300";
                 
         Evento newEvento = new Evento();
-        
+        newEvento.put("id_dest", e.get("id_source"));
+        newEvento.put("id_source", e.get("id_dest"));
         newEvento.put("type", type);
         newEvento.put("context", context);
         newEvento.put("content", content);
@@ -157,11 +170,7 @@ public class AlgoExecution implements AlgoritmoProxy{
         newEvento.put("max_p", max_p);
         return newEvento;
 }
-    public  void swap(Object s1, Object s2) {
-        Object temp = s1;
-        s1 = s2;
-        s2 = temp;
-    }
+    
 
     private String getContentFromID(Object idObject) {
         // devo dare la posizione iniziale in base all'id di destinazione del messaggio
@@ -206,16 +215,26 @@ public class AlgoExecution implements AlgoritmoProxy{
                 return String.valueOf(y);
     }
 
-    private String getSafePosition(Object position) {
+    private String getSafePosition(String position) {
         // Z - 5
          String pos = (String) position;
-
+         StringBuilder build = new StringBuilder();
             String[] parametri = pos.toString().toLowerCase().split(";");
             String p[] = parametri[0].split(":"); //posizione  
 
-                int z = Integer.getInteger(p[2]);
+                int z = Integer.parseInt(p[2]);
                 z = z-5;
-                return String.valueOf(z);
+                
+                p[2] = z+"";
+                
+                String ps = p[0]+":"+p[1]+":"+p[2];
+                
+                parametri[0] = ps;
+            
+            for (String s : parametri){
+                build.append(s).append(";");
+            }
+                return build.toString();
     }
     
 }

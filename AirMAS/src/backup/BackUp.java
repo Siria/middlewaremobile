@@ -19,6 +19,8 @@ import valutatori.AlgoBackup;
  * @author Seby
  */
 public class BackUp extends Blocco{
+        
+     int IDtrans = 0;
     
      AdapterTrasmettitore trasmettitore;
      AdapterRicevitore ricevitore;
@@ -56,6 +58,7 @@ public class BackUp extends Blocco{
              
              
             while(true){
+                int tempIDtrans;
                 Object messaggio = bloccoC.monitor.prelevaMessaggio();
                 int backupAttivi = 0;
                 System.out.println("--> Sono il primary: richiesta backup\n--> Sono il primary: invio il prepareToCommit");
@@ -67,10 +70,15 @@ public class BackUp extends Blocco{
                     int confermati = 0;
                     int i = 0;
                     
+                    Evento e = new Evento(messaggio.toString());
+                    tempIDtrans = Integer.parseInt(e.get("id_trans").toString());
                     
+                    if (tempIDtrans == IDtrans){
+                        bloccoC.invia("ack");
+                    } else {
+                        
                     for (BloccoBidirezionale asc : blocchiB){
                         i++;
-                        Evento e = new Evento(messaggio.toString());
                         e.put("id_backup",i+"");
                         confermati = confermati + asc.inviaConAck(e.toString(), 20000);
                     }
@@ -78,12 +86,12 @@ public class BackUp extends Blocco{
                     if (confermati == backupAttivi){
                         System.out.println("--> Sono il primary: ACK-OK, confermo il backup");
                         AlgoBackup al = new AlgoBackup();
-                        Evento e = new Evento(messaggio.toString());
                         e.put("id_backup",0+"");
                         al.writeLog(messaggio.toString(), 0+"");
+                        IDtrans = tempIDtrans;
                         bloccoC.invia("ack");
                     }
-                    
+                    }
                 }
             }
             
@@ -105,17 +113,22 @@ public class BackUp extends Blocco{
          try{    
     		boolean continua=true;
 			while (continua){
-                            Object tmp = monitor.prelevaMessaggio(); //questi lasciamoli object
+                            int IDtrans = 0;
+                            Object tmp = monitor.prelevaMessaggio(); 
+                            IDtrans++;
                             final Object risp = tmp;
+                            
+                            final Evento e = new Evento(risp.toString());
+                            e.put("id_trans", IDtrans);
                                 if (risp != null){
-                                       trasmettitore.invia(risp);              
+                                       trasmettitore.invia(e.toString());              
                                     
                                     Thread t = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
                                            
                                                   for (BloccoBidirezionale blocco : blocchiB){
-                                                    int res = blocco.inviaConAck(risp, 20000);
+                                                    int res = blocco.inviaConAck(e.toString(), 20000);
                                                     if (res == 0){
                                                         System.out.println("--- Impossibile completare il backup ---");
                                                     } else {

@@ -57,7 +57,7 @@ public class AlgoLocal implements AlgoritmoProxy{
     private Object modify(Evento e) {
         String pos = e.get("content").toString();
         myPosition = pos;
-        e.put("analisi", true);
+        e.put("analisi", "true");
         return e;
     }
 
@@ -65,9 +65,9 @@ public class AlgoLocal implements AlgoritmoProxy{
     private Object control(Evento e) {
         String pos = e.get("content").toString();
         if (!verify(pos)) {
-            e.put("analisi", false);
+            e.put("analisi", "false");
         } else {
-            e.put("analisi", true);
+            e.put("analisi", "true");
             e.put("myPosition", myPosition);
         }
         return e;
@@ -75,11 +75,6 @@ public class AlgoLocal implements AlgoritmoProxy{
     
     
     private boolean verify(String pos) {
-        if (!myPosition.equals(pos)) {
-            return false;
-        }else {
-            return true;
-        }
-        
+        return (myPosition.equals(pos));
     }
 }

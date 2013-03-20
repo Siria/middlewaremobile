@@ -23,7 +23,6 @@ public class AlgoBackup implements AlgoritmoProxy{
     
     @Override
     public Object valuta(Object messaggio){
-        // TODO qua va la funzione che scrive su file
         if (messaggio.toString().length() > 30){
             System.out.println("Ho ricevuto: " + messaggio.toString().substring(0, 20) + "...");
         } else {

@@ -20,9 +20,8 @@ public class AlgoTime implements AlgoritmoProxy{
         
         
         Evento e =  new Evento(messaggio.toString());
-        
-        /*
-        // funziona questo cast?
+
+        if (e.get("Vector")!= null){
         VectorClock vc = (VectorClock) e.get("Vector");
         int [] timestamp = (int[])e.get("timestamp");
         vc.receiveAction(timestamp);      
@@ -30,8 +29,7 @@ public class AlgoTime implements AlgoritmoProxy{
         // incremento il vc con sendAction()                                    
         vc.sendAction();
         e.put("timestamp", vc.getV());
-        //serve il cast ad Object?
-        */
+        }
         System.out.println("Il valore del VectorClock è COERENTE");
         
         return e;

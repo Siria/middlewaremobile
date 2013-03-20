@@ -923,3 +923,653 @@
 </java>
 
 
+--- 2013-03-20 11:55:19.255 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 11:58:40.396 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:04:07.364 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:08:19.084 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>true</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:11:32.582 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:15:03.039 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:18:12.29 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:30:21.513 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:34:07.11 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:39:46.915 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:46:48.65 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:49:38.787 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:55:05.319 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
+--- 2013-03-20 12:56:29.827 ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_07" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>content</string>
+   <string>10:10:10;10:0:0;0:0:0</string>
+  </void>
+  <void method="put">
+   <string>sourceType</string>
+   <string>aereo</string>
+  </void>
+  <void method="put">
+   <string>id_dest</string>
+   <string>0</string>
+  </void>
+  <void method="put">
+   <string>planning</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>analisi</string>
+   <string>false</string>
+  </void>
+  <void method="put">
+   <string>context</string>
+   <string>control</string>
+  </void>
+  <void method="put">
+   <string>id_source</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>id_trans</string>
+   <int>1</int>
+  </void>
+  <void method="put">
+   <string>id_backup</string>
+   <string>1</string>
+  </void>
+  <void method="put">
+   <string>type</string>
+   <string>posizione</string>
+  </void>
+ </object>
+</java>
+
+
